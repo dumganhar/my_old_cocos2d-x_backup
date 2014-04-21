@@ -959,6 +959,42 @@
 		1ABA68AF1888D700007D1BB4 /* CCFontCharMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1ABA68AC1888D700007D1BB4 /* CCFontCharMap.cpp */; };
 		1ABA68B01888D700007D1BB4 /* CCFontCharMap.h in Headers */ = {isa = PBXBuildFile; fileRef = 1ABA68AD1888D700007D1BB4 /* CCFontCharMap.h */; };
 		1ABA68B11888D700007D1BB4 /* CCFontCharMap.h in Headers */ = {isa = PBXBuildFile; fileRef = 1ABA68AD1888D700007D1BB4 /* CCFontCharMap.h */; };
+		1AD4BA831904BD2F009C56A8 /* CCGameController.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AD4BA801904BD2F009C56A8 /* CCGameController.h */; };
+		1AD4BA841904BD2F009C56A8 /* CCGameController.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AD4BA801904BD2F009C56A8 /* CCGameController.h */; };
+		1AD4BA8E1904BDA3009C56A8 /* CCControllerElement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AD4BA8C1904BDA3009C56A8 /* CCControllerElement.cpp */; };
+		1AD4BA8F1904BDA3009C56A8 /* CCControllerElement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AD4BA8C1904BDA3009C56A8 /* CCControllerElement.cpp */; };
+		1AD4BA901904BDA3009C56A8 /* CCControllerElement.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AD4BA8D1904BDA3009C56A8 /* CCControllerElement.h */; };
+		1AD4BA911904BDA3009C56A8 /* CCControllerElement.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AD4BA8D1904BDA3009C56A8 /* CCControllerElement.h */; };
+		1AD4BAA01904BDF2009C56A8 /* CCControllerAxisInput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AD4BA9E1904BDF2009C56A8 /* CCControllerAxisInput.cpp */; };
+		1AD4BAA11904BDF2009C56A8 /* CCControllerAxisInput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AD4BA9E1904BDF2009C56A8 /* CCControllerAxisInput.cpp */; };
+		1AD4BAA21904BDF2009C56A8 /* CCControllerAxisInput.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AD4BA9F1904BDF2009C56A8 /* CCControllerAxisInput.h */; };
+		1AD4BAA31904BDF2009C56A8 /* CCControllerAxisInput.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AD4BA9F1904BDF2009C56A8 /* CCControllerAxisInput.h */; };
+		1AD4BAA91904BE4B009C56A8 /* CCControllerButtonInput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AD4BAA51904BE4B009C56A8 /* CCControllerButtonInput.cpp */; };
+		1AD4BAAA1904BE4B009C56A8 /* CCControllerButtonInput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AD4BAA51904BE4B009C56A8 /* CCControllerButtonInput.cpp */; };
+		1AD4BAAB1904BE4B009C56A8 /* CCControllerButtonInput.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AD4BAA61904BE4B009C56A8 /* CCControllerButtonInput.h */; };
+		1AD4BAAC1904BE4B009C56A8 /* CCControllerButtonInput.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AD4BAA61904BE4B009C56A8 /* CCControllerButtonInput.h */; };
+		1AD4BAAD1904BE4B009C56A8 /* CCControllerDirectionPad.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AD4BAA71904BE4B009C56A8 /* CCControllerDirectionPad.cpp */; };
+		1AD4BAAE1904BE4B009C56A8 /* CCControllerDirectionPad.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AD4BAA71904BE4B009C56A8 /* CCControllerDirectionPad.cpp */; };
+		1AD4BAAF1904BE4B009C56A8 /* CCControllerDirectionPad.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AD4BAA81904BE4B009C56A8 /* CCControllerDirectionPad.h */; };
+		1AD4BAB01904BE4B009C56A8 /* CCControllerDirectionPad.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AD4BAA81904BE4B009C56A8 /* CCControllerDirectionPad.h */; };
+		1AD4BAB31904BFC8009C56A8 /* CCGamepad.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AD4BAB11904BFC8009C56A8 /* CCGamepad.cpp */; };
+		1AD4BAB41904BFC8009C56A8 /* CCGamepad.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AD4BAB11904BFC8009C56A8 /* CCGamepad.cpp */; };
+		1AD4BAB51904BFC8009C56A8 /* CCGamepad.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AD4BAB21904BFC8009C56A8 /* CCGamepad.h */; };
+		1AD4BAB61904BFC8009C56A8 /* CCGamepad.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AD4BAB21904BFC8009C56A8 /* CCGamepad.h */; };
+		1AD4BAB91904C0EA009C56A8 /* CCController-iOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1AD4BAB71904C0EA009C56A8 /* CCController-iOS.mm */; };
+		1AD4BABA1904C0EA009C56A8 /* CCController-iOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1AD4BAB71904C0EA009C56A8 /* CCController-iOS.mm */; };
+		1AD4BABB1904C0EA009C56A8 /* CCController.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AD4BAB81904C0EA009C56A8 /* CCController.h */; };
+		1AD4BABC1904C0EA009C56A8 /* CCController.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AD4BAB81904C0EA009C56A8 /* CCController.h */; };
+		1AD4BABF1904C20D009C56A8 /* CCEventController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AD4BABD1904C20D009C56A8 /* CCEventController.cpp */; };
+		1AD4BAC01904C20D009C56A8 /* CCEventController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AD4BABD1904C20D009C56A8 /* CCEventController.cpp */; };
+		1AD4BAC11904C20D009C56A8 /* CCEventController.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AD4BABE1904C20D009C56A8 /* CCEventController.h */; };
+		1AD4BAC21904C20D009C56A8 /* CCEventController.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AD4BABE1904C20D009C56A8 /* CCEventController.h */; };
+		1AD4BAC51904C21E009C56A8 /* CCEventListenerController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AD4BAC31904C21E009C56A8 /* CCEventListenerController.cpp */; };
+		1AD4BAC61904C21E009C56A8 /* CCEventListenerController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AD4BAC31904C21E009C56A8 /* CCEventListenerController.cpp */; };
+		1AD4BAC71904C21E009C56A8 /* CCEventListenerController.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AD4BAC41904C21E009C56A8 /* CCEventListenerController.h */; };
+		1AD4BAC81904C21E009C56A8 /* CCEventListenerController.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AD4BAC41904C21E009C56A8 /* CCEventListenerController.h */; };
+		1AD4BACA1904CE04009C56A8 /* GameController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AD4BAC91904CE04009C56A8 /* GameController.framework */; };
+		1AD4BACC1904CE1C009C56A8 /* GameController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AD4BACB1904CE1C009C56A8 /* GameController.framework */; };
 		1AD71DA9180E26E600808F54 /* CCBAnimationManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AD71CFA180E26E600808F54 /* CCBAnimationManager.cpp */; };
 		1AD71DAA180E26E600808F54 /* CCBAnimationManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AD71CFA180E26E600808F54 /* CCBAnimationManager.cpp */; };
 		1AD71DAB180E26E600808F54 /* CCBAnimationManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AD71CFB180E26E600808F54 /* CCBAnimationManager.h */; };
@@ -2252,6 +2288,25 @@
 		1AAF584E180E40B9000584C8 /* LocalStorageAndroid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LocalStorageAndroid.cpp; sourceTree = "<group>"; };
 		1ABA68AC1888D700007D1BB4 /* CCFontCharMap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCFontCharMap.cpp; sourceTree = "<group>"; };
 		1ABA68AD1888D700007D1BB4 /* CCFontCharMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFontCharMap.h; sourceTree = "<group>"; };
+		1AD4BA801904BD2F009C56A8 /* CCGameController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCGameController.h; path = ../base/CCGameController.h; sourceTree = "<group>"; };
+		1AD4BA8C1904BDA3009C56A8 /* CCControllerElement.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCControllerElement.cpp; path = ../base/CCControllerElement.cpp; sourceTree = "<group>"; };
+		1AD4BA8D1904BDA3009C56A8 /* CCControllerElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCControllerElement.h; path = ../base/CCControllerElement.h; sourceTree = "<group>"; };
+		1AD4BA9E1904BDF2009C56A8 /* CCControllerAxisInput.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCControllerAxisInput.cpp; path = ../base/CCControllerAxisInput.cpp; sourceTree = "<group>"; };
+		1AD4BA9F1904BDF2009C56A8 /* CCControllerAxisInput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCControllerAxisInput.h; path = ../base/CCControllerAxisInput.h; sourceTree = "<group>"; };
+		1AD4BAA51904BE4B009C56A8 /* CCControllerButtonInput.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCControllerButtonInput.cpp; path = ../base/CCControllerButtonInput.cpp; sourceTree = "<group>"; };
+		1AD4BAA61904BE4B009C56A8 /* CCControllerButtonInput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCControllerButtonInput.h; path = ../base/CCControllerButtonInput.h; sourceTree = "<group>"; };
+		1AD4BAA71904BE4B009C56A8 /* CCControllerDirectionPad.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCControllerDirectionPad.cpp; path = ../base/CCControllerDirectionPad.cpp; sourceTree = "<group>"; };
+		1AD4BAA81904BE4B009C56A8 /* CCControllerDirectionPad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCControllerDirectionPad.h; path = ../base/CCControllerDirectionPad.h; sourceTree = "<group>"; };
+		1AD4BAB11904BFC8009C56A8 /* CCGamepad.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCGamepad.cpp; path = ../base/CCGamepad.cpp; sourceTree = "<group>"; };
+		1AD4BAB21904BFC8009C56A8 /* CCGamepad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCGamepad.h; path = ../base/CCGamepad.h; sourceTree = "<group>"; };
+		1AD4BAB71904C0EA009C56A8 /* CCController-iOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "CCController-iOS.mm"; path = "../base/CCController-iOS.mm"; sourceTree = "<group>"; };
+		1AD4BAB81904C0EA009C56A8 /* CCController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCController.h; path = ../base/CCController.h; sourceTree = "<group>"; };
+		1AD4BABD1904C20D009C56A8 /* CCEventController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCEventController.cpp; path = ../base/CCEventController.cpp; sourceTree = "<group>"; };
+		1AD4BABE1904C20D009C56A8 /* CCEventController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCEventController.h; path = ../base/CCEventController.h; sourceTree = "<group>"; };
+		1AD4BAC31904C21E009C56A8 /* CCEventListenerController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCEventListenerController.cpp; path = ../base/CCEventListenerController.cpp; sourceTree = "<group>"; };
+		1AD4BAC41904C21E009C56A8 /* CCEventListenerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCEventListenerController.h; path = ../base/CCEventListenerController.h; sourceTree = "<group>"; };
+		1AD4BAC91904CE04009C56A8 /* GameController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameController.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/GameController.framework; sourceTree = DEVELOPER_DIR; };
+		1AD4BACB1904CE1C009C56A8 /* GameController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameController.framework; path = System/Library/Frameworks/GameController.framework; sourceTree = SDKROOT; };
 		1AD71CFA180E26E600808F54 /* CCBAnimationManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCBAnimationManager.cpp; sourceTree = "<group>"; };
 		1AD71CFB180E26E600808F54 /* CCBAnimationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBAnimationManager.h; sourceTree = "<group>"; };
 		1AD71CFC180E26E600808F54 /* CCBFileLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCBFileLoader.cpp; sourceTree = "<group>"; };
@@ -2858,6 +2913,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1AD4BACC1904CE1C009C56A8 /* GameController.framework in Frameworks */,
 				B3B12A5A17E7F44000026B4A /* libchipmunk Mac.a in Frameworks */,
 				1A94D35116C2072800D79D09 /* Foundation.framework in Frameworks */,
 				1A570347180BD0850088DEC7 /* libglfw3.a in Frameworks */,
@@ -2902,6 +2958,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1AD4BACA1904CE04009C56A8 /* GameController.framework in Frameworks */,
 				B3B12A5B17E7F45C00026B4A /* libchipmunk iOS.a in Frameworks */,
 				A07A4CAF1783777C0073F6A7 /* Foundation.framework in Frameworks */,
 				1A570364180BD1120088DEC7 /* libpng.a in Frameworks */,
@@ -3079,6 +3136,7 @@
 		1A5700A2180BC5E60088DEC7 /* base */ = {
 			isa = PBXGroup;
 			children = (
+				1AD4BAA41904BDFD009C56A8 /* controller */,
 				1A5700A3180BC6060088DEC7 /* atitc.cpp */,
 				1A5700A4180BC6060088DEC7 /* atitc.h */,
 				1A5700A5180BC6060088DEC7 /* CCAffineTransform.cpp */,
@@ -3858,6 +3916,30 @@
 				1AAF584E180E40B9000584C8 /* LocalStorageAndroid.cpp */,
 			);
 			path = "local-storage";
+			sourceTree = "<group>";
+		};
+		1AD4BAA41904BDFD009C56A8 /* controller */ = {
+			isa = PBXGroup;
+			children = (
+				1AD4BAB71904C0EA009C56A8 /* CCController-iOS.mm */,
+				1AD4BAB81904C0EA009C56A8 /* CCController.h */,
+				1AD4BA9E1904BDF2009C56A8 /* CCControllerAxisInput.cpp */,
+				1AD4BA9F1904BDF2009C56A8 /* CCControllerAxisInput.h */,
+				1AD4BAA51904BE4B009C56A8 /* CCControllerButtonInput.cpp */,
+				1AD4BAA61904BE4B009C56A8 /* CCControllerButtonInput.h */,
+				1AD4BAA71904BE4B009C56A8 /* CCControllerDirectionPad.cpp */,
+				1AD4BAA81904BE4B009C56A8 /* CCControllerDirectionPad.h */,
+				1AD4BA8C1904BDA3009C56A8 /* CCControllerElement.cpp */,
+				1AD4BA8D1904BDA3009C56A8 /* CCControllerElement.h */,
+				1AD4BA801904BD2F009C56A8 /* CCGameController.h */,
+				1AD4BAB11904BFC8009C56A8 /* CCGamepad.cpp */,
+				1AD4BAB21904BFC8009C56A8 /* CCGamepad.h */,
+				1AD4BABD1904C20D009C56A8 /* CCEventController.cpp */,
+				1AD4BABE1904C20D009C56A8 /* CCEventController.h */,
+				1AD4BAC31904C21E009C56A8 /* CCEventListenerController.cpp */,
+				1AD4BAC41904C21E009C56A8 /* CCEventListenerController.h */,
+			);
+			name = controller;
 			sourceTree = "<group>";
 		};
 		1AD71CF7180E26E600808F54 /* editor-support */ = {
@@ -4944,6 +5026,7 @@
 		B3D8D4471799219B0039C204 /* mac */ = {
 			isa = PBXGroup;
 			children = (
+				1AD4BACB1904CE1C009C56A8 /* GameController.framework */,
 				46A16E281807C99F005B8026 /* libwebsockets.a */,
 				46A16E211807C95C005B8026 /* libfreetype.a */,
 				46A16E221807C95C005B8026 /* libglfw3.a */,
@@ -4958,6 +5041,7 @@
 		B3D8D44B179921D50039C204 /* ios */ = {
 			isa = PBXGroup;
 			children = (
+				1AD4BAC91904CE04009C56A8 /* GameController.framework */,
 				46A16E271807C992005B8026 /* libwebsockets.a */,
 				46A16E1B1807C948005B8026 /* libcurl.a */,
 				46A16E1C1807C948005B8026 /* libfreetype.a */,
@@ -5006,6 +5090,7 @@
 				B375107B1823AC9F00B3BA6A /* CCPhysicsWorldInfo_chipmunk.h in Headers */,
 				2905FA6818CF08D100240AA3 /* UILoadingBar.h in Headers */,
 				46A170F01807CECA005B8026 /* CCPhysicsWorld.h in Headers */,
+				1AD4BA901904BDA3009C56A8 /* CCControllerElement.h in Headers */,
 				46A1705C1807CC1C005B8026 /* CCStdC.h in Headers */,
 				46A1704F1807CC1C005B8026 /* CCApplication.h in Headers */,
 				46A170131807CBFC005B8026 /* CCFileUtilsApple.h in Headers */,
@@ -5024,6 +5109,8 @@
 				1A57007B180BC5A10088DEC7 /* CCActionInstant.h in Headers */,
 				1A57007F180BC5A10088DEC7 /* CCActionInterval.h in Headers */,
 				1A01C69A18F57BE800EFE3A6 /* CCSet.h in Headers */,
+				1AD4BABB1904C0EA009C56A8 /* CCController.h in Headers */,
+				1AD4BAAB1904BE4B009C56A8 /* CCControllerButtonInput.h in Headers */,
 				A023FA36185198C800E10CD1 /* ccShader_PositionTextureColor_noMVP_vert.h in Headers */,
 				593BDCF8184D0A6E00C21E48 /* CCGroupCommand.h in Headers */,
 				1A570083180BC5A10088DEC7 /* CCActionManager.h in Headers */,
@@ -5100,6 +5187,7 @@
 				1A570204180BCBD40088DEC7 /* CCClippingNode.h in Headers */,
 				1A01C6A618F58F7500EFE3A6 /* CCNotificationCenter.h in Headers */,
 				1A57020A180BCBDF0088DEC7 /* CCMotionStreak.h in Headers */,
+				1AD4BAB51904BFC8009C56A8 /* CCGamepad.h in Headers */,
 				1A570212180BCBF40088DEC7 /* CCProgressTimer.h in Headers */,
 				1A570216180BCBF40088DEC7 /* CCRenderTexture.h in Headers */,
 				1A01C69618F57BE800EFE3A6 /* CCInteger.h in Headers */,
@@ -5130,6 +5218,7 @@
 				1A570265180BCC6F0088DEC7 /* ccShader_PositionTextureColor_frag.h in Headers */,
 				50FCEBB918C72017004AD434 /* TextAtlasReader.h in Headers */,
 				1A570267180BCC6F0088DEC7 /* ccShader_PositionTextureColor_vert.h in Headers */,
+				1AD4BA831904BD2F009C56A8 /* CCGameController.h in Headers */,
 				1A570269180BCC6F0088DEC7 /* ccShader_PositionTextureColorAlphaTest_frag.h in Headers */,
 				1A57026D180BCC6F0088DEC7 /* CCShaderCache.h in Headers */,
 				1A570273180BCC6F0088DEC7 /* ccShaders.h in Headers */,
@@ -5149,6 +5238,7 @@
 				A044DED718C6A58700B6CCBD /* vec4.h in Headers */,
 				1A5702BA180BCDFC0088DEC7 /* ccUtils.h in Headers */,
 				1A5702C0180BCE2A0088DEC7 /* CCIMEDelegate.h in Headers */,
+				1AD4BAC71904C21E009C56A8 /* CCEventListenerController.h in Headers */,
 				A044DEAF18C6A58700B6CCBD /* kazmath.h in Headers */,
 				2905FA7618CF08D100240AA3 /* UIScrollView.h in Headers */,
 				1A5702C4180BCE2A0088DEC7 /* CCIMEDispatcher.h in Headers */,
@@ -5160,6 +5250,7 @@
 				1A5702DD180BCE570088DEC7 /* CCTextureCache.h in Headers */,
 				1A5702EC180BCE750088DEC7 /* CCTileMapAtlas.h in Headers */,
 				1A5702F0180BCE750088DEC7 /* CCTMXLayer.h in Headers */,
+				1AD4BAA21904BDF2009C56A8 /* CCControllerAxisInput.h in Headers */,
 				50FCEBAD18C72017004AD434 /* PageViewReader.h in Headers */,
 				1A5702F4180BCE750088DEC7 /* CCTMXObjectGroup.h in Headers */,
 				1A5702F8180BCE750088DEC7 /* CCTMXTiledMap.h in Headers */,
@@ -5234,6 +5325,7 @@
 				A044DEA518C6A58700B6CCBD /* aabb.h in Headers */,
 				2905FA8218CF08D100240AA3 /* UITextAtlas.h in Headers */,
 				1AD71EB7180E26E600808F54 /* BoneData.h in Headers */,
+				1AD4BAAF1904BE4B009C56A8 /* CCControllerDirectionPad.h in Headers */,
 				1AD71EBB180E26E600808F54 /* CCSkeleton.h in Headers */,
 				50FCEBA118C72017004AD434 /* LayoutReader.h in Headers */,
 				1AD71EBF180E26E600808F54 /* CCSkeletonAnimation.h in Headers */,
@@ -5266,6 +5358,7 @@
 				1A9DCA17180E6955007A3AD4 /* CCConfiguration.h in Headers */,
 				1A9DCA1F180E6955007A3AD4 /* CCDirector.h in Headers */,
 				1A9DCA21180E6955007A3AD4 /* CCEventType.h in Headers */,
+				1AD4BAC11904C20D009C56A8 /* CCEventController.h in Headers */,
 				1A9DCA25180E6955007A3AD4 /* ccFPSImages.h in Headers */,
 				1A9DCA29180E6955007A3AD4 /* CCGLBufferedNode.h in Headers */,
 				1A9DCA2B180E6955007A3AD4 /* ccMacros.h in Headers */,
@@ -5483,6 +5576,7 @@
 				46A1702E1807CBFE005B8026 /* CCDevice.h in Headers */,
 				46A1702A1807CBFE005B8026 /* CCLock.h in Headers */,
 				46A170451807CC07005B8026 /* CCESRenderer.h in Headers */,
+				1AD4BAAC1904BE4B009C56A8 /* CCControllerButtonInput.h in Headers */,
 				46A171011807CECB005B8026 /* CCPhysicsJoint.h in Headers */,
 				50AE5EA6188749250007CFE3 /* CCBatchCommand.h in Headers */,
 				46A170411807CC07005B8026 /* CCGLView.h in Headers */,
@@ -5500,7 +5594,10 @@
 				46A170431807CC07005B8026 /* CCES2Renderer.h in Headers */,
 				46A170331807CBFE005B8026 /* CCImage.h in Headers */,
 				2905FA5518CF08D100240AA3 /* UIImageView.h in Headers */,
+				1AD4BAB01904BE4B009C56A8 /* CCControllerDirectionPad.h in Headers */,
 				46A170481807CC07005B8026 /* CCPlatformDefine.h in Headers */,
+				1AD4BAC21904C20D009C56A8 /* CCEventController.h in Headers */,
+				1AD4BAC81904C21E009C56A8 /* CCEventListenerController.h in Headers */,
 				46A1704C1807CC07005B8026 /* OpenGL_Internal.h in Headers */,
 				46A1702C1807CBFE005B8026 /* CCApplicationProtocol.h in Headers */,
 				1A570064180BC5A10088DEC7 /* CCAction.h in Headers */,
@@ -5659,6 +5756,7 @@
 				1A57031C180BCF430088DEC7 /* ccCArray.h in Headers */,
 				2905FA6518CF08D100240AA3 /* UIListView.h in Headers */,
 				50FCEBAA18C72017004AD434 /* LoadingBarReader.h in Headers */,
+				1AD4BABC1904C0EA009C56A8 /* CCController.h in Headers */,
 				1A57031E180BCF430088DEC7 /* uthash.h in Headers */,
 				1A570320180BCF430088DEC7 /* utlist.h in Headers */,
 				50FCEBC618C72017004AD434 /* TextReader.h in Headers */,
@@ -5675,11 +5773,13 @@
 				1A570536180BD9500088DEC7 /* CCGLProgram.h in Headers */,
 				1A57053A180BD9500088DEC7 /* ccGLStateCache.h in Headers */,
 				1A570549180BD9C40088DEC7 /* CCTouch.h in Headers */,
+				1AD4BAA31904BDF2009C56A8 /* CCControllerAxisInput.h in Headers */,
 				1AD71DAC180E26E600808F54 /* CCBAnimationManager.h in Headers */,
 				1AD71DB0180E26E600808F54 /* CCBFileLoader.h in Headers */,
 				1AD71DB4180E26E600808F54 /* CCBKeyframe.h in Headers */,
 				1AD71DB6180E26E600808F54 /* CCBMemberVariableAssigner.h in Headers */,
 				1AD71DBA180E26E600808F54 /* CCBReader.h in Headers */,
+				1AD4BAB61904BFC8009C56A8 /* CCGamepad.h in Headers */,
 				1AD71DBC180E26E600808F54 /* CCBSelectorResolver.h in Headers */,
 				1AD71DC0180E26E600808F54 /* CCBSequence.h in Headers */,
 				50FCEBCC18C72017004AD434 /* WidgetReaderProtocol.h in Headers */,
@@ -5749,6 +5849,7 @@
 				59A79D581821E26E00F19697 /* CCEventMouse.h in Headers */,
 				1AAF5371180E3374000584C8 /* HttpResponse.h in Headers */,
 				1AAF5375180E3374000584C8 /* SocketIO.h in Headers */,
+				1AD4BA841904BD2F009C56A8 /* CCGameController.h in Headers */,
 				1AAF5379180E3374000584C8 /* WebSocket.h in Headers */,
 				1AAF5852180E40B9000584C8 /* LocalStorage.h in Headers */,
 				1A9DCA14180E6955007A3AD4 /* ccConfig.h in Headers */,
@@ -5802,6 +5903,7 @@
 				1A8C59E6180E930E00EF57C3 /* CCProcessBase.h in Headers */,
 				2905FA5918CF08D100240AA3 /* UILayout.h in Headers */,
 				B375107D1823ACA100B3BA6A /* CCPhysicsBodyInfo_chipmunk.h in Headers */,
+				1AD4BA911904BDA3009C56A8 /* CCControllerElement.h in Headers */,
 				2905FA4518CF08D100240AA3 /* GUIDefine.h in Headers */,
 				1A8C59EA180E930E00EF57C3 /* CCSGUIReader.h in Headers */,
 				A044DEE018C6A61F00B6CCBD /* neon_matrix_impl.h in Headers */,
@@ -6182,6 +6284,8 @@
 				2AC795DB1862870F005EC8E1 /* SkeletonBounds.cpp in Sources */,
 				2AC795DC1862870F005EC8E1 /* Event.cpp in Sources */,
 				1A01C68A18F57BE800EFE3A6 /* CCDeprecated.cpp in Sources */,
+				1AD4BABF1904C20D009C56A8 /* CCEventController.cpp in Sources */,
+				1AD4BA8E1904BDA3009C56A8 /* CCControllerElement.cpp in Sources */,
 				2905FA5618CF08D100240AA3 /* UILayout.cpp in Sources */,
 				2AC795DD1862870F005EC8E1 /* EventData.cpp in Sources */,
 				2AC795DE1862870F005EC8E1 /* BoundingBoxAttachment.cpp in Sources */,
@@ -6200,6 +6304,7 @@
 				06CAAACB186AD7F20012A414 /* TriggerMng.cpp in Sources */,
 				46A170511807CC1C005B8026 /* CCCommon.mm in Sources */,
 				46A1701B1807CBFC005B8026 /* CCGLViewProtocol.cpp in Sources */,
+				1AD4BAA91904BE4B009C56A8 /* CCControllerButtonInput.cpp in Sources */,
 				46A170E61807CECA005B8026 /* CCPhysicsBody.cpp in Sources */,
 				3E26D40818ACB63900834404 /* CCDevice.mm in Sources */,
 				46A170151807CBFC005B8026 /* CCLock.cpp in Sources */,
@@ -6258,6 +6363,7 @@
 				1A570152180BC9460088DEC7 /* CCEventListenerAcceleration.cpp in Sources */,
 				50FCEBA718C72017004AD434 /* LoadingBarReader.cpp in Sources */,
 				1A570156180BC9460088DEC7 /* CCEventListenerCustom.cpp in Sources */,
+				1AD4BAB91904C0EA009C56A8 /* CCController-iOS.mm in Sources */,
 				06C0F2EF186AD822003594D5 /* ObjectFactory.cpp in Sources */,
 				A044DECD18C6A58700B6CCBD /* vec2.c in Sources */,
 				1A57015A180BC9460088DEC7 /* CCEventListenerKeyboard.cpp in Sources */,
@@ -6334,6 +6440,7 @@
 				1A57030C180BCF190088DEC7 /* CCComponent.cpp in Sources */,
 				1A570310180BCF190088DEC7 /* CCComponentContainer.cpp in Sources */,
 				1A570319180BCF430088DEC7 /* ccCArray.cpp in Sources */,
+				1AD4BAA01904BDF2009C56A8 /* CCControllerAxisInput.cpp in Sources */,
 				B37510711823AC9F00B3BA6A /* CCPhysicsBodyInfo_chipmunk.cpp in Sources */,
 				1A570324180BCF660088DEC7 /* TGAlib.cpp in Sources */,
 				1A01C69C18F57BE800EFE3A6 /* CCString.cpp in Sources */,
@@ -6390,6 +6497,7 @@
 				1AD71EB1180E26E600808F54 /* Bone.cpp in Sources */,
 				1AD71EB5180E26E600808F54 /* BoneData.cpp in Sources */,
 				1AD71EB9180E26E600808F54 /* CCSkeleton.cpp in Sources */,
+				1AD4BAC51904C21E009C56A8 /* CCEventListenerController.cpp in Sources */,
 				1AD71EBD180E26E600808F54 /* CCSkeletonAnimation.cpp in Sources */,
 				2905FA4018CF08D100240AA3 /* CocosGUI.cpp in Sources */,
 				1AD71EC1180E26E600808F54 /* extension.cpp in Sources */,
@@ -6459,6 +6567,7 @@
 				1A8C59EB180E930E00EF57C3 /* CCSkin.cpp in Sources */,
 				1A8C59EF180E930E00EF57C3 /* CCSpriteFrameCacheHelper.cpp in Sources */,
 				1A8C59F3180E930E00EF57C3 /* CCSSceneReader.cpp in Sources */,
+				1AD4BAAD1904BE4B009C56A8 /* CCControllerDirectionPad.cpp in Sources */,
 				2905FA6E18CF08D100240AA3 /* UIRichText.cpp in Sources */,
 				1A01C68E18F57BE800EFE3A6 /* CCDictionary.cpp in Sources */,
 				1A8C59F7180E930E00EF57C3 /* CCTransformHelp.cpp in Sources */,
@@ -6467,6 +6576,7 @@
 				46C02E0718E91123004B7456 /* xxhash.c in Sources */,
 				1A8C5A03180E930E00EF57C3 /* CCUtilMath.cpp in Sources */,
 				1A8C5A0D180E930E00EF57C3 /* DictionaryHelper.cpp in Sources */,
+				1AD4BAB31904BFC8009C56A8 /* CCGamepad.cpp in Sources */,
 				74AC8C8DDFD05322513C8C72 /* CCFrustum.cpp in Sources */,
 				74AC8796ABB6761790CF8CC2 /* CCRenderer.cpp in Sources */,
 				1ABA68AE1888D700007D1BB4 /* CCFontCharMap.cpp in Sources */,
@@ -6622,6 +6732,7 @@
 				2AC795E418628746005EC8E1 /* Event.cpp in Sources */,
 				A044DECE18C6A58700B6CCBD /* vec2.c in Sources */,
 				2AC795E518628746005EC8E1 /* EventData.cpp in Sources */,
+				1AD4BAAE1904BE4B009C56A8 /* CCControllerDirectionPad.cpp in Sources */,
 				2AC795E618628746005EC8E1 /* BoundingBoxAttachment.cpp in Sources */,
 				A044DED218C6A58700B6CCBD /* vec3.c in Sources */,
 				46A1703C1807CC07005B8026 /* CCApplication.mm in Sources */,
@@ -6649,6 +6760,7 @@
 				46A170291807CBFE005B8026 /* CCLock.cpp in Sources */,
 				46A170FE1807CECB005B8026 /* CCPhysicsContact.cpp in Sources */,
 				46A170391807CBFE005B8026 /* CCThread.cpp in Sources */,
+				1AD4BAAA1904BE4B009C56A8 /* CCControllerButtonInput.cpp in Sources */,
 				46A170421807CC07005B8026 /* CCGLView.mm in Sources */,
 				1A570062180BC5A10088DEC7 /* CCAction.cpp in Sources */,
 				1A570066180BC5A10088DEC7 /* CCActionCamera.cpp in Sources */,
@@ -6703,6 +6815,7 @@
 				1A57015B180BC9460088DEC7 /* CCEventListenerKeyboard.cpp in Sources */,
 				1A57015F180BC9460088DEC7 /* CCEventListenerTouch.cpp in Sources */,
 				1A570163180BC9460088DEC7 /* CCEventTouch.cpp in Sources */,
+				1AD4BAC01904C20D009C56A8 /* CCEventController.cpp in Sources */,
 				1A57019E180BCB590088DEC7 /* CCFont.cpp in Sources */,
 				1A5701A2180BCB590088DEC7 /* CCFontAtlas.cpp in Sources */,
 				1A5701A6180BCB590088DEC7 /* CCFontAtlasCache.cpp in Sources */,
@@ -6710,6 +6823,7 @@
 				1A5701B6180BCB590088DEC7 /* CCFontFreeType.cpp in Sources */,
 				1A5701BA180BCB5A0088DEC7 /* CCLabel.cpp in Sources */,
 				2905FA4B18CF08D100240AA3 /* UICheckBox.cpp in Sources */,
+				1AD4BA8F1904BDA3009C56A8 /* CCControllerElement.cpp in Sources */,
 				1A5701BE180BCB5A0088DEC7 /* CCLabelAtlas.cpp in Sources */,
 				1A5701C2180BCB5A0088DEC7 /* CCLabelBMFont.cpp in Sources */,
 				1A087AE91860400400196EF5 /* edtaa3func.cpp in Sources */,
@@ -6802,6 +6916,7 @@
 				50FCEBC018C72017004AD434 /* TextFieldReader.cpp in Sources */,
 				1AD71DDE180E26E600808F54 /* CCLayerGradientLoader.cpp in Sources */,
 				1AD71DE2180E26E600808F54 /* CCLayerLoader.cpp in Sources */,
+				1AD4BAB41904BFC8009C56A8 /* CCGamepad.cpp in Sources */,
 				1AD71DE6180E26E600808F54 /* CCMenuItemImageLoader.cpp in Sources */,
 				1AD71DEA180E26E600808F54 /* CCMenuItemLoader.cpp in Sources */,
 				593BDCF3184D0A6E00C21E48 /* CCCustomCommand.cpp in Sources */,
@@ -6830,6 +6945,7 @@
 				1AD71EBE180E26E600808F54 /* CCSkeletonAnimation.cpp in Sources */,
 				50FCEBBC18C72017004AD434 /* TextBMFontReader.cpp in Sources */,
 				1AD71EC2180E26E600808F54 /* extension.cpp in Sources */,
+				1AD4BAC61904C21E009C56A8 /* CCEventListenerController.cpp in Sources */,
 				1AD71EC6180E26E600808F54 /* Json.cpp in Sources */,
 				1AD71ECA180E26E600808F54 /* RegionAttachment.cpp in Sources */,
 				1AD71ECE180E26E600808F54 /* Skeleton.cpp in Sources */,
@@ -6889,6 +7005,7 @@
 				1A8C59CC180E930E00EF57C3 /* CCDataReaderHelper.cpp in Sources */,
 				1A8C59D0180E930E00EF57C3 /* CCDatas.cpp in Sources */,
 				1A8C59D4180E930E00EF57C3 /* CCDecorativeDisplay.cpp in Sources */,
+				1AD4BABA1904C0EA009C56A8 /* CCController-iOS.mm in Sources */,
 				1A8C59D8180E930E00EF57C3 /* CCDisplayFactory.cpp in Sources */,
 				A044DEB618C6A58700B6CCBD /* mat4.c in Sources */,
 				46C02E0818E91123004B7456 /* xxhash.c in Sources */,
@@ -6909,6 +7026,7 @@
 				2905FA7518CF08D100240AA3 /* UIScrollView.cpp in Sources */,
 				1A8C5A0E180E930E00EF57C3 /* DictionaryHelper.cpp in Sources */,
 				74AC858052DDF289AF7D6309 /* CCFrustum.cpp in Sources */,
+				1AD4BAA11904BDF2009C56A8 /* CCControllerAxisInput.cpp in Sources */,
 				74AC80E553789C6DE3EC737A /* CCRenderer.cpp in Sources */,
 				1ABA68AF1888D700007D1BB4 /* CCFontCharMap.cpp in Sources */,
 				74AC846799FE6F299B410289 /* CCQuadCommand.cpp in Sources */,
