@@ -17,27 +17,83 @@
 #include "CCEventController.h"
 #include "CCEventListenerController.h"
 #include "CCDirector.h"
+#import "NSLogger.h"
 
 #import <GameController/GameController.h>
 
-@interface GCControllerEventHandler : NSObject
-
-typedef void (^GCControllerConnectionBlock)();
-@property (copy) GCControllerConnectionBlock _connectionBlock;
-
-typedef void (^GCControllerDisconnectionBlock)();
-@property (copy) GCControllerDisconnectionBlock _disconnectionBlock;
-
-@end
-
-@implementation GCControllerEventHandler
-
--(void) onControllerConnected :(NSNotification *)note {
-    [self _connectionBlock];
+void CCNSLog(const char* file, int line, const char* function, const char* format, ...)
+{
+    va_list args;
+    va_start(args, format);
+    
+    char buf[1024 * 16] = {0};
+    vsprintf(buf, format, args);
+    
+    va_end(args);
+    
+    LogMessageF(file, line, function, @"cocos2d-x", 0, [NSString stringWithUTF8String:buf], nullptr);
+    
+    LoggerFlush(LoggerGetDefaultLogger(), YES);
 }
 
--(void) onControllerDisconnected :(NSNotification *)note {
-    [self _disconnectionBlock];
+@interface GCControllerConnectionEventHandler : NSObject
+
+typedef void (^GCControllerConnectionBlock)(GCController* controller);
+@property (copy) GCControllerConnectionBlock _connectionBlock;
+
+typedef void (^GCControllerDisconnectionBlock)(GCController* controller);
+@property (copy) GCControllerDisconnectionBlock _disconnectionBlock;
+
++(GCControllerConnectionEventHandler*) getInstance;
++(void) destroyInstance;
+@end
+
+@implementation GCControllerConnectionEventHandler
+
+
+static GCControllerConnectionEventHandler* __instance = nil;
+
++(GCControllerConnectionEventHandler*) getInstance {
+    
+    if (__instance == nil)
+    {
+        __instance = [[GCControllerConnectionEventHandler alloc] init];
+    }
+    return __instance;
+}
+
++(void) destroyInstance {
+    if (__instance)
+    {
+        [__instance release];
+        __instance = nil;
+    }
+}
+
+-(void) observerConnection: (GCControllerConnectionBlock) connectBlock disconnection: (GCControllerDisconnectionBlock) disconnectBlock {
+    self._connectionBlock = connectBlock;
+    self._disconnectionBlock = disconnectBlock;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onControllerConnected:) name:GCControllerDidConnectNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onControllerDisconnected:) name:GCControllerDidDisconnectNotification object:nil];
+}
+
+-(void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+	[super dealloc];
+}
+
+-(void) onControllerConnected :(NSNotification *)connectedNotification {
+    GCController *controller =(GCController *)[connectedNotification object];
+    
+    self._connectionBlock(controller);
+}
+
+-(void) onControllerDisconnected :(NSNotification *)connectedNotification {
+
+    GCController *controller =(GCController *)[connectedNotification object];
+    self._disconnectionBlock(controller);
 }
 
 @end
@@ -51,41 +107,19 @@ public:
     : _controller(controller)
     , _gcController(nil)
     {
-        _gcControllerEventHandler = [[GCControllerEventHandler alloc] init];
-        _gcControllerEventHandler._connectionBlock = ^(){
-            if ([[GCController controllers] count] > 0) {
-                for (GCController* c in [GCController controllers])
-                {
-//                    if (_controllers.end() != std::find_if(_controllers.begin(), _controllers.end(), [gcController](Controller* c){ return c->_impl->_gcController == gcController; }))
-//                    {
-//                        
-//                    }
-//                        
-//                    if (c == _gcController)
-//                    {
-//                        EventController evt(_controller, true);
-//                        Director::getInstance()->getEventDispatcher()->dispatchEvent(&evt);
-//                    }
-                }
-            }
-        };
-        _gcControllerEventHandler._disconnectionBlock = ^(){
-        
-        };
+
     }
     
     ~ControllerImpl()
     {
-        [_gcControllerEventHandler release];
+
     }
     
     Controller* _controller;
     GCController* _gcController;
-    GCControllerEventHandler* _gcControllerEventHandler;
 };
 
 std::vector<Controller*> Controller::_controllers;
-std::function<void()> Controller::_searchCompletedCallback = nullptr;
 
 const std::vector<Controller*>& Controller::getControllers()
 {
@@ -101,43 +135,41 @@ void Controller::releaseControllers()
     _controllers.clear();
 }
 
-GCControllerEventHandler* __notificationCenterDelegate = [[GCControllerEventHandler alloc] init];
-
-void Controller::startDiscovery(const std::function<void()>& completeCallback/* = nullptr*/)
+void Controller::startDiscoveryController()
 {
+    MyLog("startDiscoveryController...: %s", "hello");
+    
     [GCController startWirelessControllerDiscoveryWithCompletionHandler: nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:__notificationCenterDelegate selector:@selector(onControllerConnected) name:GCControllerDidConnectNotification object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:__notificationCenterDelegate selector:@selector(onControllerDisconnected) name:GCControllerDidDisconnectNotification object:nil];
-    
-//     ^{
-//        NSArray* gcControllers = [GCController controllers];
-//
-//        for (GCController* gcController in gcControllers)
-//        {
-//            if (!_controllers.empty())
-//            {
-//                // If the controller has been added, skip it.
-//                if (_controllers.end() != std::find_if(_controllers.begin(), _controllers.end(), [gcController](Controller* c){ return c->_impl->_gcController == gcController; }))
-//                    continue;
-//            }
-//            auto controller = new Controller();
-//            controller->_impl->_gcController = gcController;
-//            
-//            _controllers.push_back(controller);
-//            
-////            [[NSNotificationCenter defaultCenter] addObserver:controller->_impl->_gcControllerEventHandler selector:@selector(onControllerConnected) name:GCControllerDidConnectNotification object:nil];
-////            [[NSNotificationCenter defaultCenter] addObserver:controller->_impl->_gcControllerEventHandler selector:@selector(onControllerDisconnected) name:GCControllerDidDisconnectNotification object:nil];
-//        }
-//        if (_searchCompletedCallback)
-//            _searchCompletedCallback();
-//    }];
-    
-    _searchCompletedCallback = completeCallback;
+
+    [[GCControllerConnectionEventHandler getInstance] observerConnection: ^(GCController* gcController) {
+        auto controller = new Controller();
+        controller->_impl->_gcController = gcController;
+        MyLog("1controller %p was connnected!", gcController);
+        _controllers.push_back(controller);
+        
+        MyLog("2controller %p was connnected!", gcController);
+        
+        EventController evt(controller, true);
+        Director::getInstance()->getEventDispatcher()->dispatchEvent(&evt);
+        
+        MyLog("3controller %p was connnected!", gcController);
+        
+    } disconnection: ^(GCController* gcController) {
+        MyLog("controller %p was disconnected!", gcController);
+        
+        auto iter = std::find_if(_controllers.begin(), _controllers.end(), [gcController](Controller* c){ return c->_impl->_gcController == gcController; });
+        
+        CCASSERT(iter != _controllers.end(), "Could not find the controller");
+        
+        EventController evt(*iter, false);
+        Director::getInstance()->getEventDispatcher()->dispatchEvent(&evt);
+        
+        delete (*iter);
+        _controllers.erase(iter);
+    }];
 }
 
-void Controller::stopDiscovery()
+void Controller::stopDiscoveryController()
 {
     [GCController stopWirelessControllerDiscovery];
 }
@@ -177,12 +209,11 @@ void Controller::setPlayerIndex(int playerIndex)
 }
 
 #define sendEventButton(dstID, srcID) \
-auto dispatcher = Director::getInstance()->getEventDispatcher(); \
 dstID->setPressed(srcID.isPressed); \
 dstID->setValue(srcID.value); \
 dstID->setAnalog(srcID.isAnalog); \
-EventController evt(dstID); \
-dispatcher->dispatchEvent(&evt);
+EventController evt(this, dstID); \
+Director::getInstance()->getEventDispatcher()->dispatchEvent(&evt);
 
 
 #define sendEventDirectionPad(dstID, srcID) \
@@ -207,7 +238,7 @@ dstID->getRight()->setValue(srcID.right.value); \
 dstID->getRight()->setPressed(srcID.right.isPressed); \
 dstID->getRight()->setAnalog(srcID.right.isAnalog); \
 \
-EventController evt(_gamepad->getDirectionPad()); \
+EventController evt(this, _gamepad->getDirectionPad()); \
 Director::getInstance()->getEventDispatcher()->dispatchEvent(&evt);
 
 Gamepad* Controller::getGamepad()

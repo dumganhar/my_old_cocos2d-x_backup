@@ -23,7 +23,9 @@ class ControllerDirectionPad;
 class EventListenerController : public EventListener
 {
 public:
-	static EventListenerController* create(Controller* controller);
+    static const std::string LISTENER_ID;
+    
+	static EventListenerController* create();
     
     /// Overrides
     virtual bool checkAvailable() override;
@@ -39,7 +41,7 @@ public:
 	std::function<void(Controller*, ControllerElement*, Event*)> onValueChanged;
     
 protected:
-    bool init(Controller* controller);
+    bool init();
 };
 
 NS_CC_END

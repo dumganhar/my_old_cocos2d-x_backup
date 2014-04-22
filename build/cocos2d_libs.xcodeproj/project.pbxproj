@@ -98,6 +98,10 @@
 		1A12775A18DFCC4F0005F345 /* CCTweenFunction.h in Headers */ = {isa = PBXBuildFile; fileRef = 2986667918B1B079000E39CA /* CCTweenFunction.h */; };
 		1A12775B18DFCC540005F345 /* CCTweenFunction.h in Headers */ = {isa = PBXBuildFile; fileRef = 2986667918B1B079000E39CA /* CCTweenFunction.h */; };
 		1A12775C18DFCC590005F345 /* CCTweenFunction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2986667818B1B079000E39CA /* CCTweenFunction.cpp */; };
+		1A4B9007190673450047587A /* LoggerClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A4B9003190673450047587A /* LoggerClient.h */; };
+		1A4B9008190673450047587A /* LoggerClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A4B9004190673450047587A /* LoggerClient.m */; };
+		1A4B9009190673450047587A /* LoggerCommon.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A4B9005190673450047587A /* LoggerCommon.h */; };
+		1A4B900A190673450047587A /* NSLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A4B9006190673450047587A /* NSLogger.h */; };
 		1A570061180BC5A10088DEC7 /* CCAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A570047180BC5A10088DEC7 /* CCAction.cpp */; };
 		1A570062180BC5A10088DEC7 /* CCAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A570047180BC5A10088DEC7 /* CCAction.cpp */; };
 		1A570063180BC5A10088DEC7 /* CCAction.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A570048180BC5A10088DEC7 /* CCAction.h */; };
@@ -1874,6 +1878,10 @@
 		1A0DB7301823827C0025743D /* CCGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCGL.h; sourceTree = "<group>"; };
 		1A0DB7311823827C0025743D /* CCEAGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEAGLView.h; sourceTree = "<group>"; };
 		1A0DB7351823828F0025743D /* CCGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCGL.h; sourceTree = "<group>"; };
+		1A4B9003190673450047587A /* LoggerClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoggerClient.h; sourceTree = "<group>"; };
+		1A4B9004190673450047587A /* LoggerClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoggerClient.m; sourceTree = "<group>"; };
+		1A4B9005190673450047587A /* LoggerCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoggerCommon.h; sourceTree = "<group>"; };
+		1A4B9006190673450047587A /* NSLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSLogger.h; sourceTree = "<group>"; };
 		1A570047180BC5A10088DEC7 /* CCAction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCAction.cpp; sourceTree = "<group>"; };
 		1A570048180BC5A10088DEC7 /* CCAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAction.h; sourceTree = "<group>"; };
 		1A570049180BC5A10088DEC7 /* CCActionCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionCamera.cpp; sourceTree = "<group>"; };
@@ -2998,6 +3006,26 @@
 			path = ../external/edtaa3func;
 			sourceTree = "<group>";
 		};
+		1A4B9001190673450047587A /* nslog */ = {
+			isa = PBXGroup;
+			children = (
+				1A4B9002190673450047587A /* ios */,
+			);
+			name = nslog;
+			path = ../external/nslog;
+			sourceTree = "<group>";
+		};
+		1A4B9002190673450047587A /* ios */ = {
+			isa = PBXGroup;
+			children = (
+				1A4B9003190673450047587A /* LoggerClient.h */,
+				1A4B9004190673450047587A /* LoggerClient.m */,
+				1A4B9005190673450047587A /* LoggerCommon.h */,
+				1A4B9006190673450047587A /* NSLogger.h */,
+			);
+			path = ios;
+			sourceTree = "<group>";
+		};
 		1A570046180BC59A0088DEC7 /* actions */ = {
 			isa = PBXGroup;
 			children = (
@@ -3372,6 +3400,7 @@
 		1A57033E180BD0490088DEC7 /* external */ = {
 			isa = PBXGroup;
 			children = (
+				1A4B9001190673450047587A /* nslog */,
 				46C02E0418E91123004B7456 /* xxhash */,
 				46A168B21807AF9C005B8026 /* Box2D */,
 				46A1693A1807AFD6005B8026 /* chipmunk */,
@@ -5448,6 +5477,7 @@
 				5034CA46191D591100CE6051 /* ccShader_Label_outline.frag in Headers */,
 				1A570078180BC5A10088DEC7 /* CCActionGrid3D.h in Headers */,
 				1A01C68918F57BE800EFE3A6 /* CCBool.h in Headers */,
+				1A4B9007190673450047587A /* LoggerClient.h in Headers */,
 				1A57007C180BC5A10088DEC7 /* CCActionInstant.h in Headers */,
 				B37510861823ACA100B3BA6A /* CCPhysicsWorldInfo_chipmunk.h in Headers */,
 				1A570080180BC5A10088DEC7 /* CCActionInterval.h in Headers */,
@@ -5472,6 +5502,7 @@
 				B2AF2FA018EBAEAE00C5807C /* Quaternion.h in Headers */,
 				50E6D33718E174130051CA34 /* UIHBox.h in Headers */,
 				1A570111180BC8EE0088DEC7 /* CCDrawingPrimitives.h in Headers */,
+				1A4B900A190673450047587A /* NSLogger.h in Headers */,
 				50E6D33F18E174130051CA34 /* UIVBox.h in Headers */,
 				1A570115180BC8EE0088DEC7 /* CCDrawNode.h in Headers */,
 				06CAAAC5186AD7E50012A414 /* TriggerObj.h in Headers */,
@@ -5610,6 +5641,7 @@
 				1AD71DE0180E26E600808F54 /* CCLayerGradientLoader.h in Headers */,
 				1AD71DE4180E26E600808F54 /* CCLayerLoader.h in Headers */,
 				1AD71DE8180E26E600808F54 /* CCMenuItemImageLoader.h in Headers */,
+				1A4B9009190673450047587A /* LoggerCommon.h in Headers */,
 				50E6D31118DAF01E0051CA34 /* CCProtectedNode.h in Headers */,
 				1AD71DEC180E26E600808F54 /* CCMenuItemLoader.h in Headers */,
 				1AD71DEE180E26E600808F54 /* CCMenuLoader.h in Headers */,
@@ -6659,6 +6691,7 @@
 				2905FA5B18CF08D100240AA3 /* UILayoutDefine.cpp in Sources */,
 				50E6D31018DAF01A0051CA34 /* CCProtectedNode.cpp in Sources */,
 				1A5702F7180BCE750088DEC7 /* CCTMXTiledMap.cpp in Sources */,
+				1A4B9008190673450047587A /* LoggerClient.m in Sources */,
 				1A5702FB180BCE750088DEC7 /* CCTMXXMLParser.cpp in Sources */,
 				500DC8B319105D41007B91BF /* CCGroupCommand.cpp in Sources */,
 				2905FA6B18CF08D100240AA3 /* UIPageView.cpp in Sources */,

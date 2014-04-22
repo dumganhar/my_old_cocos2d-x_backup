@@ -21,6 +21,11 @@ Scene* HelloWorld::scene()
     return scene;
 }
 
+HelloWorld::~HelloWorld()
+{
+    _eventDispatcher->removeEventListener(_listener);
+}
+
 // on "init" you need to initialize your instance
 bool HelloWorld::init()
 {
@@ -75,6 +80,8 @@ bool HelloWorld::init()
 //    // add the sprite as a child to this layer
 //    this->addChild(sprite);
     
+    _player1 = nullptr;
+    
     auto statusLabel = Label::createWithSystemFont("status:", "", 20);
     statusLabel->setPosition(Point(visibleSize / 2) + origin + Point(0, 50));
     this->addChild(statusLabel, 0, 100);
@@ -83,17 +90,31 @@ bool HelloWorld::init()
     _actor->setPosition(Point(visibleSize / 2) + origin);
     this->addChild(_actor);
     
-    Controller::startDiscovery([=](){
-        
-        statusLabel->setString("startDiscovery...");
-        
-        auto controllers = Controller::getControllers();
-        if (!controllers.empty())
-        {
-            _player1 = controllers[0];
-            statusLabel->setString("Connected");
-        }
-    });
+    Controller::startDiscoveryController();
+//        auto controllers = Controller::getControllers();
+//        if (!controllers.empty())
+//        {
+//            _player1 = controllers[0];
+//            statusLabel->setString("Connected");
+//        }
+//    });
+
+    MyLog("layer: %p", this);
+    
+    _listener = EventListenerController::create();
+    _listener->onConnected = [=](Controller* controller, Event* event){
+        MyLog("%p connected", controller);
+        _player1 = controller;
+        statusLabel->setString("controller connected!");
+    };
+    
+    _listener->onDisconnected = [=](Controller* controller, Event* event){
+        MyLog("%p disconnected", controller);
+        _player1 = nullptr;
+        statusLabel->setString("controller disconnected!");
+    };
+    
+    _eventDispatcher->addEventListenerWithFixedPriority(_listener, 1);
     
     scheduleUpdate();
     
@@ -114,21 +135,26 @@ void HelloWorld::update(float dt)
             statusLabel->setString("Dpad: down pressed");
             newPos.y -= MOVE_DELTA;
         }
-        else if (_player1->getGamepad()->getDirectionPad()->getUp()->isPressed())
+        
+        if (_player1->getGamepad()->getDirectionPad()->getUp()->isPressed())
         {
             statusLabel->setString("Dpad: up pressed");
             newPos.y += MOVE_DELTA;
         }
-        else if (_player1->getGamepad()->getDirectionPad()->getLeft()->isPressed())
+        
+        if (_player1->getGamepad()->getDirectionPad()->getLeft()->isPressed())
         {
             statusLabel->setString("Dpad: left pressed");
             newPos.x -= MOVE_DELTA;
         }
-        else if (_player1->getGamepad()->getDirectionPad()->getRight()->isPressed())
+        
+        if (_player1->getGamepad()->getDirectionPad()->getRight()->isPressed())
         {
             statusLabel->setString("Dpad: right pressed");
             newPos.x += MOVE_DELTA;
         }
+        
+        _actor->setPosition(newPos);
     }
 }
 

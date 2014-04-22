@@ -55,6 +55,7 @@ public:
         MOUSE,
         ACCELERATION,
         FOCUS,
+		GAME_CONTROLLER,
         CUSTOM
     };
 

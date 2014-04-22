@@ -20,11 +20,22 @@ class Controller;
 class EventController : public Event
 {
 public:
+    enum class ControllerEventType
+    {
+        CONNECTION,
+        VALUE_CHANGED,
+    };
     
-	EventController(ControllerElement* element);
+	EventController(Controller* controller, ControllerElement* element);
     EventController(Controller* controller, bool isConnected);
+
+    ControllerEventType getControllerEventType() const;
+    Controller* getController() const;
+    ControllerElement* getControllerElement() const;
+    bool isConnected() const;
     
 protected:
+    ControllerEventType _controllerEventType;
     ControllerElement* _element;
     Controller* _controller;
     bool _isConnected;
