@@ -27,8 +27,15 @@ public:
 	ControllerButtonInput* getDown() const;
 	ControllerButtonInput* getLeft() const;
 	ControllerButtonInput* getRight() const;
+    ControllerButtonInput* getCenter() const;
     
 protected:
+    
+    friend class Controller;
+    friend class Gamepad;
+    
+    ControllerDirectionPad();
+    virtual ~ControllerDirectionPad();
     
     ControllerAxisInput* _axisX;
     ControllerAxisInput* _axisY;
@@ -37,6 +44,7 @@ protected:
     ControllerButtonInput* _down;
     ControllerButtonInput* _left;
     ControllerButtonInput* _right;
+    ControllerButtonInput* _center;
 };
 
 NS_CC_END

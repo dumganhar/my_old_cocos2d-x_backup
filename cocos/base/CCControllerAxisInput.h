@@ -20,7 +20,12 @@ public:
 	float getValue() const;
 
 protected:
-    friend class EventListenerController;
+    ControllerAxisInput();
+    virtual ~ControllerAxisInput();
+    
+    friend class Controller;
+    friend class ControllerDirectionPad;
+    
     void setValue(float value);
     
 	float _value;

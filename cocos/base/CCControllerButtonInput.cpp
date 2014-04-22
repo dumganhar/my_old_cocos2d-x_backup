@@ -10,6 +10,18 @@
 
 NS_CC_BEGIN
 
+ControllerButtonInput::ControllerButtonInput()
+: _value(0.0f)
+, _isPressed(false)
+{
+    
+}
+
+ControllerButtonInput::~ControllerButtonInput()
+{
+    
+}
+
 float ControllerButtonInput::getValue() const
 {
     return _value;
