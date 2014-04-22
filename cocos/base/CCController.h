@@ -45,6 +45,7 @@ private:
     virtual ~Controller();
     
 	static std::vector<Controller*> _controllers;
+    static std::function<void()> _searchCompletedCallback;
     
 	int _playerIndex;
     Gamepad* _gamepad;
