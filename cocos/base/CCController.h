@@ -46,8 +46,6 @@ private:
     
 	static std::vector<Controller*> _controllers;
     
-	std::string _vendorName;
-	bool _isConnected;
 	int _playerIndex;
     Gamepad* _gamepad;
     

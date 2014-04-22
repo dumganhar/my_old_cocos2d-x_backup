@@ -10,16 +10,23 @@
 
 NS_CC_BEGIN
 
-EventController::EventController(ButtonType btnType, bool isPressed, float value)
+EventController::EventController(ControllerElement* element)
 : Event(Type::GAME_CONTROLLER)
+, _element(element)
+, _controller(nullptr)
+, _isConnected(false)
 {
     
 }
 
-EventController::EventController(DirectionPadType dirType, float value)
+EventController::EventController(Controller* controller, bool isConnected)
 : Event(Type::GAME_CONTROLLER)
+, _element(nullptr)
+, _controller(controller)
+, _isConnected(isConnected)
 {
     
 }
+
 
 NS_CC_END

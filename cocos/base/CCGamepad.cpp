@@ -7,29 +7,41 @@
 //
 
 #include "CCGamepad.h"
+#include "CCControllerDirectionPad.h"
+#include "CCControllerButtonInput.h"
 
 NS_CC_BEGIN
 
 Gamepad::Gamepad()
 : _controller(nullptr)
-, _directionPad(nullptr)
-, _buttonA(nullptr)
-, _buttonB(nullptr)
-, _buttonX(nullptr)
-, _buttonY(nullptr)
-, _leftShoulder(nullptr)
-, _rightShoulder(nullptr)
-, _leftThumbstick(nullptr)
-, _rightThumbstick(nullptr)
-, _leftTrigger(nullptr)
-, _rightTrigger(nullptr)
+, _directionPad(new ControllerDirectionPad())
+, _buttonA(new ControllerButtonInput())
+, _buttonB(new ControllerButtonInput())
+, _buttonX(new ControllerButtonInput())
+, _buttonY(new ControllerButtonInput())
+, _leftShoulder(new ControllerButtonInput())
+, _rightShoulder(new ControllerButtonInput())
+, _leftThumbstick(new ControllerDirectionPad())
+, _rightThumbstick(new ControllerDirectionPad())
+, _leftTrigger(new ControllerButtonInput())
+, _rightTrigger(new ControllerButtonInput())
 {
     
 }
 
 Gamepad::~Gamepad()
 {
-    
+    CC_SAFE_DELETE(_directionPad);
+    CC_SAFE_DELETE(_buttonA);
+    CC_SAFE_DELETE(_buttonB);
+    CC_SAFE_DELETE(_buttonX);
+    CC_SAFE_DELETE(_buttonY);
+    CC_SAFE_DELETE(_leftShoulder);
+    CC_SAFE_DELETE(_rightShoulder);
+    CC_SAFE_DELETE(_leftThumbstick);
+    CC_SAFE_DELETE(_rightThumbstick);
+    CC_SAFE_DELETE(_leftTrigger);
+    CC_SAFE_DELETE(_rightTrigger);
 }
 
 Controller* Gamepad::getController()

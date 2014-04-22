@@ -14,30 +14,20 @@
 
 NS_CC_BEGIN
 
+class ControllerElement;
+class Controller;
+
 class EventController : public Event
 {
 public:
-	enum class ButtonType
-	{
-		A,
-		B,
-		X,
-		Y,
-		LEFT_SHOULDER,
-		RIGHT_SHOULDER,
-		LEFT_TRIGGER,
-		RIGHT_TRIGGER
-	};
     
-	enum class DirectionPadType
-	{
-		DIRECTION_PAD = 0,
-		LEFT_THUMB_STICK,
-		RIGHT_THUMB_STICK
-	};
+	EventController(ControllerElement* element);
+    EventController(Controller* controller, bool isConnected);
     
-	EventController(ButtonType btnType, bool isPressed, float value);
-	EventController(DirectionPadType dirType, float value);
+protected:
+    ControllerElement* _element;
+    Controller* _controller;
+    bool _isConnected;
 };
 
 NS_CC_END

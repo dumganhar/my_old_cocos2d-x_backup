@@ -18,7 +18,7 @@ class Event;
 class Controller;
 class ControllerButtonInput;
 class ControllerElement;
-class ControllerAxisInput;
+class ControllerDirectionPad;
 
 class EventListenerController : public EventListener
 {
@@ -34,7 +34,7 @@ public:
     
 	std::function<void(Controller*, ControllerButtonInput*, Event*)> onButtonPressed;
 	std::function<void(Controller*, ControllerButtonInput*, Event*)> onButtonReleased;
-	std::function<void(Controller*, ControllerDirectionPad*, Event*)> onAxisMoved;
+	std::function<void(Controller*, ControllerDirectionPad*, Event*)> onDirectionPadChanged;
     
 	std::function<void(Controller*, ControllerElement*, Event*)> onValueChanged;
     
