@@ -4,12 +4,15 @@
 #include "cocos2d.h"
 
 namespace cocos2d {
-class Controller;
+    class Controller;
+    class EventListenerController;
 }
 
 class HelloWorld : public cocos2d::Layer
 {
 public:
+    virtual ~HelloWorld();
+    
     // Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone
     virtual bool init();  
 
@@ -27,6 +30,7 @@ public:
 private:
     cocos2d::Controller* _player1;
     cocos2d::Sprite* _actor;
+    cocos2d::EventListenerController* _listener;
 };
 
 #endif // __HELLOWORLD_SCENE_H__

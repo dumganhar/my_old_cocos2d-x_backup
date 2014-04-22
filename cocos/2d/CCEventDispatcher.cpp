@@ -30,6 +30,7 @@
 #include "CCEventListenerMouse.h"
 #include "CCEventListenerKeyboard.h"
 #include "CCEventListenerCustom.h"
+#include "CCEventListenerController.h"
 
 #include "CCScene.h"
 #include "CCDirector.h"
@@ -89,6 +90,9 @@ static EventListener::ListenerID __getListenerID(Event* event)
             // Touch listener is very special, it contains two kinds of listeners, EventListenerTouchOneByOne and EventListenerTouchAllAtOnce.
             // return UNKNOWN instead.
             CCASSERT(false, "Don't call this method if the event is for touch.");
+            break;
+        case Event::Type::GAME_CONTROLLER:
+            ret = EventListenerController::LISTENER_ID;
             break;
         default:
             CCASSERT(false, "Invalid type!");

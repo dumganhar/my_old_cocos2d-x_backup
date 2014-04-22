@@ -54,7 +54,8 @@ public:
         KEYBOARD,
         MOUSE,
         ACCELERATION,
-        CUSTOM
+        CUSTOM,
+        GAME_CONTROLLER
     };
 
     typedef std::string ListenerID;

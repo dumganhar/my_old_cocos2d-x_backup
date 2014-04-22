@@ -15,6 +15,12 @@
 #include <vector>
 #include <functional>
 
+
+extern void CCNSLog(const char* file, int line, const char* function, const char* format, ...);
+
+#define MyLog(format, ...) CCNSLog(__FILE__, __LINE__, __FUNCTION__, format,  ##__VA_ARGS__, nullptr)
+
+
 NS_CC_BEGIN
 
 class Gamepad;
@@ -26,8 +32,8 @@ public:
 	static const std::vector<Controller*>& getControllers();
     static void releaseControllers();
     
-	static void startDiscovery(const std::function<void()>& completeCallback = nullptr);
-	static void stopDiscovery();
+	static void startDiscoveryController();
+	static void stopDiscoveryController();
     
     void setPausedCallback(const std::function<void()>& pausedCallback);
 	std::string getVendorName() const;
@@ -45,7 +51,6 @@ private:
     virtual ~Controller();
     
 	static std::vector<Controller*> _controllers;
-    static std::function<void()> _searchCompletedCallback;
     
 	int _playerIndex;
     Gamepad* _gamepad;

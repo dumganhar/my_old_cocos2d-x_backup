@@ -10,17 +10,19 @@
 
 NS_CC_BEGIN
 
-EventController::EventController(ControllerElement* element)
+EventController::EventController(Controller* controller, ControllerElement* element)
 : Event(Type::GAME_CONTROLLER)
+, _controllerEventType(ControllerEventType::VALUE_CHANGED)
 , _element(element)
-, _controller(nullptr)
-, _isConnected(false)
+, _controller(controller)
+, _isConnected(true)
 {
     
 }
 
 EventController::EventController(Controller* controller, bool isConnected)
 : Event(Type::GAME_CONTROLLER)
+, _controllerEventType(ControllerEventType::CONNECTION)
 , _element(nullptr)
 , _controller(controller)
 , _isConnected(isConnected)
@@ -28,5 +30,24 @@ EventController::EventController(Controller* controller, bool isConnected)
     
 }
 
+EventController::ControllerEventType EventController::getControllerEventType() const
+{
+    return _controllerEventType;
+}
+
+Controller* EventController::getController() const
+{
+    return _controller;
+}
+
+ControllerElement* EventController::getControllerElement() const
+{
+    return _element;
+}
+
+bool EventController::isConnected() const
+{
+    return _isConnected;
+}
 
 NS_CC_END

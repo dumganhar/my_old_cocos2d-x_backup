@@ -177,6 +177,8 @@
 		1A0EE57D18CDFBBE004CD58F /* Opengl.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1ABCA37518CD9E180087CE3A /* Opengl.lua */; };
 		1A0EE57E18CDFBBE004CD58F /* OpenglConstants.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1ABCA37618CD9E180087CE3A /* OpenglConstants.lua */; };
 		1A0EE57F18CDFBBE004CD58F /* StudioConstants.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1ABCA37718CD9E180087CE3A /* StudioConstants.lua */; };
+		1A4B900C190674060047587A /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A4B900B190674060047587A /* CFNetwork.framework */; };
+		1A4B900E1906743A0047587A /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A4B900D1906743A0047587A /* SystemConfiguration.framework */; };
 		1A9F808D177E98A600D9A1CB /* libcurl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A9F808C177E98A600D9A1CB /* libcurl.dylib */; };
 		1AAF534B180E2F4E000584C8 /* libbox2d Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FB61807A4F9005B8026 /* libbox2d Mac.a */; };
 		1AAF534C180E2F4E000584C8 /* libchipmunk Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FB41807A4F9005B8026 /* libchipmunk Mac.a */; };
@@ -1265,6 +1267,8 @@
 		1A0EE31418CDF733004CD58F /* lua-empty-test Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "lua-empty-test Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A0EE41318CDF775004CD58F /* cpp-empty-test iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "cpp-empty-test iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A0EE47E18CDF799004CD58F /* lua-empty-test iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "lua-empty-test iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1A4B900B190674060047587A /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/CFNetwork.framework; sourceTree = DEVELOPER_DIR; };
+		1A4B900D1906743A0047587A /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/SystemConfiguration.framework; sourceTree = DEVELOPER_DIR; };
 		1A9F808C177E98A600D9A1CB /* libcurl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.dylib; path = usr/lib/libcurl.dylib; sourceTree = SDKROOT; };
 		1ABCA27618CD90A40087CE3A /* cocos2d_lua_bindings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2d_lua_bindings.xcodeproj; path = "../cocos/scripting/lua-bindings/proj.ios_mac/cocos2d_lua_bindings.xcodeproj"; sourceTree = "<group>"; };
 		1ABCA28618CD91510087CE3A /* lua-tests Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "lua-tests Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1919,6 +1923,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1A4B900E1906743A0047587A /* SystemConfiguration.framework in Frameworks */,
+				1A4B900C190674060047587A /* CFNetwork.framework in Frameworks */,
 				1AD4BACE190619E1009C56A8 /* GameController.framework in Frameworks */,
 				1A0EE40218CDF775004CD58F /* libchipmunk iOS.a in Frameworks */,
 				1A0EE40318CDF775004CD58F /* libcocos2dx iOS.a in Frameworks */,
@@ -3731,6 +3737,8 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1A4B900D1906743A0047587A /* SystemConfiguration.framework */,
+				1A4B900B190674060047587A /* CFNetwork.framework */,
 				1AD4BACD190619E1009C56A8 /* GameController.framework */,
 				1ABCA3AF18CDA06D0087CE3A /* libz.dylib */,
 				1ABCA3A818CD9F130087CE3A /* AudioToolbox.framework */,
