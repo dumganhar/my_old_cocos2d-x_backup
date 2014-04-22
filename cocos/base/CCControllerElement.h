@@ -13,12 +13,33 @@
 
 NS_CC_BEGIN
 
+/**
+ Every controller element knows which collection it belongs to and whether its input value is analog or digital.
+ */
 class ControllerElement
 {
 public:
+    /**
+     Each element can be part of a wider collection of inputs that map to a single logical element. A directional pad (dpad)
+     is a logical collection of two axis inputs and thus each axis belongs to the same collection element - the dpad.
+     */
+    ControllerElement * getCollection();
+    
+    /**
+     Check if the element can support more than just digital values, such as decimal ranges between 0 and 1.
+     */
 	bool isAnalog() const;
-private:
-	bool _isAnalog;
+    
+protected:
+    
+    ControllerElement();
+    virtual ~ControllerElement();
+    
+    void setAnalog(bool isAnalog);
+    void setCollection(ControllerElement* collection);
+    
+    bool _isAnalog;
+    ControllerElement* _collection;
 };
 
 NS_CC_END

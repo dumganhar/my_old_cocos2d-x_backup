@@ -21,7 +21,13 @@ public:
 	bool isPressed() const;
     
 protected:
-    friend class EventListenerController;
+    
+    ControllerButtonInput();
+    virtual ~ControllerButtonInput();
+    
+    friend class Controller;
+    friend class ControllerDirectionPad;
+    friend class Gamepad;
     
     void setValue(float value);
     void setPressed(bool isPressed);

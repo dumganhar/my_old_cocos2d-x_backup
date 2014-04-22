@@ -10,6 +10,17 @@
 
 NS_CC_BEGIN
 
+ControllerAxisInput::ControllerAxisInput()
+: _value(0.0f)
+{
+    
+}
+
+ControllerAxisInput::~ControllerAxisInput()
+{
+    
+}
+
 float ControllerAxisInput::getValue() const
 {
     return _value;
