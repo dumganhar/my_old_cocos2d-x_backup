@@ -3,6 +3,10 @@
 
 #include "cocos2d.h"
 
+namespace cocos2d {
+class Controller;
+}
+
 class HelloWorld : public cocos2d::Layer
 {
 public:
@@ -17,6 +21,12 @@ public:
     
     // implement the "static node()" method manually
     CREATE_FUNC(HelloWorld);
+    
+    void update(float dt);
+    
+private:
+    cocos2d::Controller* _player1;
+    cocos2d::Sprite* _actor;
 };
 
 #endif // __HELLOWORLD_SCENE_H__

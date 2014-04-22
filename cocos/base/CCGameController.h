@@ -14,6 +14,7 @@
 #include "CCControllerAxisInput.h"
 #include "CCControllerDirectionPad.h"
 #include "CCGamepad.h"
+#include "CCController.h"
 #include "CCEventController.h"
 #include "CCEventListenerController.h"
 

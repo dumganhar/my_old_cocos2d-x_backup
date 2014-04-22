@@ -85,6 +85,7 @@ public:
 };
 
 std::vector<Controller*> Controller::_controllers;
+std::function<void()> Controller::_searchCompletedCallback = nullptr;
 
 const std::vector<Controller*>& Controller::getControllers()
 {
@@ -100,33 +101,40 @@ void Controller::releaseControllers()
     _controllers.clear();
 }
 
-
+GCControllerEventHandler* __notificationCenterDelegate = [[GCControllerEventHandler alloc] init];
 
 void Controller::startDiscovery(const std::function<void()>& completeCallback/* = nullptr*/)
 {
-    [GCController startWirelessControllerDiscoveryWithCompletionHandler:^{
-        NSArray* gcControllers = [GCController controllers];
-        auto controllers = Controller::getControllers();
-
-        for (GCController* gcController in gcControllers)
-        {
-            if (!controllers.empty())
-            {
-                // If the controller has been added, skip it.
-                if (_controllers.end() != std::find_if(_controllers.begin(), _controllers.end(), [gcController](Controller* c){ return c->_impl->_gcController == gcController; }))
-                    continue;
-            }
-            auto controller = new Controller();
-            controller->_impl->_gcController = gcController;
-            
-            _controllers.push_back(controller);
-            
-            [[NSNotificationCenter defaultCenter] addObserver:controller->_impl->_gcControllerEventHandler selector:@selector(onControllerConnected) name:GCControllerDidConnectNotification object:nil];
-            [[NSNotificationCenter defaultCenter] addObserver:controller->_impl->_gcControllerEventHandler selector:@selector(onControllerDisconnected) name:GCControllerDidDisconnectNotification object:nil];
-        }
-        completeCallback();
-    }];
+    [GCController startWirelessControllerDiscoveryWithCompletionHandler: nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:__notificationCenterDelegate selector:@selector(onControllerConnected) name:GCControllerDidConnectNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:__notificationCenterDelegate selector:@selector(onControllerDisconnected) name:GCControllerDidDisconnectNotification object:nil];
+    
+//     ^{
+//        NSArray* gcControllers = [GCController controllers];
+//
+//        for (GCController* gcController in gcControllers)
+//        {
+//            if (!_controllers.empty())
+//            {
+//                // If the controller has been added, skip it.
+//                if (_controllers.end() != std::find_if(_controllers.begin(), _controllers.end(), [gcController](Controller* c){ return c->_impl->_gcController == gcController; }))
+//                    continue;
+//            }
+//            auto controller = new Controller();
+//            controller->_impl->_gcController = gcController;
+//            
+//            _controllers.push_back(controller);
+//            
+////            [[NSNotificationCenter defaultCenter] addObserver:controller->_impl->_gcControllerEventHandler selector:@selector(onControllerConnected) name:GCControllerDidConnectNotification object:nil];
+////            [[NSNotificationCenter defaultCenter] addObserver:controller->_impl->_gcControllerEventHandler selector:@selector(onControllerDisconnected) name:GCControllerDidDisconnectNotification object:nil];
+//        }
+//        if (_searchCompletedCallback)
+//            _searchCompletedCallback();
+//    }];
+    
+    _searchCompletedCallback = completeCallback;
 }
 
 void Controller::stopDiscovery()
@@ -137,7 +145,8 @@ void Controller::stopDiscovery()
 Controller::Controller()
 {
     _playerIndex = PLAYER_INDEX_UNSET;
-    _gamepad = nullptr;
+    _gamepad = new Gamepad();
+    _gamepad->_controller = this;
     _impl = new ControllerImpl(this);
 }
 
@@ -203,17 +212,11 @@ Director::getInstance()->getEventDispatcher()->dispatchEvent(&evt);
 
 Gamepad* Controller::getGamepad()
 {
-    if (_gamepad)
-        return _gamepad;
-    
     if (_impl->_gcController == nil)
         return nullptr;
     
     if (_impl->_gcController.gamepad != nil || _impl->_gcController.extendedGamepad != nil)
     {
-        _gamepad = new Gamepad();
-        _gamepad->_controller = this;
-        
         if (_impl->_gcController.gamepad != nil)
         {
             _impl->_gcController.gamepad.valueChangedHandler = ^(GCGamepad *gamepad, GCControllerElement *element){
