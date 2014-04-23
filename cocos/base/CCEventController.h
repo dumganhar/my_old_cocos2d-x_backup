@@ -14,6 +14,8 @@
 
 NS_CC_BEGIN
 
+class ControllerButtonInput;
+class ControllerDirectionPad;
 class ControllerElement;
 class Controller;
 
@@ -23,11 +25,13 @@ public:
     enum class ControllerEventType
     {
         CONNECTION,
-        VALUE_CHANGED,
+        BUTTON_STATUS_CHANGED,
+        AXIS_STATUS_CHANGED,
     };
     
-	EventController(Controller* controller, ControllerElement* element);
-    EventController(Controller* controller, bool isConnected);
+	EventController(ControllerEventType type, Controller* controller, ControllerButtonInput* button);
+    EventController(ControllerEventType type, Controller* controller, ControllerDirectionPad* dpad);
+    EventController(ControllerEventType type, Controller* controller, bool isConnected);
 
     ControllerEventType getControllerEventType() const;
     Controller* getController() const;

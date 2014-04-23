@@ -1,7 +1,7 @@
 #include "HelloWorldScene.h"
 #include "AppMacros.h"
 
-#include "CCGameController.h"
+
 
 USING_NS_CC;
 
@@ -82,9 +82,9 @@ bool HelloWorld::init()
     
     _player1 = nullptr;
     
-    auto statusLabel = Label::createWithSystemFont("status:", "", 20);
-    statusLabel->setPosition(Point(visibleSize / 2) + origin + Point(0, 50));
-    this->addChild(statusLabel, 0, 100);
+    _statusLabel = Label::createWithSystemFont("status:", "", 20);
+    _statusLabel->setPosition(Point(visibleSize / 2) + origin + Point(0, 50));
+    this->addChild(_statusLabel, 0, 100);
     
     _actor = Sprite::create("CloseNormal.png");
     _actor->setPosition(Point(visibleSize / 2) + origin);
@@ -105,20 +105,100 @@ bool HelloWorld::init()
     _listener->onConnected = [=](Controller* controller, Event* event){
         MyLog("%p connected", controller);
         _player1 = controller;
-        statusLabel->setString("controller connected!");
+        _statusLabel->setString("controller connected!");
     };
     
     _listener->onDisconnected = [=](Controller* controller, Event* event){
         MyLog("%p disconnected", controller);
         _player1 = nullptr;
-        statusLabel->setString("controller disconnected!");
+        _statusLabel->setString("controller disconnected!");
     };
+    
+    _listener->onButtonPressed = CC_CALLBACK_3(HelloWorld::onButtonPressed, this);
+    _listener->onButtonReleased = CC_CALLBACK_3(HelloWorld::onButtonReleased, this);
     
     _eventDispatcher->addEventListenerWithFixedPriority(_listener, 1);
     
     scheduleUpdate();
     
+    srand(time(nullptr));
+    
     return true;
+}
+
+void HelloWorld::onButtonPressed(cocos2d::Controller *controller, cocos2d::ControllerButtonInput *button, cocos2d::Event *event)
+{
+    MyLog("HelloWorld::onButtonPressed: %p, %d, %f", button, button->isPressed(), button->getValue());
+    if (_player1 == nullptr)
+        return;
+    
+    if (button == _player1->getGamepad()->getButtonA())
+    {
+        _statusLabel->setString("button A pressed!");
+    }
+    
+    if (button == _player1->getGamepad()->getButtonB())
+    {
+        _statusLabel->setString("button B pressed!");
+    }
+    
+    if (button == _player1->getGamepad()->getButtonX())
+    {
+        _statusLabel->setString("button X pressed!");
+    }
+    
+    if (button == _player1->getGamepad()->getButtonY())
+    {
+        _statusLabel->setString("button Y pressed!");
+    }
+    
+    if (button == _player1->getGamepad()->getDirectionPad()->getUp())
+    {
+        _statusLabel->setString("Dpad up pressed!");
+    }
+    
+    if (button == _player1->getGamepad()->getDirectionPad()->getDown())
+    {
+        _statusLabel->setString("Dpad down pressed!");
+    }
+    
+    if (button == _player1->getGamepad()->getDirectionPad()->getLeft())
+    {
+        _statusLabel->setString("Dpad left pressed!");
+    }
+    
+    if (button == _player1->getGamepad()->getDirectionPad()->getRight())
+    {
+        _statusLabel->setString("Dpad right pressed!");
+    }
+    
+    
+    Size winSize = Director::getInstance()->getWinSize();
+    
+    int randX = rand() % static_cast<int>(winSize.width);
+
+    auto bullet = Sprite::create("CloseSelected.png");
+    bullet->setPosition(_actor->getPosition() + Point(0, _actor->getContentSize().height/2));
+    this->addChild(bullet);
+    bullet->setColor(Color3B::BLUE);
+    bullet->runAction(Sequence::create(MoveTo::create(3.0f, Point(randX, winSize.height)), RemoveSelf::create(),  NULL));
+}
+
+void HelloWorld::onButtonReleased(cocos2d::Controller *controller, cocos2d::ControllerButtonInput *button, cocos2d::Event *event)
+{
+    MyLog("HelloWorld::onButtonReleased: %p, %d, %f", button, button->isPressed(), button->getValue());
+    if (_player1 == nullptr)
+        return;
+    
+    Size winSize = Director::getInstance()->getWinSize();
+    
+    int randX = rand() % static_cast<int>(winSize.width);
+    
+    auto bullet = Sprite::create("CloseSelected.png");
+    bullet->setPosition(_actor->getPosition() + Point(0, _actor->getContentSize().height/2));
+    bullet->setColor(Color3B::RED);
+    this->addChild(bullet);
+    bullet->runAction(Sequence::create(MoveTo::create(3.0f, Point(randX, winSize.height)), RemoveSelf::create(),  NULL));
 }
 
 void HelloWorld::update(float dt)
@@ -126,31 +206,30 @@ void HelloWorld::update(float dt)
     if (_player1 && _player1->isConnected())
     {
         const int MOVE_DELTA = dt * 100;
-        Label* statusLabel = static_cast<Label*>(this->getChildByTag(100));
         
         Point newPos = _actor->getPosition();
 
         if (_player1->getGamepad()->getDirectionPad()->getDown()->isPressed())
         {
-            statusLabel->setString("Dpad: down pressed");
+            _statusLabel->setString("Dpad: down pressed");
             newPos.y -= MOVE_DELTA;
         }
         
         if (_player1->getGamepad()->getDirectionPad()->getUp()->isPressed())
         {
-            statusLabel->setString("Dpad: up pressed");
+            _statusLabel->setString("Dpad: up pressed");
             newPos.y += MOVE_DELTA;
         }
         
         if (_player1->getGamepad()->getDirectionPad()->getLeft()->isPressed())
         {
-            statusLabel->setString("Dpad: left pressed");
+            _statusLabel->setString("Dpad: left pressed");
             newPos.x -= MOVE_DELTA;
         }
         
         if (_player1->getGamepad()->getDirectionPad()->getRight()->isPressed())
         {
-            statusLabel->setString("Dpad: right pressed");
+            _statusLabel->setString("Dpad: right pressed");
             newPos.x += MOVE_DELTA;
         }
         

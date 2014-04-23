@@ -19,21 +19,25 @@ class ControllerButtonInput : public ControllerElement
 public:
 	float getValue() const;
 	bool isPressed() const;
+    bool isPrevStatusPressed() const;
     
 protected:
     
     ControllerButtonInput();
     virtual ~ControllerButtonInput();
     
-    friend class Controller;
-    friend class ControllerDirectionPad;
-    friend class Gamepad;
-    
     void setValue(float value);
     void setPressed(bool isPressed);
     
 	float _value;
 	bool _isPressed;
+    
+    bool _isPrevStatusPressed; // Whether previous status is pressed
+    
+    friend class Controller;
+    friend class ControllerDirectionPad;
+    friend class ControllerThumbstick;
+    friend class Gamepad;
 };
 
 NS_CC_END

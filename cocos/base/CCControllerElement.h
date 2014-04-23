@@ -11,6 +11,8 @@
 
 #include "CCPlatformMacros.h"
 
+#include "CCNSLog.h"
+
 NS_CC_BEGIN
 
 /**

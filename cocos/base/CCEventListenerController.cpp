@@ -8,6 +8,9 @@
 
 #include "CCEventListenerController.h"
 #include "CCEventController.h"
+#include "CCControllerButtonInput.h"
+#include "CCControllerAxisInput.h"
+#include "ccMacros.h"
 
 NS_CC_BEGIN
 
@@ -46,8 +49,40 @@ bool EventListenerController::init()
         }
         else
         {
-            if (this->onValueChanged)
-                this->onValueChanged(evtController->getController(), evtController->getControllerElement(), event);
+            switch (evtController->getControllerEventType()) {
+                case EventController::ControllerEventType::BUTTON_STATUS_CHANGED:
+                    {
+                        auto button = static_cast<ControllerButtonInput*>(evtController->getControllerElement());
+
+                        MyLog("button event: %d, %d, %f", button->isPressed(), button->isPrevStatusPressed(), button->getValue());
+                        if (this->onButtonPressed && button->isPressed() && !button->isPrevStatusPressed())
+                        {
+                            this->onButtonPressed(evtController->getController(), button, event);
+                        }
+                        else if (this->onButtonReleased && !button->isPressed() && button->isPrevStatusPressed())
+                        {
+                            this->onButtonReleased(evtController->getController(), button, event);
+                        }
+                        
+                        if (this->onButtonValueChanged)
+                        {
+                            this->onButtonValueChanged(evtController->getController(), button, event);
+                        }
+                    }
+                    break;
+                case EventController::ControllerEventType::AXIS_STATUS_CHANGED:
+                    {
+                        if (this->onAxisValueChanged)
+                        {
+                            auto axis = static_cast<ControllerAxisInput*>(evtController->getControllerElement());
+                            this->onAxisValueChanged(evtController->getController(), axis, event);
+                        }
+                    }
+                    break;
+                default:
+                    CCASSERT(false, "Invalid EventController type");
+                    break;
+            }
         }
     };
     

@@ -15,6 +15,7 @@ NS_CC_BEGIN
 
 class ControllerButtonInput;
 class ControllerDirectionPad;
+class ControllerThumbstick;
 class Controller;
 
 class Gamepad
@@ -43,6 +44,15 @@ public:
 	ControllerButtonInput* getButtonX() const;
 	ControllerButtonInput* getButtonY() const;
     
+    // Select button
+    ControllerButtonInput* getButtonSelect() const;
+    
+    // Start button
+    ControllerButtonInput* getButtonStart() const;
+    
+    // Pause button
+    ControllerButtonInput* getButtonPause() const;
+    
     // Shoulder buttons
 	ControllerButtonInput* getLeftShoulder() const;
 	ControllerButtonInput* getRightShoulder() const;
@@ -52,8 +62,8 @@ public:
     /**
      A thumbstick is a 2-axis control that is physically required to be analog. All the elements of this directional input are thus analog.
      */
-	ControllerDirectionPad* getLeftThumbstick() const;
-	ControllerDirectionPad* getRightThumbstick() const;
+	ControllerThumbstick* getLeftThumbstick() const;
+	ControllerThumbstick* getRightThumbstick() const;
 	
     /**
      If Trigger button supports analog inputs, it could be used as acceleration and decelleration in a driving game for example.
@@ -76,11 +86,15 @@ protected:
     ControllerButtonInput* _buttonX;
     ControllerButtonInput* _buttonY;
     
+    ControllerButtonInput* _buttonSelect;
+    ControllerButtonInput* _buttonStart;
+    ControllerButtonInput* _buttonPause;
+    
     ControllerButtonInput* _leftShoulder;
     ControllerButtonInput* _rightShoulder;
     
-    ControllerDirectionPad* _leftThumbstick;
-    ControllerDirectionPad* _rightThumbstick;
+    ControllerThumbstick* _leftThumbstick;
+    ControllerThumbstick* _rightThumbstick;
     
     ControllerButtonInput* _leftTrigger;
     ControllerButtonInput* _rightTrigger;
