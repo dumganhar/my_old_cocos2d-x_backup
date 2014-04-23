@@ -25,7 +25,6 @@ class Controller
 {
 public:
 	static const std::vector<Controller*>& getControllers();
-    static void releaseControllers();
     
 	static void startDiscoveryController();
 	static void stopDiscoveryController();
