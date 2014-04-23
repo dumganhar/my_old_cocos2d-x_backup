@@ -127,18 +127,6 @@ const std::vector<Controller*>& Controller::getControllers()
     return _controllers;
 }
 
-void Controller::releaseControllers()
-{
-    for (auto& e : _controllers)
-    {
-        delete e;
-    }
-    
-    [GCControllerConnectionEventHandler destroyInstance];
-    
-    _controllers.clear();
-}
-
 void Controller::startDiscoveryController()
 {
     MyLog("startDiscoveryController...: %s", "hello");
@@ -156,7 +144,7 @@ void Controller::startDiscoveryController()
             
             CCASSERT(iter != _controllers.end(), "Could not find the controller");
             
-            auto button = (*iter)->getGamepad()->getPausedButton();
+            auto button = (*iter)->getGamepad()->getButtonPause();
             button->setPressed(true);
             EventController evt(EventController::ControllerEventType::BUTTON_STATUS_CHANGED, (*iter), button);
             Director::getInstance()->getEventDispatcher()->dispatchEvent(&evt);
