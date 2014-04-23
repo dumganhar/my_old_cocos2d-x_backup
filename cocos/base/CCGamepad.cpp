@@ -9,6 +9,7 @@
 #include "CCGamepad.h"
 #include "CCControllerDirectionPad.h"
 #include "CCControllerButtonInput.h"
+#include "CCControllerThumbstick.h"
 
 NS_CC_BEGIN
 
@@ -19,10 +20,13 @@ Gamepad::Gamepad()
 , _buttonB(new ControllerButtonInput())
 , _buttonX(new ControllerButtonInput())
 , _buttonY(new ControllerButtonInput())
+, _buttonSelect(new ControllerButtonInput())
+, _buttonStart(new ControllerButtonInput())
+, _buttonPause(new ControllerButtonInput())
 , _leftShoulder(new ControllerButtonInput())
 , _rightShoulder(new ControllerButtonInput())
-, _leftThumbstick(new ControllerDirectionPad())
-, _rightThumbstick(new ControllerDirectionPad())
+, _leftThumbstick(new ControllerThumbstick())
+, _rightThumbstick(new ControllerThumbstick())
 , _leftTrigger(new ControllerButtonInput())
 , _rightTrigger(new ControllerButtonInput())
 {
@@ -36,6 +40,9 @@ Gamepad::~Gamepad()
     CC_SAFE_DELETE(_buttonB);
     CC_SAFE_DELETE(_buttonX);
     CC_SAFE_DELETE(_buttonY);
+    CC_SAFE_DELETE(_buttonSelect);
+    CC_SAFE_DELETE(_buttonStart);
+    CC_SAFE_DELETE(_buttonPause);
     CC_SAFE_DELETE(_leftShoulder);
     CC_SAFE_DELETE(_rightShoulder);
     CC_SAFE_DELETE(_leftThumbstick);
@@ -74,6 +81,21 @@ ControllerButtonInput* Gamepad::getButtonY() const
     return _buttonY;
 }
 
+ControllerButtonInput* Gamepad::getButtonPause() const
+{
+    return _buttonPause;
+}
+
+ControllerButtonInput* Gamepad::getButtonSelect() const
+{
+    return _buttonSelect;
+}
+
+ControllerButtonInput* Gamepad::getButtonStart() const
+{
+    return _buttonStart;
+}
+
 ControllerButtonInput* Gamepad::getLeftShoulder() const
 {
     return _leftShoulder;
@@ -84,12 +106,12 @@ ControllerButtonInput* Gamepad::getRightShoulder() const
     return _rightShoulder;
 }
 
-ControllerDirectionPad* Gamepad::getLeftThumbstick() const
+ControllerThumbstick* Gamepad::getLeftThumbstick() const
 {
     return _leftThumbstick;
 }
 
-ControllerDirectionPad* Gamepad::getRightThumbstick() const
+ControllerThumbstick* Gamepad::getRightThumbstick() const
 {
     return _rightThumbstick;
 }

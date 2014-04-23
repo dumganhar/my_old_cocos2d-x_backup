@@ -17,8 +17,7 @@ NS_CC_BEGIN
 class Event;
 class Controller;
 class ControllerButtonInput;
-class ControllerElement;
-class ControllerDirectionPad;
+class ControllerAxisInput;
 
 class EventListenerController : public EventListener
 {
@@ -34,11 +33,11 @@ public:
 	std::function<void(Controller*, Event*)> onConnected;
 	std::function<void(Controller*, Event*)> onDisconnected;
     
-	std::function<void(Controller*, ControllerButtonInput*, Event*)> onButtonPressed;
-	std::function<void(Controller*, ControllerButtonInput*, Event*)> onButtonReleased;
-	std::function<void(Controller*, ControllerDirectionPad*, Event*)> onDirectionPadChanged;
+    std::function<void(Controller*, ControllerButtonInput*, Event*)> onButtonPressed;
+    std::function<void(Controller*, ControllerButtonInput*, Event*)> onButtonReleased;
+	std::function<void(Controller*, ControllerButtonInput*, Event*)> onButtonValueChanged;
     
-	std::function<void(Controller*, ControllerElement*, Event*)> onValueChanged;
+	std::function<void(Controller*, ControllerAxisInput*, Event*)> onAxisValueChanged;
     
 protected:
     bool init();

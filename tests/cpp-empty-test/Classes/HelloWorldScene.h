@@ -2,11 +2,7 @@
 #define __HELLOWORLD_SCENE_H__
 
 #include "cocos2d.h"
-
-namespace cocos2d {
-    class Controller;
-    class EventListenerController;
-}
+#include "CCGameController.h"
 
 class HelloWorld : public cocos2d::Layer
 {
@@ -26,10 +22,13 @@ public:
     CREATE_FUNC(HelloWorld);
     
     void update(float dt);
+    void onButtonPressed(cocos2d::Controller* controller, cocos2d::ControllerButtonInput* button, cocos2d::Event* event);
+    void onButtonReleased(cocos2d::Controller* controller, cocos2d::ControllerButtonInput* button, cocos2d::Event* event);
     
 private:
     cocos2d::Controller* _player1;
     cocos2d::Sprite* _actor;
+    cocos2d::Label* _statusLabel;
     cocos2d::EventListenerController* _listener;
 };
 

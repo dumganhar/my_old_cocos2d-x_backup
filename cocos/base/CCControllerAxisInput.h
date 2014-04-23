@@ -23,12 +23,13 @@ protected:
     ControllerAxisInput();
     virtual ~ControllerAxisInput();
     
-    friend class Controller;
-    friend class ControllerDirectionPad;
-    
     void setValue(float value);
     
 	float _value;
+    
+    friend class Controller;
+    friend class ControllerDirectionPad;
+    friend class ControllerThumbstick;
 };
 
 NS_CC_END

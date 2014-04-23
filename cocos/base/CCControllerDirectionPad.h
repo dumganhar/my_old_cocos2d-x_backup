@@ -20,14 +20,10 @@ class ControllerButtonInput;
 class ControllerDirectionPad : public ControllerElement
 {
 public:
-	ControllerAxisInput* getAxisX() const;
-	ControllerAxisInput* getAxisY() const;
-    
 	ControllerButtonInput* getUp() const;
 	ControllerButtonInput* getDown() const;
 	ControllerButtonInput* getLeft() const;
 	ControllerButtonInput* getRight() const;
-    ControllerButtonInput* getCenter() const;
     
 protected:
     
@@ -37,14 +33,10 @@ protected:
     ControllerDirectionPad();
     virtual ~ControllerDirectionPad();
     
-    ControllerAxisInput* _axisX;
-    ControllerAxisInput* _axisY;
-    
     ControllerButtonInput* _up;
     ControllerButtonInput* _down;
     ControllerButtonInput* _left;
     ControllerButtonInput* _right;
-    ControllerButtonInput* _center;
 };
 
 NS_CC_END

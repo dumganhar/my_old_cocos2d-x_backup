@@ -98,6 +98,14 @@
 		1A12775A18DFCC4F0005F345 /* CCTweenFunction.h in Headers */ = {isa = PBXBuildFile; fileRef = 2986667918B1B079000E39CA /* CCTweenFunction.h */; };
 		1A12775B18DFCC540005F345 /* CCTweenFunction.h in Headers */ = {isa = PBXBuildFile; fileRef = 2986667918B1B079000E39CA /* CCTweenFunction.h */; };
 		1A12775C18DFCC590005F345 /* CCTweenFunction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2986667818B1B079000E39CA /* CCTweenFunction.cpp */; };
+		1A2E06891907900100B856DF /* CCNSLog.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A2E06871907900100B856DF /* CCNSLog.mm */; };
+		1A2E068A1907900100B856DF /* CCNSLog.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A2E06871907900100B856DF /* CCNSLog.mm */; };
+		1A2E068B1907900100B856DF /* CCNSLog.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A2E06881907900100B856DF /* CCNSLog.h */; };
+		1A2E068C1907900100B856DF /* CCNSLog.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A2E06881907900100B856DF /* CCNSLog.h */; };
+		1A2E068F1907967000B856DF /* CCControllerThumbstick.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A2E068D1907967000B856DF /* CCControllerThumbstick.cpp */; };
+		1A2E06901907967000B856DF /* CCControllerThumbstick.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A2E068D1907967000B856DF /* CCControllerThumbstick.cpp */; };
+		1A2E06911907967000B856DF /* CCControllerThumbstick.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A2E068E1907967000B856DF /* CCControllerThumbstick.h */; };
+		1A2E06921907967000B856DF /* CCControllerThumbstick.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A2E068E1907967000B856DF /* CCControllerThumbstick.h */; };
 		1A4B9007190673450047587A /* LoggerClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A4B9003190673450047587A /* LoggerClient.h */; };
 		1A4B9008190673450047587A /* LoggerClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A4B9004190673450047587A /* LoggerClient.m */; };
 		1A4B9009190673450047587A /* LoggerCommon.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A4B9005190673450047587A /* LoggerCommon.h */; };
@@ -1944,6 +1952,10 @@
 		1A0DB7301823827C0025743D /* CCGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCGL.h; sourceTree = "<group>"; };
 		1A0DB7311823827C0025743D /* CCEAGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEAGLView.h; sourceTree = "<group>"; };
 		1A0DB7351823828F0025743D /* CCGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCGL.h; sourceTree = "<group>"; };
+		1A2E06871907900100B856DF /* CCNSLog.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = CCNSLog.mm; path = ../base/CCNSLog.mm; sourceTree = "<group>"; };
+		1A2E06881907900100B856DF /* CCNSLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCNSLog.h; path = ../base/CCNSLog.h; sourceTree = "<group>"; };
+		1A2E068D1907967000B856DF /* CCControllerThumbstick.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCControllerThumbstick.cpp; path = ../base/CCControllerThumbstick.cpp; sourceTree = "<group>"; };
+		1A2E068E1907967000B856DF /* CCControllerThumbstick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCControllerThumbstick.h; path = ../base/CCControllerThumbstick.h; sourceTree = "<group>"; };
 		1A4B9003190673450047587A /* LoggerClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoggerClient.h; sourceTree = "<group>"; };
 		1A4B9004190673450047587A /* LoggerClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoggerClient.m; sourceTree = "<group>"; };
 		1A4B9005190673450047587A /* LoggerCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoggerCommon.h; sourceTree = "<group>"; };
@@ -3960,13 +3972,17 @@
 				1AD4BAA81904BE4B009C56A8 /* CCControllerDirectionPad.h */,
 				1AD4BA8C1904BDA3009C56A8 /* CCControllerElement.cpp */,
 				1AD4BA8D1904BDA3009C56A8 /* CCControllerElement.h */,
-				1AD4BA801904BD2F009C56A8 /* CCGameController.h */,
-				1AD4BAB11904BFC8009C56A8 /* CCGamepad.cpp */,
-				1AD4BAB21904BFC8009C56A8 /* CCGamepad.h */,
+				1A2E068D1907967000B856DF /* CCControllerThumbstick.cpp */,
+				1A2E068E1907967000B856DF /* CCControllerThumbstick.h */,
 				1AD4BABD1904C20D009C56A8 /* CCEventController.cpp */,
 				1AD4BABE1904C20D009C56A8 /* CCEventController.h */,
 				1AD4BAC31904C21E009C56A8 /* CCEventListenerController.cpp */,
 				1AD4BAC41904C21E009C56A8 /* CCEventListenerController.h */,
+				1AD4BA801904BD2F009C56A8 /* CCGameController.h */,
+				1AD4BAB11904BFC8009C56A8 /* CCGamepad.cpp */,
+				1AD4BAB21904BFC8009C56A8 /* CCGamepad.h */,
+				1A2E06881907900100B856DF /* CCNSLog.h */,
+				1A2E06871907900100B856DF /* CCNSLog.mm */,
 			);
 			name = controller;
 			sourceTree = "<group>";
@@ -5131,6 +5147,7 @@
 				1A57006F180BC5A10088DEC7 /* CCActionEase.h in Headers */,
 				1A570073180BC5A10088DEC7 /* CCActionGrid.h in Headers */,
 				A044DEAD18C6A58700B6CCBD /* matrix.h in Headers */,
+				1A2E06911907967000B856DF /* CCControllerThumbstick.h in Headers */,
 				50FCEBB518C72017004AD434 /* SliderReader.h in Headers */,
 				06CAAAD1186AD8010012A414 /* ObjectFactory.h in Headers */,
 				A023FA34185198C800E10CD1 /* ccShader_PositionTextureColor_noMVP_frag.h in Headers */,
@@ -5182,6 +5199,7 @@
 				1A570148180BC9460088DEC7 /* CCEventDispatcher.h in Headers */,
 				50FCEB9918C72017004AD434 /* CheckBoxReader.h in Headers */,
 				1A57014C180BC9460088DEC7 /* CCEventKeyboard.h in Headers */,
+				1A2E068B1907900100B856DF /* CCNSLog.h in Headers */,
 				1A570150180BC9460088DEC7 /* CCEventListener.h in Headers */,
 				50E6D33E18E174130051CA34 /* UIVBox.h in Headers */,
 				1A570154180BC9460088DEC7 /* CCEventListenerAcceleration.h in Headers */,
@@ -5637,6 +5655,7 @@
 				1A57006C180BC5A10088DEC7 /* CCActionCatmullRom.h in Headers */,
 				1A570070180BC5A10088DEC7 /* CCActionEase.h in Headers */,
 				1A570074180BC5A10088DEC7 /* CCActionGrid.h in Headers */,
+				1A2E06921907967000B856DF /* CCControllerThumbstick.h in Headers */,
 				B37510841823ACA100B3BA6A /* CCPhysicsShapeInfo_chipmunk.h in Headers */,
 				1A570078180BC5A10088DEC7 /* CCActionGrid3D.h in Headers */,
 				1A01C68918F57BE800EFE3A6 /* CCBool.h in Headers */,
@@ -5676,6 +5695,7 @@
 				1AA206401848437A00053418 /* CCMap.h in Headers */,
 				1A570104180BC6060088DEC7 /* etc1.h in Headers */,
 				1A570108180BC6060088DEC7 /* s3tc.h in Headers */,
+				1A2E068C1907900100B856DF /* CCNSLog.h in Headers */,
 				1A570111180BC8EE0088DEC7 /* CCDrawingPrimitives.h in Headers */,
 				1A4B900A190673450047587A /* NSLogger.h in Headers */,
 				50E6D33F18E174130051CA34 /* UIVBox.h in Headers */,
@@ -6320,6 +6340,7 @@
 				1AD4BA8E1904BDA3009C56A8 /* CCControllerElement.cpp in Sources */,
 				2905FA5618CF08D100240AA3 /* UILayout.cpp in Sources */,
 				2AC795DD1862870F005EC8E1 /* EventData.cpp in Sources */,
+				1A2E068F1907967000B856DF /* CCControllerThumbstick.cpp in Sources */,
 				2AC795DE1862870F005EC8E1 /* BoundingBoxAttachment.cpp in Sources */,
 				46A170501807CC1C005B8026 /* CCApplication.mm in Sources */,
 				1A01C6A418F58F7500EFE3A6 /* CCNotificationCenter.cpp in Sources */,
@@ -6535,6 +6556,7 @@
 				1AD71EC1180E26E600808F54 /* extension.cpp in Sources */,
 				1AD71EC5180E26E600808F54 /* Json.cpp in Sources */,
 				50E6D33C18E174130051CA34 /* UIVBox.cpp in Sources */,
+				1A2E06891907900100B856DF /* CCNSLog.mm in Sources */,
 				1AD71EC9180E26E600808F54 /* RegionAttachment.cpp in Sources */,
 				50E6D33818E174130051CA34 /* UIRelativeBox.cpp in Sources */,
 				1AD71ECD180E26E600808F54 /* Skeleton.cpp in Sources */,
@@ -6799,6 +6821,7 @@
 				1A57006A180BC5A10088DEC7 /* CCActionCatmullRom.cpp in Sources */,
 				1A57006E180BC5A10088DEC7 /* CCActionEase.cpp in Sources */,
 				A044DECA18C6A58700B6CCBD /* utility.c in Sources */,
+				1A2E068A1907900100B856DF /* CCNSLog.mm in Sources */,
 				1A570072180BC5A10088DEC7 /* CCActionGrid.cpp in Sources */,
 				593BDCF7184D0A6E00C21E48 /* CCGroupCommand.cpp in Sources */,
 				B37510811823ACA100B3BA6A /* CCPhysicsJointInfo_chipmunk.cpp in Sources */,
@@ -6954,6 +6977,7 @@
 				1AD71DEA180E26E600808F54 /* CCMenuItemLoader.cpp in Sources */,
 				593BDCF3184D0A6E00C21E48 /* CCCustomCommand.cpp in Sources */,
 				06CAAAC8186AD7EB0012A414 /* TriggerObj.cpp in Sources */,
+				1A2E06901907967000B856DF /* CCControllerThumbstick.cpp in Sources */,
 				1AD71DF0180E26E600808F54 /* CCNode+CCBRelativePositioning.cpp in Sources */,
 				1AD71DF4180E26E600808F54 /* CCNodeLoader.cpp in Sources */,
 				1AD71DF8180E26E600808F54 /* CCNodeLoaderLibrary.cpp in Sources */,

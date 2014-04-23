@@ -16,11 +16,6 @@
 #include <functional>
 
 
-extern void CCNSLog(const char* file, int line, const char* function, const char* format, ...);
-
-#define MyLog(format, ...) CCNSLog(__FILE__, __LINE__, __FUNCTION__, format,  ##__VA_ARGS__, nullptr)
-
-
 NS_CC_BEGIN
 
 class Gamepad;
@@ -35,8 +30,7 @@ public:
 	static void startDiscoveryController();
 	static void stopDiscoveryController();
     
-    void setPausedCallback(const std::function<void()>& pausedCallback);
-	std::string getVendorName() const;
+	const std::string& getVendorName();
 	bool isConnected() const;
     
     static const int PLAYER_INDEX_UNSET = -1;
@@ -52,6 +46,7 @@ private:
     
 	static std::vector<Controller*> _controllers;
     
+    std::string _vendorName;
 	int _playerIndex;
     Gamepad* _gamepad;
     
