@@ -35,6 +35,7 @@ protected:
     bool _isPrevStatusPressed; // Whether previous status is pressed
     
     friend class Controller;
+    friend class ControllerImpl;
     friend class ControllerDirectionPad;
     friend class ControllerThumbstick;
     friend class Gamepad;

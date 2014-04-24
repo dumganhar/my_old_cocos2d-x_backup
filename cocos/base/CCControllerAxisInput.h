@@ -28,6 +28,7 @@ protected:
 	float _value;
     
     friend class Controller;
+    friend class ControllerImpl;
     friend class ControllerDirectionPad;
     friend class ControllerThumbstick;
 };

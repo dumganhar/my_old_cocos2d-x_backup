@@ -136,6 +136,15 @@ renderer/CCRenderMaterial.cpp \
 ../base/CCValue.cpp \
 ../base/etc1.cpp \
 ../base/s3tc.cpp \
+../base/CCController-android.cpp \
+../base/CCControllerAxisInput.cpp \
+../base/CCControllerButtonInput.cpp \
+../base/CCControllerDirectionPad.cpp \
+../base/CCControllerElement.cpp \
+../base/CCControllerThumbstick.cpp \
+../base/CCGamepad.cpp \
+../base/CCEventController.cpp \
+../base/CCEventListenerController.cpp \
 ../deprecated/CCArray.cpp \
 ../deprecated/CCSet.cpp \
 ../deprecated/CCString.cpp \

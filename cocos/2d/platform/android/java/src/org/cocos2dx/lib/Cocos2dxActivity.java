@@ -91,7 +91,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 	// ===========================================================
 	// Methods for/from SuperClass/Interfaces
 	// ===========================================================
-
+	
 	@Override
 	protected void onResume() {
 		super.onResume();
