@@ -119,6 +119,11 @@ bool HelloWorld::init()
     
     _eventDispatcher->addEventListenerWithFixedPriority(_listener, 1);
     
+    auto bullet = Sprite::create("CloseSelected.png");
+    bullet->setPosition(_actor->getPosition() + Point(0, _actor->getContentSize().height/2 + 20));
+    this->addChild(bullet);
+    bullet->setColor(Color3B::BLUE);
+    
     scheduleUpdate();
     
     srand(time(nullptr));
