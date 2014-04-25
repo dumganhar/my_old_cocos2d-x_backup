@@ -80,6 +80,8 @@ public class Cocos2dxRenderer implements GLSurfaceView.Renderer {
 
 	@Override
 	public void onDrawFrame(final GL10 gl) {
+		
+		Cocos2dxGameController.onDrawFrameStart();
 		/*
 		 * FPS controlling algorithm is not accurate, and it will slow down FPS
 		 * on some devices. So comment FPS controlling code.

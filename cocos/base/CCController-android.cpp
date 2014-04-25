@@ -23,23 +23,25 @@ NS_CC_BEGIN
 enum AndroidControllerCode
 {
     LEFT_THUMBSTICK_X = 101,
-    LEFT_THUMBSTICK_Y,
-    RIGHT_THUMBSTICK_X,
-    RIGHT_THUMBSTICK_Y,
-    BUTTON_A,
-    BUTTON_B,
-    BUTTON_X,
-    BUTTON_Y,
-    BUTTON_LEFT_SHOULDER,
-    BUTTON_RIGHT_SHOULDER,
-    BUTTON_DPAD_UP,
-    BUTTON_DPAD_DOWN,
-    BUTTON_DPAD_LEFT,
-    BUTTON_DPAD_RIGHT,
-    BUTTON_START,
-    BUTTON_SELECT,
-    BUTTON_LEFT_THUMBSTICK,
-    BUTTON_RIGHT_THUMBSTICK,
+    LEFT_THUMBSTICK_Y = 102,
+    RIGHT_THUMBSTICK_X = 103,
+    RIGHT_THUMBSTICK_Y = 104,
+    BUTTON_A = 105,
+    BUTTON_B = 106,
+    BUTTON_X = 107,
+    BUTTON_Y = 108,
+    BUTTON_LEFT_SHOULDER = 109,
+    BUTTON_RIGHT_SHOULDER = 110,
+    BUTTON_DPAD_UP = 111,
+    BUTTON_DPAD_DOWN = 112,
+    BUTTON_DPAD_LEFT = 113,
+    BUTTON_DPAD_RIGHT = 114,
+    BUTTON_START = 115,
+    BUTTON_SELECT = 116,
+    BUTTON_LEFT_THUMBSTICK = 117,
+    BUTTON_RIGHT_THUMBSTICK = 118,
+    BUTTON_LEFT_TRIGGER = 119,
+    BUTTON_RIGHT_TRIGGER = 120,
 };
 
 class ControllerImpl
@@ -92,7 +94,8 @@ public:
     void sendEventButton(ControllerButtonInput* button, bool isPressed, float value, bool isAnalog)
     {
         button->setPressed(isPressed);
-        button->setValue(value);
+        if (!isAnalog)
+            button->setValue(value);
         button->setAnalog(isAnalog);
         EventController evt(EventController::ControllerEventType::BUTTON_STATUS_CHANGED, _controller, button);
         Director::getInstance()->getEventDispatcher()->dispatchEvent(&evt);
@@ -109,6 +112,12 @@ public:
     static void onButtonEvent(const std::string& vendorName, int controllerID, AndroidControllerCode btnCode, bool isPressed, float value, bool isAnalog)
     {
         auto iter = findController(vendorName, controllerID);
+        if (iter == Controller::_controllers.end())
+        {
+            onConnected(vendorName, controllerID);
+            iter = findController(vendorName, controllerID);
+        }
+
         auto gamepad = (*iter)->getGamepad();
         auto thiz = (*iter)->getImpl();
         switch(btnCode)
@@ -141,6 +150,16 @@ public:
             case AndroidControllerCode::BUTTON_RIGHT_SHOULDER:
             {
                 thiz->sendEventButton(gamepad->getRightShoulder(), isPressed, value, isAnalog);
+            }
+            break;
+            case AndroidControllerCode::BUTTON_LEFT_TRIGGER:
+            {
+                thiz->sendEventButton(gamepad->getLeftTrigger(), isPressed, value, isAnalog);
+            }
+            break;
+            case AndroidControllerCode::BUTTON_RIGHT_TRIGGER:
+            {
+                thiz->sendEventButton(gamepad->getRightTrigger(), isPressed, value, isAnalog);
             }
             break;
             case AndroidControllerCode::BUTTON_DPAD_UP:
@@ -184,7 +203,7 @@ public:
             }
             break;
             default:
-                CCASSERT(false, "Invalid controller button code!");
+                //                CCASSERT(false, "Invalid controller button code!");
                 break;
         }
     }
@@ -192,6 +211,11 @@ public:
     static void onAxisEvent(const std::string& vendorName, int controllerID, AndroidControllerCode axisCode, float value, bool isAnalog)
     {
         auto iter = findController(vendorName, controllerID);
+        if (iter == Controller::_controllers.end())
+        {
+            onConnected(vendorName, controllerID);
+            iter = findController(vendorName, controllerID);
+        }
         auto gamepad = (*iter)->getGamepad();
         auto thiz = (*iter)->getImpl();
         switch (axisCode)
