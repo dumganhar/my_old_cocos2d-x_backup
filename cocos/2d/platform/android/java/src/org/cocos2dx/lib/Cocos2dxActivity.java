@@ -24,7 +24,14 @@ THE SOFTWARE.
 package org.cocos2dx.lib;
 
 import org.cocos2dx.lib.Cocos2dxHelper.Cocos2dxHelperListener;
+import org.cocos2dx.lib.inputmanagercompat.InputManagerCompat;
+import org.cocos2dx.lib.inputmanagercompat.InputManagerCompat.InputDeviceListener;
 
+import com.badlogic.gdx.controllers.android.AndroidController;
+import com.badlogic.gdx.utils.IntMap;
+import com.badlogic.gdx.utils.IntMap.Entry;
+
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -33,12 +40,15 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
+import android.view.InputDevice;
+import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.ViewGroup;
 import android.util.Log;
 import android.widget.FrameLayout;
 import android.preference.PreferenceManager.OnActivityResultListener;
 
-public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelperListener {
+public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelperListener, InputDeviceListener {
 	// ===========================================================
 	// Constants
 	// ===========================================================
@@ -53,6 +63,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 	private Cocos2dxHandler mHandler;
 	private static Cocos2dxActivity sContext = null;
 	private Cocos2dxVideoHelper mVideoHelper = null;
+	private InputManagerCompat mInputManager = null;
 	
 	public static Context getContext() {
 		return sContext;
@@ -88,6 +99,8 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
     	if (mVideoHelper == null) {
     		mVideoHelper = new Cocos2dxVideoHelper(this, mFrameLayout);
 		}
+        mInputManager = InputManagerCompat.Factory.getInputManager(this);
+        mInputManager.registerInputDeviceListener(this, null);
 	}
 	
 	// ===========================================================
@@ -114,6 +127,60 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 		this.mGLSurfaceView.onPause();
 	}
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        int deviceId = event.getDeviceId();
+        
+        int eventSource = event.getSource();
+        if (((eventSource & InputDevice.SOURCE_GAMEPAD)  == InputDevice.SOURCE_GAMEPAD) ||
+            ((eventSource & InputDevice.SOURCE_JOYSTICK) == InputDevice.SOURCE_JOYSTICK))
+        {
+        	Cocos2dxGameController.onButtonEvent("Standard", deviceId, keyCode, false, 0.0f, false);
+        	return true;
+        }
+
+        return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        int deviceId = event.getDeviceId();
+
+        int eventSource = event.getSource();
+        if (((eventSource & InputDevice.SOURCE_GAMEPAD)  == InputDevice.SOURCE_GAMEPAD) ||
+            ((eventSource & InputDevice.SOURCE_JOYSTICK) == InputDevice.SOURCE_JOYSTICK))
+        {
+        	Cocos2dxGameController.onButtonEvent("Standard", deviceId, keyCode, true, 1.0f, false);
+        	return true;
+        }
+        
+        return super.onKeyUp(keyCode, event);
+    }
+
+    @Override
+    public boolean onGenericMotionEvent(MotionEvent event) {
+        mInputManager.onGenericMotionEvent(event);
+
+        // Check that the event came from a joystick or gamepad since a generic
+        // motion event could be almost anything. API level 18 adds the useful
+        // event.isFromSource() helper function.
+        int eventSource = event.getSource();
+        if ((((eventSource & InputDevice.SOURCE_GAMEPAD) == InputDevice.SOURCE_GAMEPAD) ||
+                ((eventSource & InputDevice.SOURCE_JOYSTICK) == InputDevice.SOURCE_JOYSTICK))
+                && event.getAction() == MotionEvent.ACTION_MOVE) {
+            int id = event.getDeviceId();
+//            if (id != -1) {
+//                Log.d("onGenericMotionEvent", "device id != -1");
+//            }
+//            else 
+//            {
+//            	Log.d("onGenericMotionEvent", "device id == -1");
+//            }
+            return true;
+        }
+        return super.onGenericMotionEvent(event);
+    }
+    
 	@Override
 	public void showDialog(final String pTitle, final String pMessage) {
 		Message msg = new Message();
@@ -203,6 +270,35 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
       return isEmulator;
    }
 
+   @Override
+   public void onInputDeviceAdded(int deviceId) {
+       Cocos2dxGameController.onConnected("Standard", deviceId);
+   }
+
+   /*
+    * This is an unusual case. Input devices don't typically change, but they
+    * certainly can --- for example a device may have different modes. We use
+    * this to make sure that the ship has an up-to-date InputDevice.
+    * @see
+    * com.example.inputmanagercompat.InputManagerCompat.InputDeviceListener
+    * #onInputDeviceChanged(int)
+    */
+   @Override
+   public void onInputDeviceChanged(int deviceId) {
+
+   }
+
+   /*
+    * Remove any ship associated with the ID.
+    * @see
+    * com.example.inputmanagercompat.InputManagerCompat.InputDeviceListener
+    * #onInputDeviceRemoved(int)
+    */
+   @Override
+   public void onInputDeviceRemoved(int deviceId) {
+	   Cocos2dxGameController.onDisconnected("Standard", deviceId);
+   }
+   
 	// ===========================================================
 	// Inner and Anonymous Classes
 	// ===========================================================
