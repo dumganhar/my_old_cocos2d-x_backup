@@ -10,7 +10,7 @@
 #define __cocos2d_libs__EventListenerController__
 
 #include "CCPlatformMacros.h"
-#include "CCEventListener.h"
+#include "2d/CCEventListener.h"
 
 NS_CC_BEGIN
 
