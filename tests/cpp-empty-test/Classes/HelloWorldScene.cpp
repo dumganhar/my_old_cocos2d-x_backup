@@ -82,7 +82,7 @@ bool HelloWorld::init()
     
     _player1 = nullptr;
     
-    _statusLabel = Label::createWithSystemFont("status:", "", 20);
+    _statusLabel = Label::createWithTTF("status:", "fonts/Marker Felt.ttf", 20);
     _statusLabel->setPosition(Point(visibleSize / 2) + origin + Point(0, 50));
     this->addChild(_statusLabel, 0, 100);
     
@@ -133,7 +133,7 @@ bool HelloWorld::init()
 
 void HelloWorld::onButtonPressed(cocos2d::Controller *controller, cocos2d::ControllerButtonInput *button, cocos2d::Event *event)
 {
-    MyLog("HelloWorld::onButtonPressed: %p, %d, %f", button, button->isPressed(), button->getValue());
+    log("HelloWorld::onButtonPressed: %p, %d, %f", button, button->isPressed(), button->getValue());
     if (_player1 == nullptr)
         return;
     
@@ -216,24 +216,28 @@ void HelloWorld::update(float dt)
 
         if (_player1->getGamepad()->getDirectionPad()->getDown()->isPressed())
         {
+            log("Dpad: down pressed");
             _statusLabel->setString("Dpad: down pressed");
             newPos.y -= MOVE_DELTA;
         }
         
         if (_player1->getGamepad()->getDirectionPad()->getUp()->isPressed())
         {
+            log("Dpad: up pressed");
             _statusLabel->setString("Dpad: up pressed");
             newPos.y += MOVE_DELTA;
         }
         
         if (_player1->getGamepad()->getDirectionPad()->getLeft()->isPressed())
         {
+            log("Dpad: left pressed");
             _statusLabel->setString("Dpad: left pressed");
             newPos.x -= MOVE_DELTA;
         }
         
         if (_player1->getGamepad()->getDirectionPad()->getRight()->isPressed())
         {
+            log("Dpad: right pressed");
             _statusLabel->setString("Dpad: right pressed");
             newPos.x += MOVE_DELTA;
         }

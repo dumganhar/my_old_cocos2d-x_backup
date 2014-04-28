@@ -25,38 +25,46 @@ package org.cocos2dx.cpp_empty_test;
 
 import org.cocos2dx.lib.Cocos2dxActivity;
 
+import com.nibiru.lib.controller.Controller;
+
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 
 public class AppActivity extends Cocos2dxActivity {
 	
-	private Cocos2dxMogaController mMogaController = new Cocos2dxMogaController();
+//	private Cocos2dxControllerMoga mMogaController = new Cocos2dxControllerMoga();
+	private Cocos2dxControllerNibiru mNibiruController = new Cocos2dxControllerNibiru();
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		mMogaController.onCreate(this);
+//		mMogaController.onCreate(this);
+		mNibiruController.onCreate(this);
 //		Cocos2dxOuyaController.onCreate(this);
+		
 	}
 	
 	@Override
 	protected void onPause()
 	{
 		super.onPause();
-		mMogaController.onPause();
+//		mMogaController.onPause();
+		mNibiruController.onPause();
 	}
 	
 	@Override
 	protected void onResume() {
 		super.onResume();
-		mMogaController.onResume();
+//		mMogaController.onResume();
+		mNibiruController.onResume();
 	}
 	
 	@Override
 	protected void onDestroy() {
-		mMogaController.onDestroy();
+//		mMogaController.onDestroy();
+		mNibiruController.onDestroy();
 		super.onDestroy();
 	}
 	
@@ -65,6 +73,8 @@ public class AppActivity extends Cocos2dxActivity {
         boolean handled = false;
 //        handled = Cocos2dxOuyaController.onKeyDown(keyCode, event);
 
+        handled = mNibiruController.onKeyDown(keyCode, event);
+        
         return handled || super.onKeyDown(keyCode, event);
     }
 
@@ -73,6 +83,8 @@ public class AppActivity extends Cocos2dxActivity {
         boolean handled = false;
 //        handled = Cocos2dxOuyaController.onKeyUp(keyCode, event);
     
+        handled = mNibiruController.onKeyUp(keyCode, event);
+        
         return handled || super.onKeyUp(keyCode, event);
     }
 
@@ -81,6 +93,8 @@ public class AppActivity extends Cocos2dxActivity {
         boolean handled = false;
 //        handled = Cocos2dxOuyaController.onGenericMotionEvent(event);
 
+        handled = mNibiruController.onGenericMotionEvent(event);
+        
         return handled || super.onGenericMotionEvent(event);
     }
 }
