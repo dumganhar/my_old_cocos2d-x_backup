@@ -30,7 +30,7 @@
 #include "2d/CCEventListenerMouse.h"
 #include "2d/CCEventListenerKeyboard.h"
 #include "2d/CCEventListenerCustom.h"
-#include "2d/CCEventListenerController.h"
+#include "base/CCEventListenerController.h"
 
 #include "CCScene.h"
 #include "2d/CCDirector.h"
