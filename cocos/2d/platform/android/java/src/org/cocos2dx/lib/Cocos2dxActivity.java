@@ -27,9 +27,6 @@ import org.cocos2dx.lib.Cocos2dxHelper.Cocos2dxHelperListener;
 import org.cocos2dx.lib.inputmanagercompat.InputManagerCompat;
 import org.cocos2dx.lib.inputmanagercompat.InputManagerCompat.InputDeviceListener;
 
-import com.badlogic.gdx.controllers.android.AndroidController;
-import com.badlogic.gdx.utils.IntMap;
-import com.badlogic.gdx.utils.IntMap.Entry;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -157,29 +154,29 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
         return super.onKeyUp(keyCode, event);
     }
 
-    @Override
-    public boolean onGenericMotionEvent(MotionEvent event) {
-        mInputManager.onGenericMotionEvent(event);
-
-        // Check that the event came from a joystick or gamepad since a generic
-        // motion event could be almost anything. API level 18 adds the useful
-        // event.isFromSource() helper function.
-        int eventSource = event.getSource();
-        if ((((eventSource & InputDevice.SOURCE_GAMEPAD) == InputDevice.SOURCE_GAMEPAD) ||
-                ((eventSource & InputDevice.SOURCE_JOYSTICK) == InputDevice.SOURCE_JOYSTICK))
-                && event.getAction() == MotionEvent.ACTION_MOVE) {
-            int id = event.getDeviceId();
-//            if (id != -1) {
-//                Log.d("onGenericMotionEvent", "device id != -1");
-//            }
-//            else 
-//            {
-//            	Log.d("onGenericMotionEvent", "device id == -1");
-//            }
-            return true;
-        }
-        return super.onGenericMotionEvent(event);
-    }
+//    @Override
+//    public boolean onGenericMotionEvent(MotionEvent event) {
+//        mInputManager.onGenericMotionEvent(event);
+//
+//        // Check that the event came from a joystick or gamepad since a generic
+//        // motion event could be almost anything. API level 18 adds the useful
+//        // event.isFromSource() helper function.
+//        int eventSource = event.getSource();
+//        if ((((eventSource & InputDevice.SOURCE_GAMEPAD) == InputDevice.SOURCE_GAMEPAD) ||
+//                ((eventSource & InputDevice.SOURCE_JOYSTICK) == InputDevice.SOURCE_JOYSTICK))
+//                && event.getAction() == MotionEvent.ACTION_MOVE) {
+//            int id = event.getDeviceId();
+////            if (id != -1) {
+////                Log.d("onGenericMotionEvent", "device id != -1");
+////            }
+////            else 
+////            {
+////            	Log.d("onGenericMotionEvent", "device id == -1");
+////            }
+//            return true;
+//        }
+//        return super.onGenericMotionEvent(event);
+//    }
     
 	@Override
 	public void showDialog(final String pTitle, final String pMessage) {
