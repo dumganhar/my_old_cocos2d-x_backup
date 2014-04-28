@@ -29,7 +29,7 @@ THE SOFTWARE.
 #define __CC_PARTICLE_SYSTEM_QUAD_H__
 
 #include  "CCParticleSystem.h"
-#include "renderer/CCQuadCommand.h"
+#include "2d/renderer/CCQuadCommand.h"
 
 NS_CC_BEGIN
 
@@ -94,7 +94,7 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual void updateQuadWithParticle(tParticle* particle, const Point& newPosition) override;
+    virtual void updateQuadWithParticle(tParticle* particle, const Vector2& newPosition) override;
     /**
      * @js NA
      * @lua NA
@@ -104,7 +104,7 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
+    virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
 
     /**
      * @js NA

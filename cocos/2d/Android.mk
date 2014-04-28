@@ -106,7 +106,7 @@ CCUserDefaultAndroid.cpp \
 ccUTF8.cpp \
 ccUtils.cpp \
 CCVertex.cpp \
-cocos2d.cpp \
+../cocos2d.cpp \
 TGAlib.cpp \
 TransformUtils.cpp \
 ZipUtils.cpp \
@@ -116,7 +116,6 @@ platform/CCSAXParser.cpp \
 platform/CCThread.cpp \
 platform/CCImage.cpp \
 renderer/CCCustomCommand.cpp \
-renderer/CCFrustum.cpp \
 renderer/CCGroupCommand.cpp \
 renderer/CCMaterialManager.cpp \
 renderer/CCQuadCommand.cpp \
@@ -151,20 +150,12 @@ renderer/CCRenderMaterial.cpp \
 ../deprecated/CCDictionary.cpp \
 ../deprecated/CCDeprecated.cpp \
 ../deprecated/CCNotificationCenter.cpp \
-../math/kazmath/kazmath/aabb.c \
-../math/kazmath/kazmath/mat3.c \
-../math/kazmath/kazmath/mat4.c \
-../math/kazmath/kazmath/neon_matrix_impl.c \
-../math/kazmath/kazmath/plane.c \
-../math/kazmath/kazmath/quaternion.c \
-../math/kazmath/kazmath/ray2.c \
-../math/kazmath/kazmath/ray3.c \
-../math/kazmath/kazmath/utility.c \
-../math/kazmath/kazmath/vec2.c \
-../math/kazmath/kazmath/vec3.c \
-../math/kazmath/kazmath/vec4.c \
-../math/kazmath/kazmath/GL/mat4stack.c \
-../math/kazmath/kazmath/GL/matrix.c \
+../math/MathUtil.cpp \
+../math/Matrix.cpp \
+../math/Quaternion.cpp \
+../math/Vector2.cpp \
+../math/Vector3.cpp \
+../math/Vector4.cpp \
 ../physics/CCPhysicsBody.cpp \
 ../physics/CCPhysicsContact.cpp \
 ../physics/CCPhysicsJoint.cpp \
@@ -186,6 +177,7 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/.. \
                     $(LOCAL_PATH)/renderer \
                     $(LOCAL_PATH)/../math/kazmath \
+                    $(LOCAL_PATH)/../math \
                     platform/android \
                     $(LOCAL_PATH)/../physics \
                     $(LOCAL_PATH)/../base \
@@ -199,6 +191,7 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/.. \
                     $(LOCAL_PATH)/renderer \
                     $(LOCAL_PATH)/../math/kazmath \
+                    $(LOCAL_PATH)/../math \
                     $(LOCAL_PATH)/platform/android \
                     $(LOCAL_PATH)/../physics \
                     $(LOCAL_PATH)/../base \

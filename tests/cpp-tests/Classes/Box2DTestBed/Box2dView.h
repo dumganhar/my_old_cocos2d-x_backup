@@ -3,7 +3,7 @@
 
 //#include "cocos2d.h"
 #include "../testBasic.h"
-#include "renderer/CCCustomCommand.h"
+#include "2d/renderer/CCCustomCommand.h"
 
 class MenuLayer : public Layer
 {
@@ -42,7 +42,7 @@ public:
 
     bool initWithEntryID(int entryId);
     std::string title() const;
-    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
+    virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
 
 //    virtual void registerWithTouchDispatcher();
     bool onTouchBegan(Touch* touch, Event* event);
@@ -55,7 +55,7 @@ public:
 
     static Box2DView* viewWithEntryID(int entryId);
 protected:
-    void onDraw(const kmMat4 &transform, bool transformUpdated);
+    void onDraw(const Matrix &transform, bool transformUpdated);
 
     CustomCommand _customCmd;
 };

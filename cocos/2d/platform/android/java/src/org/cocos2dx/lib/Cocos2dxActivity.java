@@ -34,6 +34,7 @@ import com.badlogic.gdx.utils.IntMap.Entry;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -45,6 +46,7 @@ import android.view.MotionEvent;
 import android.view.ViewGroup;
 import android.util.Log;
 import android.widget.FrameLayout;
+import android.preference.PreferenceManager.OnActivityResultListener;
 
 public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelperListener, InputDeviceListener {
 	// ===========================================================
@@ -197,6 +199,17 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 	public void runOnGLThread(final Runnable pRunnable) {
 		this.mGLSurfaceView.queueEvent(pRunnable);
 	}
+	
+	@Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        for (OnActivityResultListener listener : Cocos2dxHelper.getOnActivityResultListeners()) {
+            listener.onActivityResult(requestCode, resultCode, data);
+        }
+
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
 
 	
 	// ===========================================================

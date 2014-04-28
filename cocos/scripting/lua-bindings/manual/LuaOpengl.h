@@ -32,14 +32,14 @@ extern "C" {
 }
 #endif
 
-#include "CCNode.h"
-#include "renderer/CCCustomCommand.h"
+#include "2d/CCNode.h"
+#include "2d/renderer/CCCustomCommand.h"
 
 class GLNode:public cocos2d::Node
 {
 public:
     virtual ~GLNode(){}
-    virtual void draw(cocos2d::Renderer *renderer, const kmMat4& transform, bool transformUpdated) override;
+    virtual void draw(cocos2d::Renderer *renderer, const Matrix& transform, bool transformUpdated) override;
 protected:
     cocos2d::CustomCommand _renderCmd;
     void onDraw(const kmMat4 &transform, bool transformUpdated);

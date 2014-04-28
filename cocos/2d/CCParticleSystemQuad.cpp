@@ -27,25 +27,24 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCGL.h"
-#include "CCParticleSystemQuad.h"
-#include "CCSpriteFrame.h"
-#include "CCDirector.h"
+#include "2d/CCParticleSystemQuad.h"
+#include "2d/CCSpriteFrame.h"
+#include "2d/CCDirector.h"
 #include "CCParticleBatchNode.h"
-#include "CCTextureAtlas.h"
+#include "2d/CCTextureAtlas.h"
 #include "CCShaderCache.h"
-#include "ccGLStateCache.h"
-#include "CCGLProgram.h"
+#include "2d/ccGLStateCache.h"
+#include "2d/CCGLProgram.h"
 #include "TransformUtils.h"
-#include "CCEventType.h"
+#include "2d/CCEventType.h"
 #include "CCConfiguration.h"
-#include "renderer/CCRenderer.h"
-#include "renderer/CCQuadCommand.h"
-#include "renderer/CCCustomCommand.h"
+#include "2d/renderer/CCRenderer.h"
+#include "2d/renderer/CCQuadCommand.h"
+#include "2d/renderer/CCCustomCommand.h"
 
 // extern
-#include "kazmath/GL/matrix.h"
-#include "CCEventListenerCustom.h"
-#include "CCEventDispatcher.h"
+#include "2d/CCEventListenerCustom.h"
+#include "2d/CCEventDispatcher.h"
 
 NS_CC_BEGIN
 
@@ -229,7 +228,7 @@ void ParticleSystemQuad::setTexture(Texture2D* texture)
 
 void ParticleSystemQuad::setDisplayFrame(SpriteFrame *spriteFrame)
 {
-    CCASSERT(spriteFrame->getOffsetInPixels().equals(Point::ZERO), 
+    CCASSERT(spriteFrame->getOffsetInPixels().equals(Vector2::ZERO), 
              "QuadParticle only supports SpriteFrames with no offsets");
 
     // update texture before updating texture rect
@@ -255,7 +254,7 @@ void ParticleSystemQuad::initIndices()
     }
 }
 
-void ParticleSystemQuad::updateQuadWithParticle(tParticle* particle, const Point& newPosition)
+void ParticleSystemQuad::updateQuadWithParticle(tParticle* particle, const Vector2& newPosition)
 {
     V3F_C4B_T2F_Quad *quad;
 
@@ -358,7 +357,7 @@ void ParticleSystemQuad::postStep()
 }
 
 // overriding draw method
-void ParticleSystemQuad::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
+void ParticleSystemQuad::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
 {
     CCASSERT( _particleIdx == 0 || _particleIdx == _particleCount, "Abnormal error in particle quad");
     //quad command
@@ -439,7 +438,6 @@ void ParticleSystemQuad::setTotalParticles(int tp)
         _totalParticles = tp;
     }
     
-    _emissionRate = _totalParticles / _life;
     resetSystem();
 }
 
