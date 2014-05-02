@@ -5,7 +5,7 @@
 
 #include "HelloWorldScene.h"
 #include "AppMacros.h"
-
+#include "ConvertUTF/ConvertUTF.h"
 USING_NS_CC;
 using namespace std;
 
@@ -17,7 +17,65 @@ AppDelegate::~AppDelegate()
 {
 }
 
+void foo() {
+    ConversionResult result = sourceIllegal;
+    UTF16 utf16_buf[8] = {0};
+    utf16_buf[0] = 0x48;
+    utf16_buf[1] = 0x49;
+    utf16_buf[2] = 0;
+    utf16_buf[3] = 0;
+    utf16_buf[4] = 0;
+    utf16_buf[5] = 0;
+    utf16_buf[6] = 0;
+    utf16_buf[7] = 0;
+    UTF16 *utf16Start = utf16_buf;
+    UTF8 utf8_buf[16] = {0};
+    UTF8* utf8Start = utf8_buf;
+    
+    result = ConvertUTF16toUTF8((const UTF16 **) &utf16Start, &(utf16_buf[6]), &utf8Start, &(utf8_buf[16]), strictConversion);
+    switch (result) {
+        default: fprintf(stderr, "Test02B fatal error: result %d for input %08x/n", result, utf16_buf[0]); exit(1);
+        case conversionOK: break;
+        case sourceExhausted: printf("sourceExhausted/t"); exit(0);
+        case targetExhausted: printf("targetExhausted/t"); exit(0);
+        case sourceIllegal: printf("sourceIllegal/t"); exit(0);
+    }
+    
+    // 清空缓存，以确定以后的值的确是转换得来
+    memset(utf16_buf, 0, sizeof(utf16_buf));
+    
+    // 由于转换中利用了这两个start，所以需要重新为start定位,并且保存住End值
+    UTF8* utf8End = utf8Start;
+    utf8Start = utf8_buf;
+    utf16Start = utf16_buf;
+    
+    result = ConvertUTF8toUTF16((const UTF8 **) &utf8Start, utf8End, &utf16Start, &(utf16_buf[6]), strictConversion);
+    switch (result) {
+        default: fprintf(stderr, "Test02B fatal error: result %d for input %08x/n", result, utf16_buf[0]); exit(1);
+        case conversionOK: break;
+        case sourceExhausted: printf("sourceExhausted/t");
+        case targetExhausted: printf("targetExhausted/t");
+        case sourceIllegal: printf("sourceIllegal/t");
+    }
+    
+    for (int i = 0; i < 7; ++i) {
+        log("%x", utf16_buf[i]);
+    }
+    
+    log("%s", utf8_buf);
+    
+    std::u16string utf16 = cc_utf8_to_utf16("你好");
+    for (int i = 0; i < 2; ++i) {
+        log("%x", utf16[i]);
+    }
+    
+    std::string hello = cc_utf16_to_utf8(utf16);
+    log("%s", hello.c_str());
+    
+    
+}
 bool AppDelegate::applicationDidFinishLaunching() {
+    foo();
     // initialize director
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();

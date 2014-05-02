@@ -175,20 +175,19 @@ FontAtlas * FontFreeType::createFontAtlas()
     FontAtlas *atlas = new FontAtlas(*this);
     if (_usedGlyphs != GlyphCollection::DYNAMIC)
     {
-        unsigned short* utf16 = cc_utf8_to_utf16(getCurrentGlyphCollection());
+        std::u16string utf16 = cc_utf8_to_utf16(getCurrentGlyphCollection());
         atlas->prepareLetterDefinitions(utf16);
-        CC_SAFE_DELETE_ARRAY(utf16);
     }
     this->release();
     return atlas;
 }
 
-int * FontFreeType::getHorizontalKerningForTextUTF16(unsigned short *text, int &outNumLetters) const
+int * FontFreeType::getHorizontalKerningForTextUTF16(const std::u16string& text, int &outNumLetters) const
 {
-    if (!text || !_fontRef)
+    if (!_fontRef)
         return nullptr;
     
-    outNumLetters = cc_wcslen(text);
+    outNumLetters = static_cast<int>(text.length());
 
     if (!outNumLetters)
         return nullptr;

@@ -3,9 +3,64 @@
 
 USING_NS_CC;
 
+// codecvt_utf8_utf16 example
+#include <iostream>
+#include <locale>
+#include <string>
+
+int mymain ()
+{
+//    std::wstring_convert<std::codecvt_utf8_utf16<char16_t>,char16_t> conversion;
+//    std::string mbs = conversion.to_bytes( "\u4f60\u597d" );  // ni hao (你好)
+//    
+//    // print out hex value of each byte:
+//    std::cout << std::hex;
+//    for (int i=0; i<mbs.length(); ++i)
+//        std::cout << mbs[i] << ' ';
+//    std::cout << '\n';
+//    log(mbs.c_str());
+    
+//    std::u32string str32 ( U"\U00004f60\U0000597d" );  // ni hao (你好)
+//    std::string str8;
+//    
+//    std::wstring_convert<std::codecvt_utf8<char32_t>,char32_t> cv;
+//    
+//    str8 = cv.to_bytes(str32);
+//    log(str8.c_str());
+//    // print contents (as their hex representations):
+//    std::cout << std::hex;
+//    
+//    std::cout << "UTF-32: ";
+//    for (char32_t c : str32)
+//        std::cout << '[' << std::uint_least32_t(c) << ']';
+//    std::cout << '\n';
+//    
+//    std::cout << "UTF-8 : ";
+//    for (char c : str8)
+//        std::cout << '[' << int(static_cast<unsigned char>(c)) << ']';
+//    std::cout << '\n';
+    
+    ///
+    std::string str8 (u8"你好");    // UTF-8 for "en español"
+    
+//    std::wstring_convert<std::codecvt_utf8_utf16<char16_t>,char16_t> cv;
+    
+    std::u16string str32;// = cv.from_bytes(str8);
+    
+    std::cout << std::hex;
+    
+    for (char16_t c : str32) {
+        std::cout << '[' << (c) << ']';
+    }
+    std::cout << '\n';
+    
+    return 0;
+}
 
 Scene* HelloWorld::scene()
 {
+    
+    mymain();
     // 'scene' is an autorelease object
     auto scene = Scene::create();
     

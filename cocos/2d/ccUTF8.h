@@ -1,35 +1,39 @@
-/*
- * Copyright (C) 1999      Tom Tromey
- * Copyright (C) 2000      Red Hat, Inc.
- * Copyright (c) 2013-2014 Chukong Technologies Inc.
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the
- * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
- * Boston, MA 02111-1307, USA.
- */
+/****************************************************************************
+ Copyright (c) 2014      cocos2d-x.org
+ Copyright (c) 2014 Chukong Technologies Inc.
+ 
+ http://www.cocos2d-x.org
+ 
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ 
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
 
 #ifndef __cocos2dx__ccUTF8__
 #define __cocos2dx__ccUTF8__
 
 #include "base/CCPlatformMacros.h"
 #include <vector>
+#include <string>
 
 NS_CC_BEGIN
 
-CC_DLL int cc_wcslen(const unsigned short* str);
 
-CC_DLL void cc_utf8_trim_ws(std::vector<unsigned short>* str);
+CC_DLL void cc_utf8_trim_ws(std::vector<char16_t>* str);
 
 /**
  * Whether the character is a whitespace character.
@@ -39,7 +43,7 @@ CC_DLL void cc_utf8_trim_ws(std::vector<unsigned short>* str);
  *
  * @see http://en.wikipedia.org/wiki/Whitespace_character#Unicode
  * */
-CC_DLL bool isspace_unicode(unsigned short ch);
+CC_DLL bool isspace_unicode(char16_t ch);
 
 /**
  * Whether the character is a Chinese/Japanese/Korean character.
@@ -50,7 +54,7 @@ CC_DLL bool isspace_unicode(unsigned short ch);
  * @see http://www.searchtb.com/2012/04/chinese_encode.html
  * @see http://tieba.baidu.com/p/748765987
  * */
-CC_DLL bool iscjk_unicode(unsigned short ch);
+CC_DLL bool iscjk_unicode(char16_t ch);
 
 /**
  * Returns the length of the string in characters.
@@ -73,41 +77,13 @@ cc_utf8_strlen (const char * p, int max);
  *
  * @returns the index of the last character that is not \p c.
  * */
-CC_DLL unsigned int cc_utf8_find_last_not_char(std::vector<unsigned short> str, unsigned short c);
+CC_DLL unsigned int cc_utf8_find_last_not_char(std::vector<char16_t> str, char16_t c);
 
-CC_DLL std::vector<unsigned short> cc_utf16_vec_from_utf16_str(const unsigned short* str);
+CC_DLL std::vector<char16_t> cc_utf16_vec_from_utf16_str(const std::u16string& utf16);
 
-/**
- * Creates a utf8 string from a cstring.
- *
- * @param str_old   pointer to the start of a C string.
- *
- * @returns the newly created utf8 string.
- * */
-CC_DLL unsigned short* cc_utf8_to_utf16(const char* str_old, int length = -1, int* rUtf16Size = nullptr);
 
-/**
- * Convert a string from UTF-16 to UTF-8. The result will be null terminated.
- *
- * @param str   a UTF-16 encoded string
- * @param len   the maximum length of \p str to use. If \p len < 0, then the
- *              string is null terminated.
- * @param items_read    location to store number of words read, or %nullptr.
- *                      If %nullptr, then %G_CONVERT_ERROR_PARTIAL_INPUT will be
- *                      returned in case \p str contains a trailing partial
- *                      character. If an error occurs then the index of the
- *                      invalid input is stored here.
- * @param items_written location to store number of bytes written, or %nullptr.
- *                      The value stored here does not include the trailing null.
- *
- * @returns a pointer to a newly allocated UTF-8 string. This value must be
- *          freed with free(). If an error occurs, %nullptr will be returned.
- **/
-CC_DLL char *
-cc_utf16_to_utf8 (const unsigned short  *str,
-                  int             len,
-                  long            *items_read,
-                  long            *items_written);
+CC_DLL std::u16string cc_utf8_to_utf16(const std::string& utf8);
+CC_DLL std::string cc_utf16_to_utf8 (const std::u16string& utf16);
 
 NS_CC_END
 

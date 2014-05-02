@@ -30,8 +30,6 @@
 #include "base/CCDirector.h"
 #include "2d/CCLabel.h"
 
-using namespace std;
-
 NS_CC_BEGIN
 
 bool LabelTextFormatter::multilineText(Label *theLabel)
@@ -41,10 +39,10 @@ bool LabelTextFormatter::multilineText(Label *theLabel)
 
     auto strWhole = theLabel->_currentUTF16String;
 
-    vector<unsigned short> multiline_string;
+    std::vector<char16_t> multiline_string;
     multiline_string.reserve( limit );
 
-    vector<unsigned short> last_word;
+    std::vector<char16_t> last_word;
     last_word.reserve( 25 );
 
     bool   isStartOfLine  = false, isStartOfWord = false;
@@ -93,7 +91,7 @@ bool LabelTextFormatter::multilineText(Label *theLabel)
         if (tIndex >= limit)
             break;
 
-        unsigned short character = strWhole[tIndex];
+        char16_t character = strWhole[tIndex];
 
         if (!isStartOfWord)
         {
@@ -175,15 +173,8 @@ bool LabelTextFormatter::multilineText(Label *theLabel)
 
     multiline_string.insert(multiline_string.end(), last_word.begin(), last_word.end());
 
-    size_t size = multiline_string.size();
-    unsigned short* strNew = new unsigned short[size + 1];
-
-    for (size_t j = 0; j < size; ++j)
-    {
-        strNew[j] = multiline_string[j];
-    }
-
-    strNew[size] = 0;
+    std::u16string strNew(multiline_string.begin(), multiline_string.end());
+    
     theLabel->setCurrentString(strNew);
 
     return true;
@@ -194,8 +185,8 @@ bool LabelTextFormatter::alignText(Label *theLabel)
     int i = 0;
     
     int lineNumber = 0;
-    int strLen = cc_wcslen(theLabel->_currentUTF16String);
-    vector<unsigned short> lastLine;
+    int strLen = static_cast<int>(theLabel->_currentUTF16String.length());
+    std::vector<char16_t> lastLine;
     auto strWhole = theLabel->_currentUTF16String;
 
     if (theLabel->_labelWidth > theLabel->_contentSize.width)
@@ -205,7 +196,7 @@ bool LabelTextFormatter::alignText(Label *theLabel)
 
     for (int ctr = 0; ctr <= strLen; ++ctr)
     { 
-        unsigned short currentChar = strWhole[ctr];
+        char16_t currentChar = strWhole[ctr];
 
         if (currentChar == '\n' || currentChar == 0)
         {
@@ -334,7 +325,7 @@ bool LabelTextFormatter::createStringSprites(Label *theLabel)
     
     for (unsigned int i = 0; i < stringLen; i++)
     {
-        unsigned short c    = strWhole[i];
+        char16_t c    = strWhole[i];
         if (fontAtlas->getLetterDefinitionForChar(c, tempDefinition))
         {
             charXOffset         = tempDefinition.offsetX;
