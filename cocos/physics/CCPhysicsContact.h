@@ -149,6 +149,7 @@ public:
     
 private:
     PhysicsContactPreSolve(void* contactInfo);
+public:
     ~PhysicsContactPreSolve();
     
 private:
@@ -172,6 +173,7 @@ public:
     
 private:
     PhysicsContactPostSolve(void* contactInfo);
+public:
     ~PhysicsContactPostSolve();
     
 private:

@@ -15,4 +15,8 @@
 -- @param self
 -- @return unsigned int#unsigned int ret (return value: unsigned int)
         
+--------------------------------
+-- @function [parent=#Ref] printLeaks 
+-- @param self
+        
 return nil

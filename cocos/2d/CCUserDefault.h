@@ -181,8 +181,9 @@ public:
 
 private:
     UserDefault();
-    ~UserDefault();
-    
+public:
+    virtual ~UserDefault();
+private:
     static bool createXMLFile();
     static void initXMLFilePath();
     

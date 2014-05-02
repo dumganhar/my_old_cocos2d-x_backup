@@ -4,6 +4,19 @@
 #include "LuaBasicConversions.h"
 
 
+static int lua_gc_callback_of_ref_class(lua_State* tolua_S)
+{
+    void* self = tolua_tousertype(tolua_S,1,0);
+    
+    cocos2d::Ref* ref = static_cast<cocos2d::Ref*>(self);
+    
+    CCLOG("gc: Ref type ( %s : %d)", typeid(*ref).name(), ref->getReferenceCount());
+    ref->_luaID = 0;
+    toluafix_remove_ccobject_by_refid(tolua_S, ref->_luaID);
+    ref->release();
+
+    return 0;
+}
 
 int lua_cocos2dx_spine_Skeleton_setToSetupPose(lua_State* tolua_S)
 {
@@ -320,17 +333,11 @@ int lua_cocos2dx_spine_Skeleton_setBonesToSetupPose(lua_State* tolua_S)
 
     return 0;
 }
-static int lua_cocos2dx_spine_Skeleton_finalize(lua_State* tolua_S)
-{
-    printf("luabindings: finalizing LUA object (Skeleton)");
-    return 0;
-}
 
 int lua_register_cocos2dx_spine_Skeleton(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"sp.Skeleton");
-    tolua_cclass(tolua_S,"Skeleton","sp.Skeleton","cc.Node",nullptr);
-
+    tolua_cclass(tolua_S,"Skeleton","sp.Skeleton","cc.Node",lua_gc_callback_of_ref_class);
     tolua_beginmodule(tolua_S,"Skeleton");
         tolua_function(tolua_S,"setToSetupPose",lua_cocos2dx_spine_Skeleton_setToSetupPose);
         tolua_function(tolua_S,"setBlendFunc",lua_cocos2dx_spine_Skeleton_setBlendFunc);
@@ -730,17 +737,11 @@ int lua_cocos2dx_spine_SkeletonAnimation_onAnimationStateEvent(lua_State* tolua_
 
     return 0;
 }
-static int lua_cocos2dx_spine_SkeletonAnimation_finalize(lua_State* tolua_S)
-{
-    printf("luabindings: finalizing LUA object (SkeletonAnimation)");
-    return 0;
-}
 
 int lua_register_cocos2dx_spine_SkeletonAnimation(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"sp.SkeletonAnimation");
-    tolua_cclass(tolua_S,"SkeletonAnimation","sp.SkeletonAnimation","sp.Skeleton",nullptr);
-
+    tolua_cclass(tolua_S,"SkeletonAnimation","sp.SkeletonAnimation","sp.Skeleton",lua_gc_callback_of_ref_class);
     tolua_beginmodule(tolua_S,"SkeletonAnimation");
         tolua_function(tolua_S,"addAnimation",lua_cocos2dx_spine_SkeletonAnimation_addAnimation);
         tolua_function(tolua_S,"getCurrent",lua_cocos2dx_spine_SkeletonAnimation_getCurrent);

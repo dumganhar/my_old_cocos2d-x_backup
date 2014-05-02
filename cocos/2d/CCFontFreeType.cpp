@@ -160,7 +160,7 @@ FontFreeType::~FontFreeType()
     }
     if (_fontRef)
     {
-        FT_Done_Face(_fontRef);
+    //    FT_Done_Face(_fontRef);
     }
 
     s_cacheFontData[_fontName].referenceCount -= 1;

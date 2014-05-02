@@ -406,8 +406,8 @@ TOLUA_API int tolua_default_collect (lua_State* tolua_S)
     {
         CCLOG("gc: type ( %s : %d)", typeid(*ref).name(), ref->getReferenceCount());
         ref->_luaID = 0;
-        ref->release();
         toluafix_remove_ccobject_by_refid(tolua_S, ref->_luaID);
+        ref->release();
     }
     else
     {
@@ -571,33 +571,11 @@ static void push_collector(lua_State* L, const char* type, lua_CFunction col) {
 };
 
 
-static int tolua_ref_class_gc(lua_State *L)
-{
-    void** udPtr = (void**)tolua_tousertype(L,1,0);
-    
-    if (udPtr && *udPtr)
-    {
-        cocos2d::Ref* ref = static_cast<cocos2d::Ref*>(*udPtr);
-        if (dynamic_cast<cocos2d::Ref*>(ref))
-        {
-            ref->release();
-        }
-    }
-    else
-    {
-        printf("could not find the ptr when gc");
-    }
-    
-    return 0;
-}
-
 /* Map C class
     * It maps a C class, setting the appropriate inheritance and super classes.
 */
 TOLUA_API void tolua_cclass (lua_State* L, const char* lname, const char* name, const char* base, lua_CFunction col)
 {
-//    col = tolua_ref_class_gc;
-    
     char cname[128] = "const ";
     char cbase[128] = "const ";
     strncat(cname,name,120);

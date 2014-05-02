@@ -146,6 +146,7 @@ bool UserDefault::_isFilePathInitialized = false;
 
 UserDefault::~UserDefault()
 {
+    _userDefault = nullptr;
 }
 
 UserDefault::UserDefault()

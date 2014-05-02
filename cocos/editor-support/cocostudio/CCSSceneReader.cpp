@@ -47,6 +47,7 @@ SceneReader::SceneReader()
 
 SceneReader::~SceneReader()
 {
+    s_sharedReader = nullptr;
 }
 
 const char* SceneReader::sceneReaderVersion()

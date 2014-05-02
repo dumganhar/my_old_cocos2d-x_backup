@@ -67,8 +67,9 @@ public:
     inline AttachComponentType getAttachComponentType(){return _attachComponent;}
 private:
     SceneReader(void);
+public:
     virtual ~SceneReader(void);
-    
+private:
     cocos2d::Node* createObject(const rapidjson::Value& dict, cocos2d::Node* parent, AttachComponentType attachComponent);
     void setPropertyFromJsonDict(const rapidjson::Value& dict, cocos2d::Node *node);
     bool readJson(const std::string &fileName, rapidjson::Document& doc);

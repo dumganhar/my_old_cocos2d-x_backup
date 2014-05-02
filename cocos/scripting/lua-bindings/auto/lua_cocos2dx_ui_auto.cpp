@@ -4,6 +4,19 @@
 #include "LuaBasicConversions.h"
 
 
+static int lua_gc_callback_of_ref_class(lua_State* tolua_S)
+{
+    void* self = tolua_tousertype(tolua_S,1,0);
+    
+    cocos2d::Ref* ref = static_cast<cocos2d::Ref*>(self);
+    
+    CCLOG("gc: Ref type ( %s : %d)", typeid(*ref).name(), ref->getReferenceCount());
+    ref->_luaID = 0;
+    toluafix_remove_ccobject_by_refid(tolua_S, ref->_luaID);
+    ref->release();
+
+    return 0;
+}
 
 int lua_cocos2dx_ui_LayoutParameter_clone(lua_State* tolua_S)
 {
@@ -248,17 +261,11 @@ int lua_cocos2dx_ui_LayoutParameter_constructor(lua_State* tolua_S)
     return 0;
 }
 
-static int lua_cocos2dx_ui_LayoutParameter_finalize(lua_State* tolua_S)
-{
-    printf("luabindings: finalizing LUA object (LayoutParameter)");
-    return 0;
-}
 
 int lua_register_cocos2dx_ui_LayoutParameter(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"ccui.LayoutParameter");
-    tolua_cclass(tolua_S,"LayoutParameter","ccui.LayoutParameter","cc.Ref",nullptr);
-
+    tolua_cclass(tolua_S,"LayoutParameter","ccui.LayoutParameter","cc.Ref",lua_gc_callback_of_ref_class);
     tolua_beginmodule(tolua_S,"LayoutParameter");
         tolua_function(tolua_S,"clone",lua_cocos2dx_ui_LayoutParameter_clone);
         tolua_function(tolua_S,"getLayoutType",lua_cocos2dx_ui_LayoutParameter_getLayoutType);
@@ -428,17 +435,11 @@ int lua_cocos2dx_ui_LinearLayoutParameter_constructor(lua_State* tolua_S)
     return 0;
 }
 
-static int lua_cocos2dx_ui_LinearLayoutParameter_finalize(lua_State* tolua_S)
-{
-    printf("luabindings: finalizing LUA object (LinearLayoutParameter)");
-    return 0;
-}
 
 int lua_register_cocos2dx_ui_LinearLayoutParameter(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"ccui.LinearLayoutParameter");
-    tolua_cclass(tolua_S,"LinearLayoutParameter","ccui.LinearLayoutParameter","ccui.LayoutParameter",nullptr);
-
+    tolua_cclass(tolua_S,"LinearLayoutParameter","ccui.LinearLayoutParameter","ccui.LayoutParameter",lua_gc_callback_of_ref_class);
     tolua_beginmodule(tolua_S,"LinearLayoutParameter");
         tolua_function(tolua_S,"setGravity",lua_cocos2dx_ui_LinearLayoutParameter_setGravity);
         tolua_function(tolua_S,"getGravity",lua_cocos2dx_ui_LinearLayoutParameter_getGravity);
@@ -786,17 +787,11 @@ int lua_cocos2dx_ui_RelativeLayoutParameter_constructor(lua_State* tolua_S)
     return 0;
 }
 
-static int lua_cocos2dx_ui_RelativeLayoutParameter_finalize(lua_State* tolua_S)
-{
-    printf("luabindings: finalizing LUA object (RelativeLayoutParameter)");
-    return 0;
-}
 
 int lua_register_cocos2dx_ui_RelativeLayoutParameter(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"ccui.RelativeLayoutParameter");
-    tolua_cclass(tolua_S,"RelativeLayoutParameter","ccui.RelativeLayoutParameter","ccui.LayoutParameter",nullptr);
-
+    tolua_cclass(tolua_S,"RelativeLayoutParameter","ccui.RelativeLayoutParameter","ccui.LayoutParameter",lua_gc_callback_of_ref_class);
     tolua_beginmodule(tolua_S,"RelativeLayoutParameter");
         tolua_function(tolua_S,"setAlign",lua_cocos2dx_ui_RelativeLayoutParameter_setAlign);
         tolua_function(tolua_S,"setRelativeToWidgetName",lua_cocos2dx_ui_RelativeLayoutParameter_setRelativeToWidgetName);
@@ -3178,17 +3173,11 @@ int lua_cocos2dx_ui_Widget_constructor(lua_State* tolua_S)
     return 0;
 }
 
-static int lua_cocos2dx_ui_Widget_finalize(lua_State* tolua_S)
-{
-    printf("luabindings: finalizing LUA object (Widget)");
-    return 0;
-}
 
 int lua_register_cocos2dx_ui_Widget(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"ccui.Widget");
-    tolua_cclass(tolua_S,"Widget","ccui.Widget","cc.ProtectedNode",nullptr);
-
+    tolua_cclass(tolua_S,"Widget","ccui.Widget","cc.ProtectedNode",lua_gc_callback_of_ref_class);
     tolua_beginmodule(tolua_S,"Widget");
         tolua_function(tolua_S,"setSizePercent",lua_cocos2dx_ui_Widget_setSizePercent);
         tolua_function(tolua_S,"getCustomSize",lua_cocos2dx_ui_Widget_getCustomSize);
@@ -4624,17 +4613,11 @@ int lua_cocos2dx_ui_Layout_constructor(lua_State* tolua_S)
     return 0;
 }
 
-static int lua_cocos2dx_ui_Layout_finalize(lua_State* tolua_S)
-{
-    printf("luabindings: finalizing LUA object (Layout)");
-    return 0;
-}
 
 int lua_register_cocos2dx_ui_Layout(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"ccui.Layout");
-    tolua_cclass(tolua_S,"Layout","ccui.Layout","ccui.Widget",nullptr);
-
+    tolua_cclass(tolua_S,"Layout","ccui.Layout","ccui.Widget",lua_gc_callback_of_ref_class);
     tolua_beginmodule(tolua_S,"Layout");
         tolua_function(tolua_S,"setBackGroundColorVector",lua_cocos2dx_ui_Layout_setBackGroundColorVector);
         tolua_function(tolua_S,"setClippingType",lua_cocos2dx_ui_Layout_setClippingType);
@@ -5914,17 +5897,11 @@ int lua_cocos2dx_ui_Button_constructor(lua_State* tolua_S)
     return 0;
 }
 
-static int lua_cocos2dx_ui_Button_finalize(lua_State* tolua_S)
-{
-    printf("luabindings: finalizing LUA object (Button)");
-    return 0;
-}
 
 int lua_register_cocos2dx_ui_Button(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"ccui.Button");
-    tolua_cclass(tolua_S,"Button","ccui.Button","ccui.Widget",nullptr);
-
+    tolua_cclass(tolua_S,"Button","ccui.Button","ccui.Widget",lua_gc_callback_of_ref_class);
     tolua_beginmodule(tolua_S,"Button");
         tolua_function(tolua_S,"getTitleText",lua_cocos2dx_ui_Button_getTitleText);
         tolua_function(tolua_S,"setTitleFontSize",lua_cocos2dx_ui_Button_setTitleFontSize);
@@ -6576,17 +6553,11 @@ int lua_cocos2dx_ui_CheckBox_constructor(lua_State* tolua_S)
     return 0;
 }
 
-static int lua_cocos2dx_ui_CheckBox_finalize(lua_State* tolua_S)
-{
-    printf("luabindings: finalizing LUA object (CheckBox)");
-    return 0;
-}
 
 int lua_register_cocos2dx_ui_CheckBox(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"ccui.CheckBox");
-    tolua_cclass(tolua_S,"CheckBox","ccui.CheckBox","ccui.Widget",nullptr);
-
+    tolua_cclass(tolua_S,"CheckBox","ccui.CheckBox","ccui.Widget",lua_gc_callback_of_ref_class);
     tolua_beginmodule(tolua_S,"CheckBox");
         tolua_function(tolua_S,"getSelectedState",lua_cocos2dx_ui_CheckBox_getSelectedState);
         tolua_function(tolua_S,"loadTextureBackGroundSelected",lua_cocos2dx_ui_CheckBox_loadTextureBackGroundSelected);
@@ -7017,17 +6988,11 @@ int lua_cocos2dx_ui_ImageView_constructor(lua_State* tolua_S)
     return 0;
 }
 
-static int lua_cocos2dx_ui_ImageView_finalize(lua_State* tolua_S)
-{
-    printf("luabindings: finalizing LUA object (ImageView)");
-    return 0;
-}
 
 int lua_register_cocos2dx_ui_ImageView(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"ccui.ImageView");
-    tolua_cclass(tolua_S,"ImageView","ccui.ImageView","ccui.Widget",nullptr);
-
+    tolua_cclass(tolua_S,"ImageView","ccui.ImageView","ccui.Widget",lua_gc_callback_of_ref_class);
     tolua_beginmodule(tolua_S,"ImageView");
         tolua_function(tolua_S,"loadTexture",lua_cocos2dx_ui_ImageView_loadTexture);
         tolua_function(tolua_S,"setScale9Enabled",lua_cocos2dx_ui_ImageView_setScale9Enabled);
@@ -7835,17 +7800,11 @@ int lua_cocos2dx_ui_Text_constructor(lua_State* tolua_S)
     return 0;
 }
 
-static int lua_cocos2dx_ui_Text_finalize(lua_State* tolua_S)
-{
-    printf("luabindings: finalizing LUA object (Text)");
-    return 0;
-}
 
 int lua_register_cocos2dx_ui_Text(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"ccui.Text");
-    tolua_cclass(tolua_S,"Text","ccui.Text","ccui.Widget",nullptr);
-
+    tolua_cclass(tolua_S,"Text","ccui.Text","ccui.Widget",lua_gc_callback_of_ref_class);
     tolua_beginmodule(tolua_S,"Text");
         tolua_function(tolua_S,"getStringLength",lua_cocos2dx_ui_Text_getStringLength);
         tolua_function(tolua_S,"setFontName",lua_cocos2dx_ui_Text_setFontName);
@@ -8185,17 +8144,11 @@ int lua_cocos2dx_ui_TextAtlas_constructor(lua_State* tolua_S)
     return 0;
 }
 
-static int lua_cocos2dx_ui_TextAtlas_finalize(lua_State* tolua_S)
-{
-    printf("luabindings: finalizing LUA object (TextAtlas)");
-    return 0;
-}
 
 int lua_register_cocos2dx_ui_TextAtlas(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"ccui.TextAtlas");
-    tolua_cclass(tolua_S,"TextAtlas","ccui.TextAtlas","ccui.Widget",nullptr);
-
+    tolua_cclass(tolua_S,"TextAtlas","ccui.TextAtlas","ccui.Widget",lua_gc_callback_of_ref_class);
     tolua_beginmodule(tolua_S,"TextAtlas");
         tolua_function(tolua_S,"setProperty",lua_cocos2dx_ui_TextAtlas_setProperty);
         tolua_function(tolua_S,"getStringValue",lua_cocos2dx_ui_TextAtlas_getStringValue);
@@ -8756,17 +8709,11 @@ int lua_cocos2dx_ui_LoadingBar_constructor(lua_State* tolua_S)
     return 0;
 }
 
-static int lua_cocos2dx_ui_LoadingBar_finalize(lua_State* tolua_S)
-{
-    printf("luabindings: finalizing LUA object (LoadingBar)");
-    return 0;
-}
 
 int lua_register_cocos2dx_ui_LoadingBar(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"ccui.LoadingBar");
-    tolua_cclass(tolua_S,"LoadingBar","ccui.LoadingBar","ccui.Widget",nullptr);
-
+    tolua_cclass(tolua_S,"LoadingBar","ccui.LoadingBar","ccui.Widget",lua_gc_callback_of_ref_class);
     tolua_beginmodule(tolua_S,"LoadingBar");
         tolua_function(tolua_S,"setPercent",lua_cocos2dx_ui_LoadingBar_setPercent);
         tolua_function(tolua_S,"loadTexture",lua_cocos2dx_ui_LoadingBar_loadTexture);
@@ -10317,17 +10264,11 @@ int lua_cocos2dx_ui_ScrollView_constructor(lua_State* tolua_S)
     return 0;
 }
 
-static int lua_cocos2dx_ui_ScrollView_finalize(lua_State* tolua_S)
-{
-    printf("luabindings: finalizing LUA object (ScrollView)");
-    return 0;
-}
 
 int lua_register_cocos2dx_ui_ScrollView(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"ccui.ScrollView");
-    tolua_cclass(tolua_S,"ScrollView","ccui.ScrollView","ccui.Layout",nullptr);
-
+    tolua_cclass(tolua_S,"ScrollView","ccui.ScrollView","ccui.Layout",lua_gc_callback_of_ref_class);
     tolua_beginmodule(tolua_S,"ScrollView");
         tolua_function(tolua_S,"scrollToTop",lua_cocos2dx_ui_ScrollView_scrollToTop);
         tolua_function(tolua_S,"scrollToPercentHorizontal",lua_cocos2dx_ui_ScrollView_scrollToPercentHorizontal);
@@ -11232,17 +11173,11 @@ int lua_cocos2dx_ui_ListView_constructor(lua_State* tolua_S)
     return 0;
 }
 
-static int lua_cocos2dx_ui_ListView_finalize(lua_State* tolua_S)
-{
-    printf("luabindings: finalizing LUA object (ListView)");
-    return 0;
-}
 
 int lua_register_cocos2dx_ui_ListView(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"ccui.ListView");
-    tolua_cclass(tolua_S,"ListView","ccui.ListView","ccui.ScrollView",nullptr);
-
+    tolua_cclass(tolua_S,"ListView","ccui.ListView","ccui.ScrollView",lua_gc_callback_of_ref_class);
     tolua_beginmodule(tolua_S,"ListView");
         tolua_function(tolua_S,"getIndex",lua_cocos2dx_ui_ListView_getIndex);
         tolua_function(tolua_S,"removeAllItems",lua_cocos2dx_ui_ListView_removeAllItems);
@@ -12139,17 +12074,11 @@ int lua_cocos2dx_ui_Slider_constructor(lua_State* tolua_S)
     return 0;
 }
 
-static int lua_cocos2dx_ui_Slider_finalize(lua_State* tolua_S)
-{
-    printf("luabindings: finalizing LUA object (Slider)");
-    return 0;
-}
 
 int lua_register_cocos2dx_ui_Slider(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"ccui.Slider");
-    tolua_cclass(tolua_S,"Slider","ccui.Slider","ccui.Widget",nullptr);
-
+    tolua_cclass(tolua_S,"Slider","ccui.Slider","ccui.Widget",lua_gc_callback_of_ref_class);
     tolua_beginmodule(tolua_S,"Slider");
         tolua_function(tolua_S,"setPercent",lua_cocos2dx_ui_Slider_setPercent);
         tolua_function(tolua_S,"loadSlidBallTextureDisabled",lua_cocos2dx_ui_Slider_loadSlidBallTextureDisabled);
@@ -13779,17 +13708,11 @@ int lua_cocos2dx_ui_TextField_constructor(lua_State* tolua_S)
     return 0;
 }
 
-static int lua_cocos2dx_ui_TextField_finalize(lua_State* tolua_S)
-{
-    printf("luabindings: finalizing LUA object (TextField)");
-    return 0;
-}
 
 int lua_register_cocos2dx_ui_TextField(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"ccui.TextField");
-    tolua_cclass(tolua_S,"TextField","ccui.TextField","ccui.Widget",nullptr);
-
+    tolua_cclass(tolua_S,"TextField","ccui.TextField","ccui.Widget",lua_gc_callback_of_ref_class);
     tolua_beginmodule(tolua_S,"TextField");
         tolua_function(tolua_S,"setAttachWithIME",lua_cocos2dx_ui_TextField_setAttachWithIME);
         tolua_function(tolua_S,"getFontSize",lua_cocos2dx_ui_TextField_getFontSize);
@@ -14083,17 +14006,11 @@ int lua_cocos2dx_ui_TextBMFont_constructor(lua_State* tolua_S)
     return 0;
 }
 
-static int lua_cocos2dx_ui_TextBMFont_finalize(lua_State* tolua_S)
-{
-    printf("luabindings: finalizing LUA object (TextBMFont)");
-    return 0;
-}
 
 int lua_register_cocos2dx_ui_TextBMFont(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"ccui.TextBMFont");
-    tolua_cclass(tolua_S,"TextBMFont","ccui.TextBMFont","ccui.Widget",nullptr);
-
+    tolua_cclass(tolua_S,"TextBMFont","ccui.TextBMFont","ccui.Widget",lua_gc_callback_of_ref_class);
     tolua_beginmodule(tolua_S,"TextBMFont");
         tolua_function(tolua_S,"setFntFile",lua_cocos2dx_ui_TextBMFont_setFntFile);
         tolua_function(tolua_S,"getStringValue",lua_cocos2dx_ui_TextBMFont_getStringValue);
@@ -14667,17 +14584,11 @@ int lua_cocos2dx_ui_PageView_constructor(lua_State* tolua_S)
     return 0;
 }
 
-static int lua_cocos2dx_ui_PageView_finalize(lua_State* tolua_S)
-{
-    printf("luabindings: finalizing LUA object (PageView)");
-    return 0;
-}
 
 int lua_register_cocos2dx_ui_PageView(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"ccui.PageView");
-    tolua_cclass(tolua_S,"PageView","ccui.PageView","ccui.Layout",nullptr);
-
+    tolua_cclass(tolua_S,"PageView","ccui.PageView","ccui.Layout",lua_gc_callback_of_ref_class);
     tolua_beginmodule(tolua_S,"PageView");
         tolua_function(tolua_S,"getCurPageIndex",lua_cocos2dx_ui_PageView_getCurPageIndex);
         tolua_function(tolua_S,"addWidgetToPage",lua_cocos2dx_ui_PageView_addWidgetToPage);
@@ -14804,17 +14715,37 @@ int lua_cocos2dx_ui_Helper_seekWidgetByName(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ui_Helper_finalize(lua_State* tolua_S)
+static int lua_gc_callback_cocos2dx_ui_Helper(lua_State* tolua_S)
 {
-    printf("luabindings: finalizing LUA object (Helper)");
+    printf("luabindings: finalizing LUA object (Helper)\n");
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+    if (   !tolua_isusertype(tolua_S,1,"ccui.Helper",0,&tolua_err) 
+        || !tolua_isnoobj(tolua_S,2,&tolua_err))
+    {
+        goto tolua_lerror;
+    }
+    else
+#endif
+    {
+        cocos2d::ui::Helper* self = (cocos2d::ui::Helper*)  tolua_tousertype(tolua_S,1,0);
+#if COCOS2D_DEBUG >= 1
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'delete'", nullptr);
+#endif
+        delete self;
+    }
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'delete'.",&tolua_err);
+#endif
     return 0;
 }
 
 int lua_register_cocos2dx_ui_Helper(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"ccui.Helper");
-    tolua_cclass(tolua_S,"Helper","ccui.Helper","",nullptr);
-
+    tolua_cclass(tolua_S,"Helper","ccui.Helper","",lua_gc_callback_cocos2dx_ui_Helper);
     tolua_beginmodule(tolua_S,"Helper");
         tolua_function(tolua_S,"seekWidgetByTag", lua_cocos2dx_ui_Helper_seekWidgetByTag);
         tolua_function(tolua_S,"seekActionWidgetByActionTag", lua_cocos2dx_ui_Helper_seekActionWidgetByActionTag);
@@ -14913,17 +14844,11 @@ int lua_cocos2dx_ui_RichElement_constructor(lua_State* tolua_S)
     return 0;
 }
 
-static int lua_cocos2dx_ui_RichElement_finalize(lua_State* tolua_S)
-{
-    printf("luabindings: finalizing LUA object (RichElement)");
-    return 0;
-}
 
 int lua_register_cocos2dx_ui_RichElement(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"ccui.RichElement");
-    tolua_cclass(tolua_S,"RichElement","ccui.RichElement","cc.Ref",nullptr);
-
+    tolua_cclass(tolua_S,"RichElement","ccui.RichElement","cc.Ref",lua_gc_callback_of_ref_class);
     tolua_beginmodule(tolua_S,"RichElement");
         tolua_function(tolua_S,"init",lua_cocos2dx_ui_RichElement_init);
         tolua_function(tolua_S,"new",lua_cocos2dx_ui_RichElement_constructor);
@@ -15073,17 +14998,11 @@ int lua_cocos2dx_ui_RichElementText_constructor(lua_State* tolua_S)
     return 0;
 }
 
-static int lua_cocos2dx_ui_RichElementText_finalize(lua_State* tolua_S)
-{
-    printf("luabindings: finalizing LUA object (RichElementText)");
-    return 0;
-}
 
 int lua_register_cocos2dx_ui_RichElementText(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"ccui.RichElementText");
-    tolua_cclass(tolua_S,"RichElementText","ccui.RichElementText","ccui.RichElement",nullptr);
-
+    tolua_cclass(tolua_S,"RichElementText","ccui.RichElementText","ccui.RichElement",lua_gc_callback_of_ref_class);
     tolua_beginmodule(tolua_S,"RichElementText");
         tolua_function(tolua_S,"init",lua_cocos2dx_ui_RichElementText_init);
         tolua_function(tolua_S,"new",lua_cocos2dx_ui_RichElementText_constructor);
@@ -15224,17 +15143,11 @@ int lua_cocos2dx_ui_RichElementImage_constructor(lua_State* tolua_S)
     return 0;
 }
 
-static int lua_cocos2dx_ui_RichElementImage_finalize(lua_State* tolua_S)
-{
-    printf("luabindings: finalizing LUA object (RichElementImage)");
-    return 0;
-}
 
 int lua_register_cocos2dx_ui_RichElementImage(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"ccui.RichElementImage");
-    tolua_cclass(tolua_S,"RichElementImage","ccui.RichElementImage","ccui.RichElement",nullptr);
-
+    tolua_cclass(tolua_S,"RichElementImage","ccui.RichElementImage","ccui.RichElement",lua_gc_callback_of_ref_class);
     tolua_beginmodule(tolua_S,"RichElementImage");
         tolua_function(tolua_S,"init",lua_cocos2dx_ui_RichElementImage_init);
         tolua_function(tolua_S,"new",lua_cocos2dx_ui_RichElementImage_constructor);
@@ -15375,17 +15288,11 @@ int lua_cocos2dx_ui_RichElementCustomNode_constructor(lua_State* tolua_S)
     return 0;
 }
 
-static int lua_cocos2dx_ui_RichElementCustomNode_finalize(lua_State* tolua_S)
-{
-    printf("luabindings: finalizing LUA object (RichElementCustomNode)");
-    return 0;
-}
 
 int lua_register_cocos2dx_ui_RichElementCustomNode(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"ccui.RichElementCustomNode");
-    tolua_cclass(tolua_S,"RichElementCustomNode","ccui.RichElementCustomNode","ccui.RichElement",nullptr);
-
+    tolua_cclass(tolua_S,"RichElementCustomNode","ccui.RichElementCustomNode","ccui.RichElement",lua_gc_callback_of_ref_class);
     tolua_beginmodule(tolua_S,"RichElementCustomNode");
         tolua_function(tolua_S,"init",lua_cocos2dx_ui_RichElementCustomNode_init);
         tolua_function(tolua_S,"new",lua_cocos2dx_ui_RichElementCustomNode_constructor);
@@ -15791,17 +15698,11 @@ int lua_cocos2dx_ui_RichText_constructor(lua_State* tolua_S)
     return 0;
 }
 
-static int lua_cocos2dx_ui_RichText_finalize(lua_State* tolua_S)
-{
-    printf("luabindings: finalizing LUA object (RichText)");
-    return 0;
-}
 
 int lua_register_cocos2dx_ui_RichText(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"ccui.RichText");
-    tolua_cclass(tolua_S,"RichText","ccui.RichText","ccui.Widget",nullptr);
-
+    tolua_cclass(tolua_S,"RichText","ccui.RichText","ccui.Widget",lua_gc_callback_of_ref_class);
     tolua_beginmodule(tolua_S,"RichText");
         tolua_function(tolua_S,"insertElement",lua_cocos2dx_ui_RichText_insertElement);
         tolua_function(tolua_S,"setAnchorPoint",lua_cocos2dx_ui_RichText_setAnchorPoint);

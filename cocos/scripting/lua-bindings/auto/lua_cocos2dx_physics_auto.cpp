@@ -4,6 +4,19 @@
 #include "LuaBasicConversions.h"
 
 
+static int lua_gc_callback_of_ref_class(lua_State* tolua_S)
+{
+    void* self = tolua_tousertype(tolua_S,1,0);
+    
+    cocos2d::Ref* ref = static_cast<cocos2d::Ref*>(self);
+    
+    CCLOG("gc: Ref type ( %s : %d)", typeid(*ref).name(), ref->getReferenceCount());
+    ref->_luaID = 0;
+    toluafix_remove_ccobject_by_refid(tolua_S, ref->_luaID);
+    ref->release();
+
+    return 0;
+}
 
 int lua_cocos2dx_physics_PhysicsWorld_setGravity(lua_State* tolua_S)
 {
@@ -804,17 +817,37 @@ int lua_cocos2dx_physics_PhysicsWorld_addJoint(lua_State* tolua_S)
 
     return 0;
 }
-static int lua_cocos2dx_physics_PhysicsWorld_finalize(lua_State* tolua_S)
+static int lua_gc_callback_cocos2dx_physics_PhysicsWorld(lua_State* tolua_S)
 {
-    printf("luabindings: finalizing LUA object (PhysicsWorld)");
+    printf("luabindings: finalizing LUA object (PhysicsWorld)\n");
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+    if (   !tolua_isusertype(tolua_S,1,"cc.PhysicsWorld",0,&tolua_err) 
+        || !tolua_isnoobj(tolua_S,2,&tolua_err))
+    {
+        goto tolua_lerror;
+    }
+    else
+#endif
+    {
+        cocos2d::PhysicsWorld* self = (cocos2d::PhysicsWorld*)  tolua_tousertype(tolua_S,1,0);
+#if COCOS2D_DEBUG >= 1
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'delete'", nullptr);
+#endif
+        delete self;
+    }
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'delete'.",&tolua_err);
+#endif
     return 0;
 }
 
 int lua_register_cocos2dx_physics_PhysicsWorld(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.PhysicsWorld");
-    tolua_cclass(tolua_S,"PhysicsWorld","cc.PhysicsWorld","",nullptr);
-
+    tolua_cclass(tolua_S,"PhysicsWorld","cc.PhysicsWorld","",lua_gc_callback_cocos2dx_physics_PhysicsWorld);
     tolua_beginmodule(tolua_S,"PhysicsWorld");
         tolua_function(tolua_S,"setGravity",lua_cocos2dx_physics_PhysicsWorld_setGravity);
         tolua_function(tolua_S,"getAllBodies",lua_cocos2dx_physics_PhysicsWorld_getAllBodies);
@@ -840,17 +873,37 @@ int lua_register_cocos2dx_physics_PhysicsWorld(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_physics_PhysicsDebugDraw_finalize(lua_State* tolua_S)
+static int lua_gc_callback_cocos2dx_physics_PhysicsDebugDraw(lua_State* tolua_S)
 {
-    printf("luabindings: finalizing LUA object (PhysicsDebugDraw)");
+    printf("luabindings: finalizing LUA object (PhysicsDebugDraw)\n");
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+    if (   !tolua_isusertype(tolua_S,1,"cc.PhysicsDebugDraw",0,&tolua_err) 
+        || !tolua_isnoobj(tolua_S,2,&tolua_err))
+    {
+        goto tolua_lerror;
+    }
+    else
+#endif
+    {
+        cocos2d::PhysicsDebugDraw* self = (cocos2d::PhysicsDebugDraw*)  tolua_tousertype(tolua_S,1,0);
+#if COCOS2D_DEBUG >= 1
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'delete'", nullptr);
+#endif
+        delete self;
+    }
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'delete'.",&tolua_err);
+#endif
     return 0;
 }
 
 int lua_register_cocos2dx_physics_PhysicsDebugDraw(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.PhysicsDebugDraw");
-    tolua_cclass(tolua_S,"PhysicsDebugDraw","cc.PhysicsDebugDraw","",nullptr);
-
+    tolua_cclass(tolua_S,"PhysicsDebugDraw","cc.PhysicsDebugDraw","",lua_gc_callback_cocos2dx_physics_PhysicsDebugDraw);
     tolua_beginmodule(tolua_S,"PhysicsDebugDraw");
     tolua_endmodule(tolua_S);
     std::string typeName = typeid(cocos2d::PhysicsDebugDraw).name();
@@ -2160,17 +2213,11 @@ int lua_cocos2dx_physics_PhysicsShape_getBody(lua_State* tolua_S)
 
     return 0;
 }
-static int lua_cocos2dx_physics_PhysicsShape_finalize(lua_State* tolua_S)
-{
-    printf("luabindings: finalizing LUA object (PhysicsShape)");
-    return 0;
-}
 
 int lua_register_cocos2dx_physics_PhysicsShape(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.PhysicsShape");
-    tolua_cclass(tolua_S,"PhysicsShape","cc.PhysicsShape","cc.Ref",nullptr);
-
+    tolua_cclass(tolua_S,"PhysicsShape","cc.PhysicsShape","cc.Ref",lua_gc_callback_of_ref_class);
     tolua_beginmodule(tolua_S,"PhysicsShape");
         tolua_function(tolua_S,"getFriction",lua_cocos2dx_physics_PhysicsShape_getFriction);
         tolua_function(tolua_S,"setGroup",lua_cocos2dx_physics_PhysicsShape_setGroup);
@@ -2393,17 +2440,11 @@ int lua_cocos2dx_physics_PhysicsShapeCircle_calculateMoment(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_physics_PhysicsShapeCircle_finalize(lua_State* tolua_S)
-{
-    printf("luabindings: finalizing LUA object (PhysicsShapeCircle)");
-    return 0;
-}
 
 int lua_register_cocos2dx_physics_PhysicsShapeCircle(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.PhysicsShapeCircle");
-    tolua_cclass(tolua_S,"PhysicsShapeCircle","cc.PhysicsShapeCircle","cc.PhysicsShape",nullptr);
-
+    tolua_cclass(tolua_S,"PhysicsShapeCircle","cc.PhysicsShapeCircle","cc.PhysicsShape",lua_gc_callback_of_ref_class);
     tolua_beginmodule(tolua_S,"PhysicsShapeCircle");
         tolua_function(tolua_S,"getRadius",lua_cocos2dx_physics_PhysicsShapeCircle_getRadius);
         tolua_function(tolua_S,"create", lua_cocos2dx_physics_PhysicsShapeCircle_create);
@@ -2645,17 +2686,11 @@ int lua_cocos2dx_physics_PhysicsShapeBox_calculateMoment(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_physics_PhysicsShapeBox_finalize(lua_State* tolua_S)
-{
-    printf("luabindings: finalizing LUA object (PhysicsShapeBox)");
-    return 0;
-}
 
 int lua_register_cocos2dx_physics_PhysicsShapeBox(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.PhysicsShapeBox");
-    tolua_cclass(tolua_S,"PhysicsShapeBox","cc.PhysicsShapeBox","cc.PhysicsShape",nullptr);
-
+    tolua_cclass(tolua_S,"PhysicsShapeBox","cc.PhysicsShapeBox","cc.PhysicsShape",lua_gc_callback_of_ref_class);
     tolua_beginmodule(tolua_S,"PhysicsShapeBox");
         tolua_function(tolua_S,"getPointsCount",lua_cocos2dx_physics_PhysicsShapeBox_getPointsCount);
         tolua_function(tolua_S,"getSize",lua_cocos2dx_physics_PhysicsShapeBox_getSize);
@@ -2760,17 +2795,11 @@ int lua_cocos2dx_physics_PhysicsShapePolygon_getPoint(lua_State* tolua_S)
 
     return 0;
 }
-static int lua_cocos2dx_physics_PhysicsShapePolygon_finalize(lua_State* tolua_S)
-{
-    printf("luabindings: finalizing LUA object (PhysicsShapePolygon)");
-    return 0;
-}
 
 int lua_register_cocos2dx_physics_PhysicsShapePolygon(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.PhysicsShapePolygon");
-    tolua_cclass(tolua_S,"PhysicsShapePolygon","cc.PhysicsShapePolygon","cc.PhysicsShape",nullptr);
-
+    tolua_cclass(tolua_S,"PhysicsShapePolygon","cc.PhysicsShapePolygon","cc.PhysicsShape",lua_gc_callback_of_ref_class);
     tolua_beginmodule(tolua_S,"PhysicsShapePolygon");
         tolua_function(tolua_S,"getPointsCount",lua_cocos2dx_physics_PhysicsShapePolygon_getPointsCount);
         tolua_function(tolua_S,"getPoint",lua_cocos2dx_physics_PhysicsShapePolygon_getPoint);
@@ -2934,17 +2963,11 @@ int lua_cocos2dx_physics_PhysicsShapeEdgeSegment_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_physics_PhysicsShapeEdgeSegment_finalize(lua_State* tolua_S)
-{
-    printf("luabindings: finalizing LUA object (PhysicsShapeEdgeSegment)");
-    return 0;
-}
 
 int lua_register_cocos2dx_physics_PhysicsShapeEdgeSegment(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.PhysicsShapeEdgeSegment");
-    tolua_cclass(tolua_S,"PhysicsShapeEdgeSegment","cc.PhysicsShapeEdgeSegment","cc.PhysicsShape",nullptr);
-
+    tolua_cclass(tolua_S,"PhysicsShapeEdgeSegment","cc.PhysicsShapeEdgeSegment","cc.PhysicsShape",lua_gc_callback_of_ref_class);
     tolua_beginmodule(tolua_S,"PhysicsShapeEdgeSegment");
         tolua_function(tolua_S,"getPointB",lua_cocos2dx_physics_PhysicsShapeEdgeSegment_getPointB);
         tolua_function(tolua_S,"getPointA",lua_cocos2dx_physics_PhysicsShapeEdgeSegment_getPointA);
@@ -3075,17 +3098,11 @@ int lua_cocos2dx_physics_PhysicsShapeEdgeBox_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_physics_PhysicsShapeEdgeBox_finalize(lua_State* tolua_S)
-{
-    printf("luabindings: finalizing LUA object (PhysicsShapeEdgeBox)");
-    return 0;
-}
 
 int lua_register_cocos2dx_physics_PhysicsShapeEdgeBox(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.PhysicsShapeEdgeBox");
-    tolua_cclass(tolua_S,"PhysicsShapeEdgeBox","cc.PhysicsShapeEdgeBox","cc.PhysicsShape",nullptr);
-
+    tolua_cclass(tolua_S,"PhysicsShapeEdgeBox","cc.PhysicsShapeEdgeBox","cc.PhysicsShape",lua_gc_callback_of_ref_class);
     tolua_beginmodule(tolua_S,"PhysicsShapeEdgeBox");
         tolua_function(tolua_S,"getPointsCount",lua_cocos2dx_physics_PhysicsShapeEdgeBox_getPointsCount);
         tolua_function(tolua_S,"create", lua_cocos2dx_physics_PhysicsShapeEdgeBox_create);
@@ -3140,17 +3157,11 @@ int lua_cocos2dx_physics_PhysicsShapeEdgePolygon_getPointsCount(lua_State* tolua
 
     return 0;
 }
-static int lua_cocos2dx_physics_PhysicsShapeEdgePolygon_finalize(lua_State* tolua_S)
-{
-    printf("luabindings: finalizing LUA object (PhysicsShapeEdgePolygon)");
-    return 0;
-}
 
 int lua_register_cocos2dx_physics_PhysicsShapeEdgePolygon(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.PhysicsShapeEdgePolygon");
-    tolua_cclass(tolua_S,"PhysicsShapeEdgePolygon","cc.PhysicsShapeEdgePolygon","cc.PhysicsShape",nullptr);
-
+    tolua_cclass(tolua_S,"PhysicsShapeEdgePolygon","cc.PhysicsShapeEdgePolygon","cc.PhysicsShape",lua_gc_callback_of_ref_class);
     tolua_beginmodule(tolua_S,"PhysicsShapeEdgePolygon");
         tolua_function(tolua_S,"getPointsCount",lua_cocos2dx_physics_PhysicsShapeEdgePolygon_getPointsCount);
     tolua_endmodule(tolua_S);
@@ -3204,17 +3215,11 @@ int lua_cocos2dx_physics_PhysicsShapeEdgeChain_getPointsCount(lua_State* tolua_S
 
     return 0;
 }
-static int lua_cocos2dx_physics_PhysicsShapeEdgeChain_finalize(lua_State* tolua_S)
-{
-    printf("luabindings: finalizing LUA object (PhysicsShapeEdgeChain)");
-    return 0;
-}
 
 int lua_register_cocos2dx_physics_PhysicsShapeEdgeChain(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.PhysicsShapeEdgeChain");
-    tolua_cclass(tolua_S,"PhysicsShapeEdgeChain","cc.PhysicsShapeEdgeChain","cc.PhysicsShape",nullptr);
-
+    tolua_cclass(tolua_S,"PhysicsShapeEdgeChain","cc.PhysicsShapeEdgeChain","cc.PhysicsShape",lua_gc_callback_of_ref_class);
     tolua_beginmodule(tolua_S,"PhysicsShapeEdgeChain");
         tolua_function(tolua_S,"getPointsCount",lua_cocos2dx_physics_PhysicsShapeEdgeChain_getPointsCount);
     tolua_endmodule(tolua_S);
@@ -6377,17 +6382,11 @@ int lua_cocos2dx_physics_PhysicsBody_createCircle(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_physics_PhysicsBody_finalize(lua_State* tolua_S)
-{
-    printf("luabindings: finalizing LUA object (PhysicsBody)");
-    return 0;
-}
 
 int lua_register_cocos2dx_physics_PhysicsBody(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.PhysicsBody");
-    tolua_cclass(tolua_S,"PhysicsBody","cc.PhysicsBody","cc.Ref",nullptr);
-
+    tolua_cclass(tolua_S,"PhysicsBody","cc.PhysicsBody","cc.Ref",lua_gc_callback_of_ref_class);
     tolua_beginmodule(tolua_S,"PhysicsBody");
         tolua_function(tolua_S,"isGravityEnabled",lua_cocos2dx_physics_PhysicsBody_isGravityEnabled);
         tolua_function(tolua_S,"resetForces",lua_cocos2dx_physics_PhysicsBody_resetForces);
@@ -6682,17 +6681,11 @@ int lua_cocos2dx_physics_PhysicsContact_getShapeB(lua_State* tolua_S)
 
     return 0;
 }
-static int lua_cocos2dx_physics_PhysicsContact_finalize(lua_State* tolua_S)
-{
-    printf("luabindings: finalizing LUA object (PhysicsContact)");
-    return 0;
-}
 
 int lua_register_cocos2dx_physics_PhysicsContact(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.PhysicsContact");
-    tolua_cclass(tolua_S,"PhysicsContact","cc.PhysicsContact","cc.EventCustom",nullptr);
-
+    tolua_cclass(tolua_S,"PhysicsContact","cc.PhysicsContact","cc.EventCustom",lua_gc_callback_of_ref_class);
     tolua_beginmodule(tolua_S,"PhysicsContact");
         tolua_function(tolua_S,"getContactData",lua_cocos2dx_physics_PhysicsContact_getContactData);
         tolua_function(tolua_S,"getEventCode",lua_cocos2dx_physics_PhysicsContact_getEventCode);
@@ -7019,17 +7012,37 @@ int lua_cocos2dx_physics_PhysicsContactPreSolve_setRestitution(lua_State* tolua_
 
     return 0;
 }
-static int lua_cocos2dx_physics_PhysicsContactPreSolve_finalize(lua_State* tolua_S)
+static int lua_gc_callback_cocos2dx_physics_PhysicsContactPreSolve(lua_State* tolua_S)
 {
-    printf("luabindings: finalizing LUA object (PhysicsContactPreSolve)");
+    printf("luabindings: finalizing LUA object (PhysicsContactPreSolve)\n");
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+    if (   !tolua_isusertype(tolua_S,1,"cc.PhysicsContactPreSolve",0,&tolua_err) 
+        || !tolua_isnoobj(tolua_S,2,&tolua_err))
+    {
+        goto tolua_lerror;
+    }
+    else
+#endif
+    {
+        cocos2d::PhysicsContactPreSolve* self = (cocos2d::PhysicsContactPreSolve*)  tolua_tousertype(tolua_S,1,0);
+#if COCOS2D_DEBUG >= 1
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'delete'", nullptr);
+#endif
+        delete self;
+    }
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'delete'.",&tolua_err);
+#endif
     return 0;
 }
 
 int lua_register_cocos2dx_physics_PhysicsContactPreSolve(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.PhysicsContactPreSolve");
-    tolua_cclass(tolua_S,"PhysicsContactPreSolve","cc.PhysicsContactPreSolve","",nullptr);
-
+    tolua_cclass(tolua_S,"PhysicsContactPreSolve","cc.PhysicsContactPreSolve","",lua_gc_callback_cocos2dx_physics_PhysicsContactPreSolve);
     tolua_beginmodule(tolua_S,"PhysicsContactPreSolve");
         tolua_function(tolua_S,"getFriction",lua_cocos2dx_physics_PhysicsContactPreSolve_getFriction);
         tolua_function(tolua_S,"getRestitution",lua_cocos2dx_physics_PhysicsContactPreSolve_getRestitution);
@@ -7177,17 +7190,37 @@ int lua_cocos2dx_physics_PhysicsContactPostSolve_getRestitution(lua_State* tolua
 
     return 0;
 }
-static int lua_cocos2dx_physics_PhysicsContactPostSolve_finalize(lua_State* tolua_S)
+static int lua_gc_callback_cocos2dx_physics_PhysicsContactPostSolve(lua_State* tolua_S)
 {
-    printf("luabindings: finalizing LUA object (PhysicsContactPostSolve)");
+    printf("luabindings: finalizing LUA object (PhysicsContactPostSolve)\n");
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+    if (   !tolua_isusertype(tolua_S,1,"cc.PhysicsContactPostSolve",0,&tolua_err) 
+        || !tolua_isnoobj(tolua_S,2,&tolua_err))
+    {
+        goto tolua_lerror;
+    }
+    else
+#endif
+    {
+        cocos2d::PhysicsContactPostSolve* self = (cocos2d::PhysicsContactPostSolve*)  tolua_tousertype(tolua_S,1,0);
+#if COCOS2D_DEBUG >= 1
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'delete'", nullptr);
+#endif
+        delete self;
+    }
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'delete'.",&tolua_err);
+#endif
     return 0;
 }
 
 int lua_register_cocos2dx_physics_PhysicsContactPostSolve(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.PhysicsContactPostSolve");
-    tolua_cclass(tolua_S,"PhysicsContactPostSolve","cc.PhysicsContactPostSolve","",nullptr);
-
+    tolua_cclass(tolua_S,"PhysicsContactPostSolve","cc.PhysicsContactPostSolve","",lua_gc_callback_cocos2dx_physics_PhysicsContactPostSolve);
     tolua_beginmodule(tolua_S,"PhysicsContactPostSolve");
         tolua_function(tolua_S,"getFriction",lua_cocos2dx_physics_PhysicsContactPostSolve_getFriction);
         tolua_function(tolua_S,"getSurfaceVelocity",lua_cocos2dx_physics_PhysicsContactPostSolve_getSurfaceVelocity);
@@ -7230,17 +7263,11 @@ int lua_cocos2dx_physics_EventListenerPhysicsContact_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_physics_EventListenerPhysicsContact_finalize(lua_State* tolua_S)
-{
-    printf("luabindings: finalizing LUA object (EventListenerPhysicsContact)");
-    return 0;
-}
 
 int lua_register_cocos2dx_physics_EventListenerPhysicsContact(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.EventListenerPhysicsContact");
-    tolua_cclass(tolua_S,"EventListenerPhysicsContact","cc.EventListenerPhysicsContact","cc.EventListenerCustom",nullptr);
-
+    tolua_cclass(tolua_S,"EventListenerPhysicsContact","cc.EventListenerPhysicsContact","cc.EventListenerCustom",lua_gc_callback_of_ref_class);
     tolua_beginmodule(tolua_S,"EventListenerPhysicsContact");
         tolua_function(tolua_S,"create", lua_cocos2dx_physics_EventListenerPhysicsContact_create);
     tolua_endmodule(tolua_S);
@@ -7335,17 +7362,11 @@ int lua_cocos2dx_physics_EventListenerPhysicsContactWithBodies_create(lua_State*
 #endif
     return 0;
 }
-static int lua_cocos2dx_physics_EventListenerPhysicsContactWithBodies_finalize(lua_State* tolua_S)
-{
-    printf("luabindings: finalizing LUA object (EventListenerPhysicsContactWithBodies)");
-    return 0;
-}
 
 int lua_register_cocos2dx_physics_EventListenerPhysicsContactWithBodies(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.EventListenerPhysicsContactWithBodies");
-    tolua_cclass(tolua_S,"EventListenerPhysicsContactWithBodies","cc.EventListenerPhysicsContactWithBodies","cc.EventListenerPhysicsContact",nullptr);
-
+    tolua_cclass(tolua_S,"EventListenerPhysicsContactWithBodies","cc.EventListenerPhysicsContactWithBodies","cc.EventListenerPhysicsContact",lua_gc_callback_of_ref_class);
     tolua_beginmodule(tolua_S,"EventListenerPhysicsContactWithBodies");
         tolua_function(tolua_S,"hitTest",lua_cocos2dx_physics_EventListenerPhysicsContactWithBodies_hitTest);
         tolua_function(tolua_S,"create", lua_cocos2dx_physics_EventListenerPhysicsContactWithBodies_create);
@@ -7441,17 +7462,11 @@ int lua_cocos2dx_physics_EventListenerPhysicsContactWithShapes_create(lua_State*
 #endif
     return 0;
 }
-static int lua_cocos2dx_physics_EventListenerPhysicsContactWithShapes_finalize(lua_State* tolua_S)
-{
-    printf("luabindings: finalizing LUA object (EventListenerPhysicsContactWithShapes)");
-    return 0;
-}
 
 int lua_register_cocos2dx_physics_EventListenerPhysicsContactWithShapes(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.EventListenerPhysicsContactWithShapes");
-    tolua_cclass(tolua_S,"EventListenerPhysicsContactWithShapes","cc.EventListenerPhysicsContactWithShapes","cc.EventListenerPhysicsContact",nullptr);
-
+    tolua_cclass(tolua_S,"EventListenerPhysicsContactWithShapes","cc.EventListenerPhysicsContactWithShapes","cc.EventListenerPhysicsContact",lua_gc_callback_of_ref_class);
     tolua_beginmodule(tolua_S,"EventListenerPhysicsContactWithShapes");
         tolua_function(tolua_S,"hitTest",lua_cocos2dx_physics_EventListenerPhysicsContactWithShapes_hitTest);
         tolua_function(tolua_S,"create", lua_cocos2dx_physics_EventListenerPhysicsContactWithShapes_create);
@@ -7545,17 +7560,11 @@ int lua_cocos2dx_physics_EventListenerPhysicsContactWithGroup_create(lua_State* 
 #endif
     return 0;
 }
-static int lua_cocos2dx_physics_EventListenerPhysicsContactWithGroup_finalize(lua_State* tolua_S)
-{
-    printf("luabindings: finalizing LUA object (EventListenerPhysicsContactWithGroup)");
-    return 0;
-}
 
 int lua_register_cocos2dx_physics_EventListenerPhysicsContactWithGroup(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.EventListenerPhysicsContactWithGroup");
-    tolua_cclass(tolua_S,"EventListenerPhysicsContactWithGroup","cc.EventListenerPhysicsContactWithGroup","cc.EventListenerPhysicsContact",nullptr);
-
+    tolua_cclass(tolua_S,"EventListenerPhysicsContactWithGroup","cc.EventListenerPhysicsContactWithGroup","cc.EventListenerPhysicsContact",lua_gc_callback_of_ref_class);
     tolua_beginmodule(tolua_S,"EventListenerPhysicsContactWithGroup");
         tolua_function(tolua_S,"hitTest",lua_cocos2dx_physics_EventListenerPhysicsContactWithGroup_hitTest);
         tolua_function(tolua_S,"create", lua_cocos2dx_physics_EventListenerPhysicsContactWithGroup_create);
@@ -8133,17 +8142,37 @@ int lua_cocos2dx_physics_PhysicsJoint_destroy(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_physics_PhysicsJoint_finalize(lua_State* tolua_S)
+static int lua_gc_callback_cocos2dx_physics_PhysicsJoint(lua_State* tolua_S)
 {
-    printf("luabindings: finalizing LUA object (PhysicsJoint)");
+    printf("luabindings: finalizing LUA object (PhysicsJoint)\n");
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+    if (   !tolua_isusertype(tolua_S,1,"cc.PhysicsJoint",0,&tolua_err) 
+        || !tolua_isnoobj(tolua_S,2,&tolua_err))
+    {
+        goto tolua_lerror;
+    }
+    else
+#endif
+    {
+        cocos2d::PhysicsJoint* self = (cocos2d::PhysicsJoint*)  tolua_tousertype(tolua_S,1,0);
+#if COCOS2D_DEBUG >= 1
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'delete'", nullptr);
+#endif
+        delete self;
+    }
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'delete'.",&tolua_err);
+#endif
     return 0;
 }
 
 int lua_register_cocos2dx_physics_PhysicsJoint(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.PhysicsJoint");
-    tolua_cclass(tolua_S,"PhysicsJoint","cc.PhysicsJoint","",nullptr);
-
+    tolua_cclass(tolua_S,"PhysicsJoint","cc.PhysicsJoint","",lua_gc_callback_cocos2dx_physics_PhysicsJoint);
     tolua_beginmodule(tolua_S,"PhysicsJoint");
         tolua_function(tolua_S,"getBodyA",lua_cocos2dx_physics_PhysicsJoint_getBodyA);
         tolua_function(tolua_S,"getBodyB",lua_cocos2dx_physics_PhysicsJoint_getBodyB);
@@ -8202,17 +8231,37 @@ int lua_cocos2dx_physics_PhysicsJointFixed_construct(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_physics_PhysicsJointFixed_finalize(lua_State* tolua_S)
+static int lua_gc_callback_cocos2dx_physics_PhysicsJointFixed(lua_State* tolua_S)
 {
-    printf("luabindings: finalizing LUA object (PhysicsJointFixed)");
+    printf("luabindings: finalizing LUA object (PhysicsJointFixed)\n");
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+    if (   !tolua_isusertype(tolua_S,1,"cc.PhysicsJointFixed",0,&tolua_err) 
+        || !tolua_isnoobj(tolua_S,2,&tolua_err))
+    {
+        goto tolua_lerror;
+    }
+    else
+#endif
+    {
+        cocos2d::PhysicsJointFixed* self = (cocos2d::PhysicsJointFixed*)  tolua_tousertype(tolua_S,1,0);
+#if COCOS2D_DEBUG >= 1
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'delete'", nullptr);
+#endif
+        delete self;
+    }
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'delete'.",&tolua_err);
+#endif
     return 0;
 }
 
 int lua_register_cocos2dx_physics_PhysicsJointFixed(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.PhysicsJointFixed");
-    tolua_cclass(tolua_S,"PhysicsJointFixed","cc.PhysicsJointFixed","cc.PhysicsJoint",nullptr);
-
+    tolua_cclass(tolua_S,"PhysicsJointFixed","cc.PhysicsJointFixed","cc.PhysicsJoint",lua_gc_callback_cocos2dx_physics_PhysicsJointFixed);
     tolua_beginmodule(tolua_S,"PhysicsJointFixed");
         tolua_function(tolua_S,"construct", lua_cocos2dx_physics_PhysicsJointFixed_construct);
     tolua_endmodule(tolua_S);
@@ -8654,17 +8703,37 @@ int lua_cocos2dx_physics_PhysicsJointLimit_construct(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_physics_PhysicsJointLimit_finalize(lua_State* tolua_S)
+static int lua_gc_callback_cocos2dx_physics_PhysicsJointLimit(lua_State* tolua_S)
 {
-    printf("luabindings: finalizing LUA object (PhysicsJointLimit)");
+    printf("luabindings: finalizing LUA object (PhysicsJointLimit)\n");
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+    if (   !tolua_isusertype(tolua_S,1,"cc.PhysicsJointLimit",0,&tolua_err) 
+        || !tolua_isnoobj(tolua_S,2,&tolua_err))
+    {
+        goto tolua_lerror;
+    }
+    else
+#endif
+    {
+        cocos2d::PhysicsJointLimit* self = (cocos2d::PhysicsJointLimit*)  tolua_tousertype(tolua_S,1,0);
+#if COCOS2D_DEBUG >= 1
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'delete'", nullptr);
+#endif
+        delete self;
+    }
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'delete'.",&tolua_err);
+#endif
     return 0;
 }
 
 int lua_register_cocos2dx_physics_PhysicsJointLimit(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.PhysicsJointLimit");
-    tolua_cclass(tolua_S,"PhysicsJointLimit","cc.PhysicsJointLimit","cc.PhysicsJoint",nullptr);
-
+    tolua_cclass(tolua_S,"PhysicsJointLimit","cc.PhysicsJointLimit","cc.PhysicsJoint",lua_gc_callback_cocos2dx_physics_PhysicsJointLimit);
     tolua_beginmodule(tolua_S,"PhysicsJointLimit");
         tolua_function(tolua_S,"setAnchr2",lua_cocos2dx_physics_PhysicsJointLimit_setAnchr2);
         tolua_function(tolua_S,"setAnchr1",lua_cocos2dx_physics_PhysicsJointLimit_setAnchr1);
@@ -8719,17 +8788,37 @@ int lua_cocos2dx_physics_PhysicsJointPin_construct(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_physics_PhysicsJointPin_finalize(lua_State* tolua_S)
+static int lua_gc_callback_cocos2dx_physics_PhysicsJointPin(lua_State* tolua_S)
 {
-    printf("luabindings: finalizing LUA object (PhysicsJointPin)");
+    printf("luabindings: finalizing LUA object (PhysicsJointPin)\n");
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+    if (   !tolua_isusertype(tolua_S,1,"cc.PhysicsJointPin",0,&tolua_err) 
+        || !tolua_isnoobj(tolua_S,2,&tolua_err))
+    {
+        goto tolua_lerror;
+    }
+    else
+#endif
+    {
+        cocos2d::PhysicsJointPin* self = (cocos2d::PhysicsJointPin*)  tolua_tousertype(tolua_S,1,0);
+#if COCOS2D_DEBUG >= 1
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'delete'", nullptr);
+#endif
+        delete self;
+    }
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'delete'.",&tolua_err);
+#endif
     return 0;
 }
 
 int lua_register_cocos2dx_physics_PhysicsJointPin(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.PhysicsJointPin");
-    tolua_cclass(tolua_S,"PhysicsJointPin","cc.PhysicsJointPin","cc.PhysicsJoint",nullptr);
-
+    tolua_cclass(tolua_S,"PhysicsJointPin","cc.PhysicsJointPin","cc.PhysicsJoint",lua_gc_callback_cocos2dx_physics_PhysicsJointPin);
     tolua_beginmodule(tolua_S,"PhysicsJointPin");
         tolua_function(tolua_S,"construct", lua_cocos2dx_physics_PhysicsJointPin_construct);
     tolua_endmodule(tolua_S);
@@ -8868,17 +8957,37 @@ int lua_cocos2dx_physics_PhysicsJointDistance_construct(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_physics_PhysicsJointDistance_finalize(lua_State* tolua_S)
+static int lua_gc_callback_cocos2dx_physics_PhysicsJointDistance(lua_State* tolua_S)
 {
-    printf("luabindings: finalizing LUA object (PhysicsJointDistance)");
+    printf("luabindings: finalizing LUA object (PhysicsJointDistance)\n");
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+    if (   !tolua_isusertype(tolua_S,1,"cc.PhysicsJointDistance",0,&tolua_err) 
+        || !tolua_isnoobj(tolua_S,2,&tolua_err))
+    {
+        goto tolua_lerror;
+    }
+    else
+#endif
+    {
+        cocos2d::PhysicsJointDistance* self = (cocos2d::PhysicsJointDistance*)  tolua_tousertype(tolua_S,1,0);
+#if COCOS2D_DEBUG >= 1
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'delete'", nullptr);
+#endif
+        delete self;
+    }
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'delete'.",&tolua_err);
+#endif
     return 0;
 }
 
 int lua_register_cocos2dx_physics_PhysicsJointDistance(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.PhysicsJointDistance");
-    tolua_cclass(tolua_S,"PhysicsJointDistance","cc.PhysicsJointDistance","cc.PhysicsJoint",nullptr);
-
+    tolua_cclass(tolua_S,"PhysicsJointDistance","cc.PhysicsJointDistance","cc.PhysicsJoint",lua_gc_callback_cocos2dx_physics_PhysicsJointDistance);
     tolua_beginmodule(tolua_S,"PhysicsJointDistance");
         tolua_function(tolua_S,"setDistance",lua_cocos2dx_physics_PhysicsJointDistance_setDistance);
         tolua_function(tolua_S,"getDistance",lua_cocos2dx_physics_PhysicsJointDistance_getDistance);
@@ -9383,17 +9492,37 @@ int lua_cocos2dx_physics_PhysicsJointSpring_construct(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_physics_PhysicsJointSpring_finalize(lua_State* tolua_S)
+static int lua_gc_callback_cocos2dx_physics_PhysicsJointSpring(lua_State* tolua_S)
 {
-    printf("luabindings: finalizing LUA object (PhysicsJointSpring)");
+    printf("luabindings: finalizing LUA object (PhysicsJointSpring)\n");
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+    if (   !tolua_isusertype(tolua_S,1,"cc.PhysicsJointSpring",0,&tolua_err) 
+        || !tolua_isnoobj(tolua_S,2,&tolua_err))
+    {
+        goto tolua_lerror;
+    }
+    else
+#endif
+    {
+        cocos2d::PhysicsJointSpring* self = (cocos2d::PhysicsJointSpring*)  tolua_tousertype(tolua_S,1,0);
+#if COCOS2D_DEBUG >= 1
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'delete'", nullptr);
+#endif
+        delete self;
+    }
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'delete'.",&tolua_err);
+#endif
     return 0;
 }
 
 int lua_register_cocos2dx_physics_PhysicsJointSpring(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.PhysicsJointSpring");
-    tolua_cclass(tolua_S,"PhysicsJointSpring","cc.PhysicsJointSpring","cc.PhysicsJoint",nullptr);
-
+    tolua_cclass(tolua_S,"PhysicsJointSpring","cc.PhysicsJointSpring","cc.PhysicsJoint",lua_gc_callback_cocos2dx_physics_PhysicsJointSpring);
     tolua_beginmodule(tolua_S,"PhysicsJointSpring");
         tolua_function(tolua_S,"setAnchr2",lua_cocos2dx_physics_PhysicsJointSpring_setAnchr2);
         tolua_function(tolua_S,"setAnchr1",lua_cocos2dx_physics_PhysicsJointSpring_setAnchr1);
@@ -9724,17 +9853,37 @@ int lua_cocos2dx_physics_PhysicsJointGroove_construct(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_physics_PhysicsJointGroove_finalize(lua_State* tolua_S)
+static int lua_gc_callback_cocos2dx_physics_PhysicsJointGroove(lua_State* tolua_S)
 {
-    printf("luabindings: finalizing LUA object (PhysicsJointGroove)");
+    printf("luabindings: finalizing LUA object (PhysicsJointGroove)\n");
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+    if (   !tolua_isusertype(tolua_S,1,"cc.PhysicsJointGroove",0,&tolua_err) 
+        || !tolua_isnoobj(tolua_S,2,&tolua_err))
+    {
+        goto tolua_lerror;
+    }
+    else
+#endif
+    {
+        cocos2d::PhysicsJointGroove* self = (cocos2d::PhysicsJointGroove*)  tolua_tousertype(tolua_S,1,0);
+#if COCOS2D_DEBUG >= 1
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'delete'", nullptr);
+#endif
+        delete self;
+    }
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'delete'.",&tolua_err);
+#endif
     return 0;
 }
 
 int lua_register_cocos2dx_physics_PhysicsJointGroove(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.PhysicsJointGroove");
-    tolua_cclass(tolua_S,"PhysicsJointGroove","cc.PhysicsJointGroove","cc.PhysicsJoint",nullptr);
-
+    tolua_cclass(tolua_S,"PhysicsJointGroove","cc.PhysicsJointGroove","cc.PhysicsJoint",lua_gc_callback_cocos2dx_physics_PhysicsJointGroove);
     tolua_beginmodule(tolua_S,"PhysicsJointGroove");
         tolua_function(tolua_S,"setAnchr2",lua_cocos2dx_physics_PhysicsJointGroove_setAnchr2);
         tolua_function(tolua_S,"setGrooveA",lua_cocos2dx_physics_PhysicsJointGroove_setGrooveA);
@@ -10059,17 +10208,37 @@ int lua_cocos2dx_physics_PhysicsJointRotarySpring_construct(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_physics_PhysicsJointRotarySpring_finalize(lua_State* tolua_S)
+static int lua_gc_callback_cocos2dx_physics_PhysicsJointRotarySpring(lua_State* tolua_S)
 {
-    printf("luabindings: finalizing LUA object (PhysicsJointRotarySpring)");
+    printf("luabindings: finalizing LUA object (PhysicsJointRotarySpring)\n");
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+    if (   !tolua_isusertype(tolua_S,1,"cc.PhysicsJointRotarySpring",0,&tolua_err) 
+        || !tolua_isnoobj(tolua_S,2,&tolua_err))
+    {
+        goto tolua_lerror;
+    }
+    else
+#endif
+    {
+        cocos2d::PhysicsJointRotarySpring* self = (cocos2d::PhysicsJointRotarySpring*)  tolua_tousertype(tolua_S,1,0);
+#if COCOS2D_DEBUG >= 1
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'delete'", nullptr);
+#endif
+        delete self;
+    }
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'delete'.",&tolua_err);
+#endif
     return 0;
 }
 
 int lua_register_cocos2dx_physics_PhysicsJointRotarySpring(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.PhysicsJointRotarySpring");
-    tolua_cclass(tolua_S,"PhysicsJointRotarySpring","cc.PhysicsJointRotarySpring","cc.PhysicsJoint",nullptr);
-
+    tolua_cclass(tolua_S,"PhysicsJointRotarySpring","cc.PhysicsJointRotarySpring","cc.PhysicsJoint",lua_gc_callback_cocos2dx_physics_PhysicsJointRotarySpring);
     tolua_beginmodule(tolua_S,"PhysicsJointRotarySpring");
         tolua_function(tolua_S,"getDamping",lua_cocos2dx_physics_PhysicsJointRotarySpring_getDamping);
         tolua_function(tolua_S,"setRestAngle",lua_cocos2dx_physics_PhysicsJointRotarySpring_setRestAngle);
@@ -10325,17 +10494,37 @@ int lua_cocos2dx_physics_PhysicsJointRotaryLimit_construct(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_physics_PhysicsJointRotaryLimit_finalize(lua_State* tolua_S)
+static int lua_gc_callback_cocos2dx_physics_PhysicsJointRotaryLimit(lua_State* tolua_S)
 {
-    printf("luabindings: finalizing LUA object (PhysicsJointRotaryLimit)");
+    printf("luabindings: finalizing LUA object (PhysicsJointRotaryLimit)\n");
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+    if (   !tolua_isusertype(tolua_S,1,"cc.PhysicsJointRotaryLimit",0,&tolua_err) 
+        || !tolua_isnoobj(tolua_S,2,&tolua_err))
+    {
+        goto tolua_lerror;
+    }
+    else
+#endif
+    {
+        cocos2d::PhysicsJointRotaryLimit* self = (cocos2d::PhysicsJointRotaryLimit*)  tolua_tousertype(tolua_S,1,0);
+#if COCOS2D_DEBUG >= 1
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'delete'", nullptr);
+#endif
+        delete self;
+    }
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'delete'.",&tolua_err);
+#endif
     return 0;
 }
 
 int lua_register_cocos2dx_physics_PhysicsJointRotaryLimit(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.PhysicsJointRotaryLimit");
-    tolua_cclass(tolua_S,"PhysicsJointRotaryLimit","cc.PhysicsJointRotaryLimit","cc.PhysicsJoint",nullptr);
-
+    tolua_cclass(tolua_S,"PhysicsJointRotaryLimit","cc.PhysicsJointRotaryLimit","cc.PhysicsJoint",lua_gc_callback_cocos2dx_physics_PhysicsJointRotaryLimit);
     tolua_beginmodule(tolua_S,"PhysicsJointRotaryLimit");
         tolua_function(tolua_S,"getMax",lua_cocos2dx_physics_PhysicsJointRotaryLimit_getMax);
         tolua_function(tolua_S,"setMin",lua_cocos2dx_physics_PhysicsJointRotaryLimit_setMin);
@@ -10658,17 +10847,37 @@ int lua_cocos2dx_physics_PhysicsJointRatchet_construct(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_physics_PhysicsJointRatchet_finalize(lua_State* tolua_S)
+static int lua_gc_callback_cocos2dx_physics_PhysicsJointRatchet(lua_State* tolua_S)
 {
-    printf("luabindings: finalizing LUA object (PhysicsJointRatchet)");
+    printf("luabindings: finalizing LUA object (PhysicsJointRatchet)\n");
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+    if (   !tolua_isusertype(tolua_S,1,"cc.PhysicsJointRatchet",0,&tolua_err) 
+        || !tolua_isnoobj(tolua_S,2,&tolua_err))
+    {
+        goto tolua_lerror;
+    }
+    else
+#endif
+    {
+        cocos2d::PhysicsJointRatchet* self = (cocos2d::PhysicsJointRatchet*)  tolua_tousertype(tolua_S,1,0);
+#if COCOS2D_DEBUG >= 1
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'delete'", nullptr);
+#endif
+        delete self;
+    }
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'delete'.",&tolua_err);
+#endif
     return 0;
 }
 
 int lua_register_cocos2dx_physics_PhysicsJointRatchet(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.PhysicsJointRatchet");
-    tolua_cclass(tolua_S,"PhysicsJointRatchet","cc.PhysicsJointRatchet","cc.PhysicsJoint",nullptr);
-
+    tolua_cclass(tolua_S,"PhysicsJointRatchet","cc.PhysicsJointRatchet","cc.PhysicsJoint",lua_gc_callback_cocos2dx_physics_PhysicsJointRatchet);
     tolua_beginmodule(tolua_S,"PhysicsJointRatchet");
         tolua_function(tolua_S,"getAngle",lua_cocos2dx_physics_PhysicsJointRatchet_getAngle);
         tolua_function(tolua_S,"setAngle",lua_cocos2dx_physics_PhysicsJointRatchet_setAngle);
@@ -10903,17 +11112,37 @@ int lua_cocos2dx_physics_PhysicsJointGear_construct(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_physics_PhysicsJointGear_finalize(lua_State* tolua_S)
+static int lua_gc_callback_cocos2dx_physics_PhysicsJointGear(lua_State* tolua_S)
 {
-    printf("luabindings: finalizing LUA object (PhysicsJointGear)");
+    printf("luabindings: finalizing LUA object (PhysicsJointGear)\n");
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+    if (   !tolua_isusertype(tolua_S,1,"cc.PhysicsJointGear",0,&tolua_err) 
+        || !tolua_isnoobj(tolua_S,2,&tolua_err))
+    {
+        goto tolua_lerror;
+    }
+    else
+#endif
+    {
+        cocos2d::PhysicsJointGear* self = (cocos2d::PhysicsJointGear*)  tolua_tousertype(tolua_S,1,0);
+#if COCOS2D_DEBUG >= 1
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'delete'", nullptr);
+#endif
+        delete self;
+    }
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'delete'.",&tolua_err);
+#endif
     return 0;
 }
 
 int lua_register_cocos2dx_physics_PhysicsJointGear(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.PhysicsJointGear");
-    tolua_cclass(tolua_S,"PhysicsJointGear","cc.PhysicsJointGear","cc.PhysicsJoint",nullptr);
-
+    tolua_cclass(tolua_S,"PhysicsJointGear","cc.PhysicsJointGear","cc.PhysicsJoint",lua_gc_callback_cocos2dx_physics_PhysicsJointGear);
     tolua_beginmodule(tolua_S,"PhysicsJointGear");
         tolua_function(tolua_S,"setRatio",lua_cocos2dx_physics_PhysicsJointGear_setRatio);
         tolua_function(tolua_S,"getPhase",lua_cocos2dx_physics_PhysicsJointGear_getPhase);
@@ -11054,17 +11283,37 @@ int lua_cocos2dx_physics_PhysicsJointMotor_construct(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_physics_PhysicsJointMotor_finalize(lua_State* tolua_S)
+static int lua_gc_callback_cocos2dx_physics_PhysicsJointMotor(lua_State* tolua_S)
 {
-    printf("luabindings: finalizing LUA object (PhysicsJointMotor)");
+    printf("luabindings: finalizing LUA object (PhysicsJointMotor)\n");
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+    if (   !tolua_isusertype(tolua_S,1,"cc.PhysicsJointMotor",0,&tolua_err) 
+        || !tolua_isnoobj(tolua_S,2,&tolua_err))
+    {
+        goto tolua_lerror;
+    }
+    else
+#endif
+    {
+        cocos2d::PhysicsJointMotor* self = (cocos2d::PhysicsJointMotor*)  tolua_tousertype(tolua_S,1,0);
+#if COCOS2D_DEBUG >= 1
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'delete'", nullptr);
+#endif
+        delete self;
+    }
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'delete'.",&tolua_err);
+#endif
     return 0;
 }
 
 int lua_register_cocos2dx_physics_PhysicsJointMotor(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.PhysicsJointMotor");
-    tolua_cclass(tolua_S,"PhysicsJointMotor","cc.PhysicsJointMotor","cc.PhysicsJoint",nullptr);
-
+    tolua_cclass(tolua_S,"PhysicsJointMotor","cc.PhysicsJointMotor","cc.PhysicsJoint",lua_gc_callback_cocos2dx_physics_PhysicsJointMotor);
     tolua_beginmodule(tolua_S,"PhysicsJointMotor");
         tolua_function(tolua_S,"setRate",lua_cocos2dx_physics_PhysicsJointMotor_setRate);
         tolua_function(tolua_S,"getRate",lua_cocos2dx_physics_PhysicsJointMotor_getRate);

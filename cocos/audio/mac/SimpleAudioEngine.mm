@@ -152,7 +152,8 @@ SimpleAudioEngine::SimpleAudioEngine()
 
 SimpleAudioEngine::~SimpleAudioEngine()
 {
-
+    s_pEngine = NULL;
+    static_end();
 }
 
 SimpleAudioEngine* SimpleAudioEngine::getInstance()

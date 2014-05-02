@@ -53,6 +53,8 @@ require "src/XMLHttpRequestTest/XMLHttpRequestTest"
 require "src/PhysicsTest/PhysicsTest"
 
 
+app = cc.Application:getInstance()
+
 local LINE_SPACE = 40
 
 local CurPos = {x = 0, y = 0}

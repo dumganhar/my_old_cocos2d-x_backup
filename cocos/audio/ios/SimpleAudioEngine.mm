@@ -150,7 +150,8 @@ SimpleAudioEngine::SimpleAudioEngine()
 
 SimpleAudioEngine::~SimpleAudioEngine()
 {
-
+    s_pEngine = nullptr;
+    static_end();
 }
 
 SimpleAudioEngine* SimpleAudioEngine::getInstance()

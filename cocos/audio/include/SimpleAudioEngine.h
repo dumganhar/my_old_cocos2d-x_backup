@@ -71,6 +71,7 @@ public:
 
 protected:
     SimpleAudioEngine();
+public:
     virtual ~SimpleAudioEngine();
 
 public:

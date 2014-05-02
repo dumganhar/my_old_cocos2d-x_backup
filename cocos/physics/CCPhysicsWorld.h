@@ -194,6 +194,7 @@ protected:
     
 protected:
     PhysicsWorld();
+public:
     virtual ~PhysicsWorld();
     
     friend class Node;
@@ -218,6 +219,7 @@ protected:
     
 protected:
     PhysicsDebugDraw(PhysicsWorld& world);
+public:
     virtual ~PhysicsDebugDraw();
     
 protected:

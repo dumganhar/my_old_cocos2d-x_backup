@@ -46,6 +46,7 @@ class PhysicsJoint
 {
 protected:
     PhysicsJoint();
+public:
     virtual ~PhysicsJoint() = 0;
 
 public:
@@ -107,6 +108,7 @@ protected:
     
 protected:
     PhysicsJointFixed() {}
+public:
     virtual ~PhysicsJointFixed() {}
 };
 
@@ -133,6 +135,7 @@ protected:
     
 protected:
     PhysicsJointLimit() {}
+public:
     virtual ~PhysicsJointLimit() {}
 };
 
@@ -149,6 +152,7 @@ protected:
     
 protected:
     PhysicsJointPin() {}
+public:
     virtual ~PhysicsJointPin() {}
 };
 
@@ -166,6 +170,7 @@ protected:
     
 protected:
     PhysicsJointDistance() {}
+public:
     virtual ~PhysicsJointDistance() {}
 };
 
@@ -190,6 +195,7 @@ protected:
     
 protected:
     PhysicsJointSpring() {}
+public:
     virtual ~PhysicsJointSpring() {}
 };
 
@@ -211,6 +217,7 @@ protected:
     
 protected:
     PhysicsJointGroove() {}
+public:
     virtual ~PhysicsJointGroove() {}
 };
 
@@ -232,6 +239,7 @@ protected:
     
 protected:
     PhysicsJointRotarySpring() {}
+public:
     virtual ~PhysicsJointRotarySpring() {}
 };
 
@@ -252,6 +260,7 @@ protected:
     
 protected:
     PhysicsJointRotaryLimit() {}
+public:
     virtual ~PhysicsJointRotaryLimit() {}
 };
 
@@ -273,6 +282,7 @@ protected:
     
 protected:
     PhysicsJointRatchet() {}
+public:
     virtual ~PhysicsJointRatchet() {}
 };
 
@@ -292,6 +302,7 @@ protected:
     
 protected:
     PhysicsJointGear() {}
+public:
     virtual ~PhysicsJointGear() {}
 };
 
@@ -309,6 +320,7 @@ protected:
     
 protected:
     PhysicsJointMotor() {}
+public:
     virtual ~PhysicsJointMotor() {}
 };
 

@@ -105,4 +105,9 @@
 -- @param self
 -- @return bool#bool ret (return value: bool)
         
+--------------------------------
+-- @function [parent=#UserDefault] getInstance 
+-- @param self
+-- @return UserDefault#UserDefault ret (return value: cc.UserDefault)
+        
 return nil
