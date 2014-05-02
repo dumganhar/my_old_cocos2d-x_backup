@@ -5054,7 +5054,7 @@ TOLUA_API int tolua_opengl_open(lua_State* tolua_S)
     tolua_reg_gl_type(tolua_S);
     tolua_module(tolua_S,"cc",0);
     tolua_beginmodule(tolua_S,"cc");
-      tolua_cclass(tolua_S,"GLNode","cc.GLNode","cc.Node",tolua_collect_GLNode);
+      tolua_cclass(tolua_S,"GLNode","cc.GLNode","cc.Node", nullptr);
         tolua_beginmodule(tolua_S,"GLNode");
             tolua_function(tolua_S, "create", tolua_Cocos2d_GLNode_create00);
             tolua_function(tolua_S, "setShaderProgram", tolua_Cocos2d_GLNode_setShaderProgram00);

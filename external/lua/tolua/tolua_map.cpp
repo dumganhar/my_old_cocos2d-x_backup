@@ -21,6 +21,7 @@
 #include <stdlib.h>
 #include <math.h>
 
+#include "cocos2d.h"
 
 /* Create metatable
     * Create and register new metatable
@@ -211,7 +212,7 @@ static int tolua_bnd_releaseownership (lua_State* L)
 
 /* Type casting
 */
-int tolua_bnd_cast (lua_State* L)
+static int tolua_bnd_cast (lua_State* L)
 {
 
     /* // old code
@@ -348,13 +349,13 @@ TOLUA_API void tolua_open (lua_State* L)
         lua_rawset(L,LUA_REGISTRYINDEX);
 
         /* create gc_event closure */
-        lua_pushstring(L, "tolua_gc_event");
-        lua_pushstring(L, "tolua_gc");
-        lua_rawget(L, LUA_REGISTRYINDEX);
-        lua_pushstring(L, "tolua_super");
-        lua_rawget(L, LUA_REGISTRYINDEX);
-        lua_pushcclosure(L, class_gc_event, 2);
-        lua_rawset(L, LUA_REGISTRYINDEX);
+        lua_pushstring(L, "tolua_gc_event");    /* stack: ... "tolua_gc_event" */
+        lua_pushstring(L, "tolua_gc");          /* stack: ... "tolua_gc_event" "tolua_gc" */
+        lua_rawget(L, LUA_REGISTRYINDEX);       /* stack: ... "tolua_gc_event" Treg["tolua_gc"] */
+        lua_pushstring(L, "tolua_super");       /* stack: ... "tolua_gc_event" Treg["tolua_gc"] "tolua_super" */
+        lua_rawget(L, LUA_REGISTRYINDEX);       /* stack: ... "tolua_gc_event" Treg["tolua_gc"] Treg["tolua_super"] */
+        lua_pushcclosure(L, class_gc_event, 2); /* stack: ... "tolua_gc_event" class_gc_event */
+        lua_rawset(L, LUA_REGISTRYINDEX);       /* reg["tolua_gc_event"] = class_gc_event, stack: ... */
 
         tolua_newmetatable(L,"tolua_commonclass");
 
@@ -391,12 +392,29 @@ TOLUA_API void* tolua_copy (lua_State* L, void* value, unsigned int size)
     return clone;
 }
 
+extern int toluafix_remove_ccobject_by_refid(lua_State* L, int refid);
+
 /* Default collect function
 */
 TOLUA_API int tolua_default_collect (lua_State* tolua_S)
 {
     void* self = tolua_tousertype(tolua_S,1,0);
-    free(self);
+    
+    cocos2d::Ref* ref = static_cast<cocos2d::Ref*>(self);
+    
+    if (dynamic_cast<cocos2d::Ref*>(ref))
+    {
+        CCLOG("gc: type ( %s : %d)", typeid(*ref).name(), ref->getReferenceCount());
+        ref->_luaID = 0;
+        ref->release();
+        toluafix_remove_ccobject_by_refid(tolua_S, ref->_luaID);
+    }
+    else
+    {
+        delete self;
+    }
+    
+ //   free(self);
     return 0;
 }
 
@@ -406,17 +424,17 @@ TOLUA_API int tolua_register_gc (lua_State* L, int lo)
 {
     int success = 1;
     void *value = *(void **)lua_touserdata(L,lo);
-    lua_pushstring(L,"tolua_gc");
-    lua_rawget(L,LUA_REGISTRYINDEX);
-    lua_pushlightuserdata(L,value);
-    lua_rawget(L,-2);
+    lua_pushstring(L,"tolua_gc");       /* stack: ... "tolua_gc" */
+    lua_rawget(L,LUA_REGISTRYINDEX);    /* stack: ... reg["tolua_gc"] */
+    lua_pushlightuserdata(L,value);     /* stack: ... reg["tolua_gc"] ptr */
+    lua_rawget(L,-2);                   /* stack: ... reg["tolua_gc"] reg["tolua_gc"][ptr] */
     if (!lua_isnil(L,-1)) /* make sure that object is not already owned */
         success = 0;
     else
     {
-        lua_pushlightuserdata(L,value);
-        lua_getmetatable(L,lo);
-        lua_rawset(L,-4);
+        lua_pushlightuserdata(L,value);  /* stack: ... reg["tolua_gc"] nil ptr */
+        lua_getmetatable(L,lo);          /* stack: ... reg["tolua_gc"] nil ptr mt */
+        lua_rawset(L,-4);                /* reg["tolua_gc"][ptr] = mt; stack: ... reg["tolua_gc"] nil */
     }
     lua_pop(L,2);
     return success;
@@ -552,11 +570,34 @@ static void push_collector(lua_State* L, const char* type, lua_CFunction col) {
     lua_pop(L, 1);
 };
 
+
+static int tolua_ref_class_gc(lua_State *L)
+{
+    void** udPtr = (void**)tolua_tousertype(L,1,0);
+    
+    if (udPtr && *udPtr)
+    {
+        cocos2d::Ref* ref = static_cast<cocos2d::Ref*>(*udPtr);
+        if (dynamic_cast<cocos2d::Ref*>(ref))
+        {
+            ref->release();
+        }
+    }
+    else
+    {
+        printf("could not find the ptr when gc");
+    }
+    
+    return 0;
+}
+
 /* Map C class
     * It maps a C class, setting the appropriate inheritance and super classes.
 */
 TOLUA_API void tolua_cclass (lua_State* L, const char* lname, const char* name, const char* base, lua_CFunction col)
 {
+//    col = tolua_ref_class_gc;
+    
     char cname[128] = "const ";
     char cbase[128] = "const ";
     strncat(cname,name,120);
@@ -599,7 +640,6 @@ TOLUA_API void tolua_cclass (lua_State* L, const char* lname, const char* name, 
 /* Add base
     * It adds additional base classes to a class (for multiple inheritance)
     * (not for now)
-    */
 TOLUA_API void tolua_addbase(lua_State* L, char* name, char* base) {
 
     char cname[128] = "const ";
@@ -610,7 +650,7 @@ TOLUA_API void tolua_addbase(lua_State* L, char* name, char* base) {
     mapsuper(L,cname,cbase);
     mapsuper(L,name,base);
 };
-
+*/
 
 /* Map function
     * It assigns a function into the current module (or class)

@@ -74,6 +74,8 @@ local function ActionManual()
 	kathia:setColor(cc.c3b(0, 0, 255))
 
 	Helper.subtitleLabel:setString("Manual Transformation")
+    
+    collectgarbage()
 	return layer
 end
 
@@ -946,6 +948,8 @@ local function ActionOrbit()
 	Helper.subtitleLabel:setString("OrbitCamera action")
 	return layer
 end
+
+director = cc.Director:getInstance():getWinSize()
 
 --------------------------------------
 -- ActionFollow

@@ -103,7 +103,7 @@ TOLUA_API void tolua_variable (lua_State* L, const char* name, lua_CFunction get
 TOLUA_API void tolua_array (lua_State* L,const char* name, lua_CFunction get, lua_CFunction set);
 
 /* TOLUA_API void tolua_set_call_event(lua_State* L, lua_CFunction func, char* type); */
-TOLUA_API void tolua_addbase(lua_State* L, char* name, char* base);
+/* TOLUA_API void tolua_addbase(lua_State* L, char* name, char* base); */
 
 TOLUA_API void tolua_pushvalue (lua_State* L, int lo);
 TOLUA_API void tolua_pushboolean (lua_State* L, int value);

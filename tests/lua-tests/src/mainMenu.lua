@@ -210,3 +210,10 @@ function CreateTestMenu()
 
     return menuLayer
 end
+
+function gc_callback()
+    collectgarbage()
+end
+
+-- cc.Director:getInstance():getScheduler():scheduleScriptFunc(gc_callback, 0, false)
+

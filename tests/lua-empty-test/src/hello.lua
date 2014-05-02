@@ -1,6 +1,8 @@
 require "Cocos2d"
 require "Cocos2dConstants"
 
+director = cc.Director:getInstance()
+
 -- cclog
 cclog = function(...)
     print(string.format(...))
@@ -13,7 +15,10 @@ function __G__TRACKBACK__(msg)
     cclog(debug.traceback())
     cclog("----------------------------------------")
 end
-
+local function mymain()
+    cc.Sprite:create();
+    cc.Sprite:create();
+end
 local function main()
     -- avoid memory leak
     collectgarbage("setpause", 100)
@@ -30,6 +35,14 @@ local function main()
     require "src/hello2"
     cclog("result is " .. myadd(1, 1))
 
+    -- mymain()
+    local aaa = cc.Sprite:create()
+    local bbb = cc.Sprite:create()
+    local ddd = aaa
+    local eee = ddd
+    aaa:addChild(bbb, 10, 1000)
+    local ccc = aaa:getChildByTag(1000)
+    -- ccc:removeFromParent()
     ---------------
 
     local visibleSize = cc.Director:getInstance():getVisibleSize()
@@ -47,7 +60,9 @@ local function main()
         rect = cc.rect(frameWidth, 0, frameWidth, frameHeight)
         local frame1 = cc.SpriteFrame:createWithTexture(textureDog, rect)
 
+
         local spriteDog = cc.Sprite:createWithSpriteFrame(frame0)
+
         spriteDog.isPaused = false
         spriteDog:setPosition(origin.x, origin.y + visibleSize.height / 4 * 3)
 --[[
@@ -72,9 +87,11 @@ local function main()
             end
 
             spriteDog:setPositionX(x)
+            collectgarbage()
         end
 
         cc.Director:getInstance():getScheduler():scheduleScriptFunc(tick, 0, false)
+
 
         return spriteDog
     end
@@ -211,6 +228,28 @@ local function main()
     sceneGame:addChild(createLayerFarm())
     sceneGame:addChild(createLayerMenu())
     cc.Director:getInstance():runWithScene(sceneGame)
+    
+    local scheduleEntry = 0
+
+    function delay_to_replace_scene()
+        
+        cc.Director:getInstance():getScheduler():unscheduleScriptEntry(scheduleEntry)
+
+        cc.Director:getInstance():replaceScene(cc.Scene:create())
+    end
+    
+    scheduleEntry = cc.Director:getInstance():getScheduler():scheduleScriptFunc(delay_to_replace_scene, 100, false)
+    
+    function gc_callback()
+        collectgarbage()
+    end
+
+    cc.Director:getInstance():getScheduler():scheduleScriptFunc(gc_callback, 0, false)
+
 end
 
+
+
 xpcall(main, __G__TRACKBACK__)
+
+collectgarbage()

@@ -2120,14 +2120,6 @@ static int extendSequenceDeprecated(lua_State* tolua_S)
     return 1;
 }
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-extern int tolua_bnd_cast(lua_State* tolua_S);
-#ifdef __cplusplus
-}
-#endif
-
 static int tolua_bnd_cast_deprecated00(lua_State* tolua_S)
 {
     void* v = nullptr;
@@ -2165,7 +2157,22 @@ static int tolua_bnd_cast_deprecated00(lua_State* tolua_S)
             lua_insert(tolua_S, 2);
             lua_pop(tolua_S, 1);
         }
-        return tolua_bnd_cast(tolua_S);
+        
+
+        // copied from tolua_bnd_cast
+        const char* s;
+        if (lua_islightuserdata(tolua_S, 1)) {
+            v = tolua_touserdata(tolua_S, 1, NULL);
+        } else {
+            v = tolua_tousertype(tolua_S, 1, 0);
+        };
+        
+        s = tolua_tostring(tolua_S,2,NULL);
+        if (v && s)
+            tolua_pushusertype(tolua_S,v,s);
+        else
+            lua_pushnil(tolua_S);
+        return 1;
     }
 }
 

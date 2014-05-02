@@ -104,6 +104,7 @@
         print("_wsiSendText websocket instance closed.")
         sendTextStatus = nil
         wsSendText = nil
+        collectgarbage()
     end
 
     local function wsSendTextError(strData)
@@ -134,6 +135,7 @@
         print("_wsiSendBinary websocket instance closed.")
         sendBinaryStatus = nil
         wsSendBinary = nil
+        collectgarbage()
     end
 
     local function wsSendBinaryError(strData)
@@ -156,6 +158,7 @@
         print("_wsiError websocket instance closed.")
         errorStatus= nil
         wsError = nil
+        collectgarbage()
     end
 
     if nil ~= wsSendText then
@@ -183,18 +186,28 @@
         if "exit" == strEventName then
             if nil ~= wsSendText  then
                 wsSendText:close()
+                wsSendText = nil
             end
             if nil ~= wsSendBinary then
                 wsSendBinary:close()
+                wsSendBinary = nil
             end
             if nil ~=  wsError     then
                 wsError:close()
+                wsError = nil
             end
+            
+            wsSendText = nil
+            print("---->onExit : .....")
         end
     end
 
     layer:registerScriptHandler(OnExit)
 
+    local aaa = cc.WebSocket:create("ws://invalid.url.com")
+    aaa = nil
+    collectgarbage()
+print("---->collectgarbage : .....")
     return layer
 end
 

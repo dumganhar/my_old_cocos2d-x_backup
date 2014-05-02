@@ -1,7 +1,7 @@
 
 -- avoid memory leak
-collectgarbage("setpause", 100) 
-collectgarbage("setstepmul", 5000)
+--collectgarbage("setpause", 100)
+--collectgarbage("setstepmul", 5000)
 	
 require "src/mainMenu"
 ----------------

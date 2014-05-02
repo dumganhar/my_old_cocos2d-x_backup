@@ -370,7 +370,7 @@ TOLUA_API int tolua_web_socket_open(lua_State* tolua_S){
     tolua_reg_Web_Socket_type(tolua_S);
     tolua_module(tolua_S,"cc",0);
     tolua_beginmodule(tolua_S,"cc");
-      #ifdef __cplusplus
+      #if 0//def __cplusplus
       tolua_cclass(tolua_S,"WebSocket","cc.WebSocket","",tolua_collect_WebSocket);
       #else
       tolua_cclass(tolua_S,"WebSocket","cc.WebSocket","",NULL);

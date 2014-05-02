@@ -17,7 +17,7 @@
 
 #include <stdlib.h>
 
-void tolua_pushusertype_internal (lua_State* L, void* value, const char* type, int addToRoot)
+static void tolua_pushusertype_internal (lua_State* L, void* value, const char* type, int addToRoot)
 {
     if (value == NULL)
         lua_pushnil(L);
@@ -85,12 +85,12 @@ void tolua_pushusertype_internal (lua_State* L, void* value, const char* type, i
         }
         lua_remove(L, -2);    /* stack: ubox[u]*/
         
-        if (0 != addToRoot)
-        {
-            lua_pushvalue(L, -1);
-            tolua_add_value_to_root(L, value);
-        }
-    } 
+//        if (0 != addToRoot)
+//        {
+//            lua_pushvalue(L, -1);
+//            tolua_add_value_to_root(L, value);
+//        }
+    }
 }
 
 TOLUA_API void tolua_pushvalue (lua_State* L, int lo)

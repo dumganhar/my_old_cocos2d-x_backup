@@ -344,7 +344,7 @@ static int class_add_event (lua_State* L)
     return do_operator(L,".add");
 }
 
-int class_sub_event (lua_State* L)
+static int class_sub_event (lua_State* L)
 {
     return do_operator(L,".sub");
 }
@@ -427,13 +427,13 @@ TOLUA_API int class_gc_event (lua_State* L)
     lua_pushstring(L,"tolua_gc");
     lua_rawget(L,LUA_REGISTRYINDEX);
     */
-    lua_pushvalue(L, lua_upvalueindex(1));
-    lua_pushlightuserdata(L,u);
-    lua_rawget(L,-2);            /* stack: gc umt    */
-    lua_getmetatable(L,1);       /* stack: gc umt mt */
+    lua_pushvalue(L, lua_upvalueindex(1));  /* stack: ud reg["tolua_gc"] */
+    lua_pushlightuserdata(L,u);             /* stack: ud reg["tolua_gc"] ptr */
+    lua_rawget(L,-2);            /* stack: gc umt    */  /* stack:  ud reg["tolua_gc"][ptr] */
+    lua_getmetatable(L,1);       /* stack: gc umt mt */  /* stack:  ud reg["tolua_gc"][ptr] mt */
     /*fprintf(stderr, "checking type\n");*/
     top = lua_gettop(L);
-    if (tolua_fast_isa(L,top,top-1, lua_upvalueindex(2))) /* make sure we collect correct type */
+    if (tolua_fast_isa(L,top,top-1, lua_upvalueindex(2))) /* make sure we collect correct type */   /* mt reg["tolua_gc"][ptr] reg["tolua_super"] */
     {
         /*fprintf(stderr, "Found type!\n");*/
         /* get gc function */

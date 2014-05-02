@@ -35,6 +35,8 @@ local function MainMenuCallback()
     scene:addChild(CreateTestMenu())
 
     cc.Director:getInstance():replaceScene(scene)
+    
+    collectgarbage()
 end
 
 -- add the menu item for back to main menu

@@ -37,6 +37,7 @@ function CreateExtensionsBasicLayerMenu(pMenu)
        local pScene = ExtensionsTestMain()
        if pScene ~= nil then
            cc.Director:getInstance():replaceScene(pScene)
+           collectgarbage()
        end
     end	
     --Create BackMneu
