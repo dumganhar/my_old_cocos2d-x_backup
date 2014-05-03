@@ -51,6 +51,7 @@
 #ifdef CVTUTF_DEBUG
 #include <stdio.h>
 #endif
+#include <string.h>
 
 static const int halfShift  = 10; /* used for shifting by 10 bits */
 
@@ -414,6 +415,21 @@ Boolean isLegalUTF8String(const UTF8 **source, const UTF8 *sourceEnd) {
         *source += length;
     }
     return true;
+}
+
+int getUTF8StringLength(const UTF8* utf8)
+{
+    const UTF8** source = &utf8;
+    const UTF8* sourceEnd = utf8 + strlen((char*)utf8);
+    int ret = 0;
+    while (*source != sourceEnd) {
+        int length = trailingBytesForUTF8[**source] + 1;
+        if (length > sourceEnd - *source || !isLegalUTF8(*source, length))
+            return 0;
+        *source += length;
+        ++ret;
+    }
+    return ret;
 }
 
 /* --------------------------------------------------------------------- */

@@ -175,8 +175,11 @@ FontAtlas * FontFreeType::createFontAtlas()
     FontAtlas *atlas = new FontAtlas(*this);
     if (_usedGlyphs != GlyphCollection::DYNAMIC)
     {
-        std::u16string utf16 = cc_utf8_to_utf16(getCurrentGlyphCollection());
-        atlas->prepareLetterDefinitions(utf16);
+        std::u16string utf16;
+        if (StringUtils::UTF8ToUTF16(getCurrentGlyphCollection(), utf16))
+        {
+            atlas->prepareLetterDefinitions(utf16);
+        }
     }
     this->release();
     return atlas;

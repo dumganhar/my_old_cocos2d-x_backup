@@ -68,7 +68,7 @@ bool LabelTextFormatter::multilineText(Label *theLabel)
             tIndex = j+skip+justSkipped;
             if (strWhole[tIndex-1] == '\n')
             {
-                cc_utf8_trim_ws(&last_word);
+                StringUtils::trimUTF16Vector(last_word);
 
                 last_word.push_back('\n');
                 multiline_string.insert(multiline_string.end(), last_word.begin(), last_word.end());
@@ -107,15 +107,15 @@ bool LabelTextFormatter::multilineText(Label *theLabel)
         
         // 1) Whitespace.
         // 2) This character is non-CJK, but the last character is CJK
-        bool isspace = isspace_unicode(character);
+        bool isspace = StringUtils::isUnicodeSpace(character);
         bool isCJK = false;
         if(!isspace)
         {
-            isCJK = iscjk_unicode(character);
+            isCJK = StringUtils::isCJKUnicode(character);
         }
 
         if (isspace ||
-            (!last_word.empty() && iscjk_unicode(last_word.back()) && !isCJK))
+            (!last_word.empty() && StringUtils::isCJKUnicode(last_word.back()) && !isCJK))
         {
             // if current character is white space, put it into the current word
             if (isspace) last_word.push_back(character);
@@ -137,9 +137,9 @@ bool LabelTextFormatter::multilineText(Label *theLabel)
             {
                 last_word.push_back(character);
                 
-                int found = cc_utf8_find_last_not_char(multiline_string, ' ');
+                int found = StringUtils::getIndexOfLastNotChar16(multiline_string, ' ');
                 if (found != -1)
-                    cc_utf8_trim_ws(&multiline_string);
+                    StringUtils::trimUTF16Vector(multiline_string);
                 else
                     multiline_string.clear();
 
@@ -151,7 +151,7 @@ bool LabelTextFormatter::multilineText(Label *theLabel)
             }
             else
             {
-                cc_utf8_trim_ws(&last_word);
+                StringUtils::trimUTF16Vector(last_word);
 
                 last_word.push_back('\n');
                 

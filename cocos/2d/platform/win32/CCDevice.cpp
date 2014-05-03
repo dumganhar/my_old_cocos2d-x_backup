@@ -77,9 +77,9 @@ public:
         removeCustomFont();
     }
 
-    wchar_t * utf8ToUtf16(const std::string& str)
+    char16_t * utf8ToUtf16(const std::string& str)
     {
-        wchar_t * pwszBuffer = NULL;
+        char16_t * pwszBuffer = NULL;
         do 
         {
             if (str.empty())
@@ -89,7 +89,7 @@ public:
             // utf-8 to utf-16
             int nLen = str.size();
             int nBufLen  = nLen + 1;			
-            pwszBuffer = new wchar_t[nBufLen];
+            pwszBuffer = new char16_t[nBufLen];
             CC_BREAK_IF(! pwszBuffer);
             memset(pwszBuffer,0,nBufLen);
             nLen = MultiByteToWideChar(CP_UTF8, 0, str.c_str(), nLen, pwszBuffer, nBufLen);		
@@ -146,7 +146,7 @@ public:
             if (fontPath.size() > 0)
             {
                 _curFontPath = fontPath;
-                wchar_t * pwszBuffer = utf8ToUtf16(_curFontPath);
+                char16_t * pwszBuffer = utf8ToUtf16(_curFontPath);
                 if (pwszBuffer)
                 {
                     if(AddFontResource(pwszBuffer))
@@ -177,7 +177,7 @@ public:
         return bRet;
     }
 
-    SIZE sizeWithText(const wchar_t * pszText, int nLen, DWORD dwFmt, LONG nWidthLimit)
+    SIZE sizeWithText(const char16_t * pszText, int nLen, DWORD dwFmt, LONG nWidthLimit)
     {
         SIZE tRet = {0};
         do 
@@ -230,7 +230,7 @@ public:
     int drawText(const char * pszText, SIZE& tSize, Device::TextAlign eAlign)
     {
         int nRet = 0;
-        wchar_t * pwszBuffer = 0;
+        char16_t * pwszBuffer = 0;
         do 
         {
             CC_BREAK_IF(! pszText);
@@ -255,10 +255,10 @@ public:
             int nLen = strlen(pszText);
             // utf-8 to utf-16
             int nBufLen  = nLen + 1;
-            pwszBuffer = new wchar_t[nBufLen];
+            pwszBuffer = new char16_t[nBufLen];
             CC_BREAK_IF(! pwszBuffer);
 
-            memset(pwszBuffer, 0, sizeof(wchar_t)*nBufLen);
+            memset(pwszBuffer, 0, sizeof(char16_t)*nBufLen);
             nLen = MultiByteToWideChar(CP_UTF8, 0, pszText, nLen, pwszBuffer, nBufLen);
 
             SIZE newSize = sizeWithText(pwszBuffer, nLen, dwFmt, tSize.cx);
@@ -358,7 +358,7 @@ private:
         // release temp font resource	
         if (_curFontPath.size() > 0)
         {
-            wchar_t * pwszBuffer = utf8ToUtf16(_curFontPath);
+            char16_t * pwszBuffer = utf8ToUtf16(_curFontPath);
             if (pwszBuffer)
             {
                 RemoveFontResource(pwszBuffer);

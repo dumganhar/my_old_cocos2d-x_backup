@@ -936,9 +936,12 @@ void Label::setFontDefinition(const FontDefinition& textDefinition)
 
 void Label::updateContent()
 {
-    auto utf16String = cc_utf8_to_utf16(_originalUTF8String.c_str());
-    setCurrentString(utf16String);
-    setOriginalString(utf16String);
+    std::u16string utf16String;
+    if (StringUtils::UTF8ToUTF16(_originalUTF8String, utf16String))
+    {
+        setCurrentString(utf16String);
+        setOriginalString(utf16String);
+    }
 
     if (_textSprite)
     {
@@ -1201,7 +1204,7 @@ void Label::computeStringNumLines()
 
 int Label::getStringLength() const
 {
-    return _currentUTF16String.empty() ? static_cast<int>(_originalUTF8String.length()) : static_cast<int>( _currentUTF16String.length());
+    return _currentUTF16String.length();
 }
 
 // RGBA protocol
@@ -1300,7 +1303,9 @@ void Label::updateColor()
 
 std::string Label::getDescription() const
 {
-    return StringUtils::format("<Label | Tag = %d, Label = '%s'>", _tag, cc_utf16_to_utf8(_currentUTF16String).c_str());
+    std::string utf8str;
+    StringUtils::UTF16ToUTF8(_currentUTF16String, utf8str);
+    return StringUtils::format("<Label | Tag = %d, Label = '%s'>", _tag, utf8str.c_str());
 }
 
 const Size& Label::getContentSize() const

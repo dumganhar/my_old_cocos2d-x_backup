@@ -92,8 +92,8 @@
 
 /* ---------------------------------------------------------------------
     The following 4 definitions are compiler-specific.
-    The C standard does not guarantee that wchar_t has at least
-    16 bits, so wchar_t is no less portable than unsigned short!
+    The C standard does not guarantee that char16_t has at least
+    16 bits, so char16_t is no less portable than unsigned short!
     All should be unsigned values to avoid sign extension during
     bit mask & shift operations.
 ------------------------------------------------------------------------ */
@@ -157,6 +157,8 @@ Boolean isLegalUTF8Sequence(const UTF8 *source, const UTF8 *sourceEnd);
 Boolean isLegalUTF8String(const UTF8 **source, const UTF8 *sourceEnd);
 
 unsigned getNumBytesForUTF8(UTF8 firstByte);
+
+int getUTF8StringLength(const UTF8* utf8);
 
 
 /* --------------------------------------------------------------------- */
