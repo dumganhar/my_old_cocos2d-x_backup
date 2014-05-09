@@ -25,8 +25,6 @@ package org.cocos2dx.cpp_empty_test;
 
 import org.cocos2dx.lib.Cocos2dxActivity;
 
-import com.nibiru.lib.controller.Controller;
-
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.MotionEvent;

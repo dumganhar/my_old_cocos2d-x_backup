@@ -109,8 +109,10 @@ base/CCEventAcceleration.cpp \
 base/CCEventCustom.cpp \
 base/CCEventDispatcher.cpp \
 base/CCEventKeyboard.cpp \
+base/CCEventController.cpp \
 base/CCEventListener.cpp \
 base/CCEventListenerAcceleration.cpp \
+base/CCEventListenerController.cpp \
 base/CCEventListenerCustom.cpp \
 base/CCEventListenerKeyboard.cpp \
 base/CCEventListenerMouse.cpp \
@@ -131,6 +133,13 @@ base/base64.cpp \
 base/ccTypes.cpp \
 base/etc1.cpp \
 base/s3tc.cpp \
+base/CCController-android.cpp \
+base/CCControllerAxisInput.cpp \
+base/CCControllerButtonInput.cpp \
+base/CCControllerDirectionPad.cpp \
+base/CCControllerElement.cpp \
+base/CCControllerThumbstick.cpp \
+base/CCGamepad.cpp \
 renderer/CCBatchCommand.cpp \
 renderer/CCCustomCommand.cpp \
 renderer/CCGLProgram.cpp \
@@ -166,6 +175,7 @@ physics/chipmunk/CCPhysicsWorldInfo_chipmunk.cpp \
 ../external/xxhash/xxhash.c
 
 
+
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/. \
                     $(LOCAL_PATH)/2d \
@@ -173,7 +183,8 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/../external/tinyxml2 \
                     $(LOCAL_PATH)/../external/unzip \
                     $(LOCAL_PATH)/../external/chipmunk/include/chipmunk \
-                    $(LOCAL_PATH)/../external/xxhash
+                    $(LOCAL_PATH)/../external/xxhash \
+                    $(LOCAL_PATH)/../external/nslog
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/. \
@@ -182,7 +193,8 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/../external/unzip \
                     $(LOCAL_PATH)/../external/chipmunk/include/chipmunk \
                     $(LOCAL_PATH)/../external/edtaa3func \
-                    $(LOCAL_PATH)/../external/xxhash
+                    $(LOCAL_PATH)/../external/xxhash \
+                    $(LOCAL_PATH)/../external/nslog
 
 
 LOCAL_LDLIBS := -lGLESv2 \
