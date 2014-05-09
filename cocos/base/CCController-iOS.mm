@@ -1,12 +1,32 @@
-//
-//  CCController.cpp
-//  cocos2d_libs
-//
-//  Created by James Chen on 4/21/14.
-//
-//
+/****************************************************************************
+ Copyright (c) 2014 cocos2d-x.org
+ Copyright (c) 2014 Chukong Technologies Inc.
+ 
+ http://www.cocos2d-x.org
+ 
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ 
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
 
 #include "CCController.h"
+#include "base/CCPlatformConfig.h"
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+
 #include "CCGamepad.h"
 #include "CCControllerDirectionPad.h"
 #include "CCControllerButtonInput.h"
@@ -20,6 +40,8 @@
 #include "CCDirector.h"
 
 #import <GameController/GameController.h>
+
+#include "CCNSLog.h"
 
 @interface GCControllerConnectionEventHandler : NSObject
 
@@ -129,7 +151,7 @@ const std::vector<Controller*>& Controller::getControllers()
 
 void Controller::startDiscoveryController()
 {
-    MyLog("startDiscoveryController...: %s", "hello");
+    CCNSLOG("startDiscoveryController...: %s", "hello");
     
     [GCController startWirelessControllerDiscoveryWithCompletionHandler: nil];
 
@@ -139,7 +161,7 @@ void Controller::startDiscoveryController()
         
         gcController.controllerPausedHandler = ^(GCController* gcCon){
             
-            MyLog("Controller(%p)'s paused handler was invoked.", gcCon);
+            CCNSLOG("Controller(%p)'s paused handler was invoked.", gcCon);
             auto iter = std::find_if(_controllers.begin(), _controllers.end(), [gcCon](Controller* c){ return c->_impl->_gcController == gcCon; });
             
             CCASSERT(iter != _controllers.end(), "Could not find the controller");
@@ -153,7 +175,7 @@ void Controller::startDiscoveryController()
             button->setPressed(false);
         };
         
-        MyLog("controller %p was connnected!", gcController);
+        CCNSLOG("controller %p was connnected!", gcController);
         _controllers.push_back(controller);
         
         
@@ -161,7 +183,7 @@ void Controller::startDiscoveryController()
         Director::getInstance()->getEventDispatcher()->dispatchEvent(&evt);
         
     } disconnection: ^(GCController* gcController) {
-        MyLog("controller %p was disconnected!", gcController);
+        CCNSLOG("controller %p was disconnected!", gcController);
         
         auto iter = std::find_if(_controllers.begin(), _controllers.end(), [gcController](Controller* c){ return c->_impl->_gcController == gcController; });
         
@@ -228,22 +250,22 @@ Gamepad* Controller::getGamepad()
         if (_impl->_gcController.extendedGamepad != nil)
         {
             _impl->_gcController.extendedGamepad.dpad.up.valueChangedHandler = ^(GCControllerButtonInput *button, float value, BOOL pressed){
-                MyLog("dpad up %d, %f", button.pressed, button.value);
+                CCNSLOG("dpad up %d, %f", button.pressed, button.value);
                 sendEventButton(_gamepad->getDirectionPad()->getUp(), button);
             };
             
             _impl->_gcController.extendedGamepad.dpad.down.valueChangedHandler = ^(GCControllerButtonInput *button, float value, BOOL pressed){
-                MyLog("dpad down %d, %f", button.pressed, button.value);
+                CCNSLOG("dpad down %d, %f", button.pressed, button.value);
                 sendEventButton(_gamepad->getDirectionPad()->getDown(), button);
             };
             
             _impl->_gcController.extendedGamepad.dpad.left.valueChangedHandler = ^(GCControllerButtonInput *button, float value, BOOL pressed){
-                MyLog("dpad left %d, %f", button.pressed, button.value);
+                CCNSLOG("dpad left %d, %f", button.pressed, button.value);
                 sendEventButton(_gamepad->getDirectionPad()->getLeft(), button);
             };
             
             _impl->_gcController.extendedGamepad.dpad.right.valueChangedHandler = ^(GCControllerButtonInput *button, float value, BOOL pressed){
-                MyLog("dpad right %d, %f", button.pressed, button.value);
+                CCNSLOG("dpad right %d, %f", button.pressed, button.value);
                 sendEventButton(_gamepad->getDirectionPad()->getRight(), button);
             };
             
@@ -301,22 +323,22 @@ Gamepad* Controller::getGamepad()
         else
         {
             _impl->_gcController.gamepad.dpad.up.valueChangedHandler = ^(GCControllerButtonInput *button, float value, BOOL pressed){
-                MyLog("dpad up %d, %f", button.pressed, button.value);
+                CCNSLOG("dpad up %d, %f", button.pressed, button.value);
                 sendEventButton(_gamepad->getDirectionPad()->getUp(), button);
             };
 
             _impl->_gcController.gamepad.dpad.down.valueChangedHandler = ^(GCControllerButtonInput *button, float value, BOOL pressed){
-                MyLog("dpad down %d, %f", button.pressed, button.value);
+                CCNSLOG("dpad down %d, %f", button.pressed, button.value);
                 sendEventButton(_gamepad->getDirectionPad()->getDown(), button);
             };
             
             _impl->_gcController.gamepad.dpad.left.valueChangedHandler = ^(GCControllerButtonInput *button, float value, BOOL pressed){
-                MyLog("dpad left %d, %f", button.pressed, button.value);
+                CCNSLOG("dpad left %d, %f", button.pressed, button.value);
                 sendEventButton(_gamepad->getDirectionPad()->getLeft(), button);
             };
             
             _impl->_gcController.gamepad.dpad.right.valueChangedHandler = ^(GCControllerButtonInput *button, float value, BOOL pressed){
-                MyLog("dpad right %d, %f", button.pressed, button.value);
+                CCNSLOG("dpad right %d, %f", button.pressed, button.value);
                 sendEventButton(_gamepad->getDirectionPad()->getRight(), button);
             };
             
@@ -358,3 +380,5 @@ Gamepad* Controller::getGamepad()
 }
 
 NS_CC_END
+
+#endif // #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
