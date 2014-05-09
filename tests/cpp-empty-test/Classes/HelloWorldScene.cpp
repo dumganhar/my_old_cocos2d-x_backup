@@ -1,7 +1,6 @@
 #include "HelloWorldScene.h"
 #include "AppMacros.h"
-
-
+#include "external/nslog/CCNSLog.h"
 
 USING_NS_CC;
 
@@ -49,11 +48,11 @@ bool HelloWorld::init()
 //                                        "CloseSelected.png",
 //                                        CC_CALLBACK_1(HelloWorld::menuCloseCallback,this));
 //    
-//    closeItem->setPosition(origin + Point(visibleSize) - Point(closeItem->getContentSize() / 2));
+//    closeItem->setPosition(origin + Vector2(visibleSize) - Vector2(closeItem->getContentSize() / 2));
 //
 //    // create menu, it's an autorelease object
 //    auto menu = Menu::create(closeItem, NULL);
-//    menu->setPosition(Point::ZERO);
+//    menu->setPosition(Vector2::ZERO);
 //    this->addChild(menu, 1);
 //    
 //    /////////////////////////////
@@ -65,7 +64,7 @@ bool HelloWorld::init()
 //    auto label = LabelTTF::create("Hello World", "Arial", TITLE_FONT_SIZE);
 //    
 //    // position the label on the center of the screen
-//    label->setPosition(Point(origin.x + visibleSize.width/2,
+//    label->setPosition(Vector2(origin.x + visibleSize.width/2,
 //                            origin.y + visibleSize.height - label->getContentSize().height));
 //
 //    // add the label as a child to this layer
@@ -75,7 +74,7 @@ bool HelloWorld::init()
 //    auto sprite = Sprite::create("HelloWorld.png");
 //
 //    // position the sprite on the center of the screen
-//    sprite->setPosition(Point(visibleSize / 2) + origin);
+//    sprite->setPosition(Vector2(visibleSize / 2) + origin);
 //
 //    // add the sprite as a child to this layer
 //    this->addChild(sprite);
@@ -83,11 +82,11 @@ bool HelloWorld::init()
     _player1 = nullptr;
     
     _statusLabel = Label::createWithTTF("status:", "fonts/Marker Felt.ttf", 20);
-    _statusLabel->setPosition(Point(visibleSize / 2) + origin + Point(0, 50));
+    _statusLabel->setPosition(Vector2(visibleSize / 2) + origin + Vector2(0, 50));
     this->addChild(_statusLabel, 0, 100);
     
     _actor = Sprite::create("CloseNormal.png");
-    _actor->setPosition(Point(visibleSize / 2) + origin);
+    _actor->setPosition(Vector2(visibleSize / 2) + origin);
     this->addChild(_actor);
     
     Controller::startDiscoveryController();
@@ -99,17 +98,17 @@ bool HelloWorld::init()
 //        }
 //    });
 
-    MyLog("layer: %p", this);
+    CCNSLOG("layer: %p", this);
     
     _listener = EventListenerController::create();
     _listener->onConnected = [=](Controller* controller, Event* event){
-        MyLog("%p connected", controller);
+        CCNSLOG("%p connected", controller);
         _player1 = controller;
         _statusLabel->setString("controller connected!");
     };
     
     _listener->onDisconnected = [=](Controller* controller, Event* event){
-        MyLog("%p disconnected", controller);
+        CCNSLOG("%p disconnected", controller);
         _player1 = nullptr;
         _statusLabel->setString("controller disconnected!");
     };
@@ -120,7 +119,7 @@ bool HelloWorld::init()
     _eventDispatcher->addEventListenerWithFixedPriority(_listener, 1);
     
     auto bullet = Sprite::create("CloseSelected.png");
-    bullet->setPosition(_actor->getPosition() + Point(0, _actor->getContentSize().height/2 + 20));
+    bullet->setPosition(_actor->getPosition() + Vector2(0, _actor->getContentSize().height/2 + 20));
     this->addChild(bullet);
     bullet->setColor(Color3B::BLUE);
     
@@ -183,15 +182,15 @@ void HelloWorld::onButtonPressed(cocos2d::Controller *controller, cocos2d::Contr
     int randX = rand() % static_cast<int>(winSize.width);
 
     auto bullet = Sprite::create("CloseSelected.png");
-    bullet->setPosition(_actor->getPosition() + Point(0, _actor->getContentSize().height/2));
+    bullet->setPosition(_actor->getPosition() + Vector2(0, _actor->getContentSize().height/2));
     this->addChild(bullet);
     bullet->setColor(Color3B::BLUE);
-    bullet->runAction(Sequence::create(MoveTo::create(3.0f, Point(randX, winSize.height)), RemoveSelf::create(),  NULL));
+    bullet->runAction(Sequence::create(MoveTo::create(3.0f, Vector2(randX, winSize.height)), RemoveSelf::create(),  NULL));
 }
 
 void HelloWorld::onButtonReleased(cocos2d::Controller *controller, cocos2d::ControllerButtonInput *button, cocos2d::Event *event)
 {
-    MyLog("HelloWorld::onButtonReleased: %p, %d, %f", button, button->isPressed(), button->getValue());
+    CCNSLOG("HelloWorld::onButtonReleased: %p, %d, %f", button, button->isPressed(), button->getValue());
     if (_player1 == nullptr)
         return;
     
@@ -200,10 +199,10 @@ void HelloWorld::onButtonReleased(cocos2d::Controller *controller, cocos2d::Cont
     int randX = rand() % static_cast<int>(winSize.width);
     
     auto bullet = Sprite::create("CloseSelected.png");
-    bullet->setPosition(_actor->getPosition() + Point(0, _actor->getContentSize().height/2));
+    bullet->setPosition(_actor->getPosition() + Vector2(0, _actor->getContentSize().height/2));
     bullet->setColor(Color3B::RED);
     this->addChild(bullet);
-    bullet->runAction(Sequence::create(MoveTo::create(3.0f, Point(randX, winSize.height)), RemoveSelf::create(),  NULL));
+    bullet->runAction(Sequence::create(MoveTo::create(3.0f, Vector2(randX, winSize.height)), RemoveSelf::create(),  NULL));
 }
 
 void HelloWorld::update(float dt)
@@ -212,7 +211,7 @@ void HelloWorld::update(float dt)
     {
         const int MOVE_DELTA = dt * 100;
         
-        Point newPos = _actor->getPosition();
+        Vector2 newPos = _actor->getPosition();
 
         if (_player1->getGamepad()->getDirectionPad()->getDown()->isPressed())
         {
