@@ -24,6 +24,7 @@ public:
     void update(float dt);
     void onButtonPressed(cocos2d::Controller* controller, cocos2d::ControllerButtonInput* button, cocos2d::Event* event);
     void onButtonReleased(cocos2d::Controller* controller, cocos2d::ControllerButtonInput* button, cocos2d::Event* event);
+    void onAxisValueChanged(cocos2d::Controller* controller, cocos2d::ControllerAxisInput* axis, cocos2d::Event* event);
     
 private:
     cocos2d::Controller* _player1;

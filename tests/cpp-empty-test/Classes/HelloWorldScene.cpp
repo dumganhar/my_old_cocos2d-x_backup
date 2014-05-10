@@ -115,6 +115,7 @@ bool HelloWorld::init()
     
     _listener->onButtonPressed = CC_CALLBACK_3(HelloWorld::onButtonPressed, this);
     _listener->onButtonReleased = CC_CALLBACK_3(HelloWorld::onButtonReleased, this);
+    _listener->onAxisValueChanged = CC_CALLBACK_3(HelloWorld::onAxisValueChanged, this);
     
     _eventDispatcher->addEventListenerWithFixedPriority(_listener, 1);
     
@@ -203,6 +204,21 @@ void HelloWorld::onButtonReleased(cocos2d::Controller *controller, cocos2d::Cont
     bullet->setColor(Color3B::RED);
     this->addChild(bullet);
     bullet->runAction(Sequence::create(MoveTo::create(3.0f, Vector2(randX, winSize.height)), RemoveSelf::create(),  NULL));
+}
+
+void HelloWorld::onAxisValueChanged(cocos2d::Controller* controller, cocos2d::ControllerAxisInput* axis, cocos2d::Event* event)
+{
+    log("HelloWorld::onAxisValueChanged: %p, %f", axis, axis->getValue());
+    if (_player1 == nullptr)
+        return;
+    
+    const int MOVE_DELTA = axis->getValue() * 5;
+    
+    Vector2 newPos = _actor->getPosition();
+    newPos.x += MOVE_DELTA;
+    newPos.y += MOVE_DELTA;
+    
+    _actor->setPosition(newPos);
 }
 
 void HelloWorld::update(float dt)
