@@ -68,28 +68,28 @@ public class Cocos2dxControllerMoga {
 			float newLeftThumbstickX = event.getAxisValue(MotionEvent.AXIS_X);
 			if (newLeftThumbstickX != mOldLeftThumbstickX)
 			{
-				Cocos2dxGameController.onAxisEvent(mVendorName, event.getControllerId(), Cocos2dxGameController.LEFT_THUMBSTICK_X, newLeftThumbstickX, true);
+				Cocos2dxGameController.onAxisEvent(mVendorName, event.getControllerId(), Cocos2dxGameController.THUMBSTICK_LEFT_X, newLeftThumbstickX, true);
 				mOldLeftThumbstickX = newLeftThumbstickX;
 			}
 			
 			float newLeftThumbstickY = event.getAxisValue(MotionEvent.AXIS_Y);
 			if (newLeftThumbstickY != mOldLeftThumbstickY)
 			{
-				Cocos2dxGameController.onAxisEvent(mVendorName, event.getControllerId(), Cocos2dxGameController.LEFT_THUMBSTICK_Y, newLeftThumbstickY, true);
+				Cocos2dxGameController.onAxisEvent(mVendorName, event.getControllerId(), Cocos2dxGameController.THUMBSTICK_LEFT_Y, newLeftThumbstickY, true);
 				mOldLeftThumbstickY = newLeftThumbstickY;
 			}
 			
 			float newRightThumbstickX = event.getAxisValue(MotionEvent.AXIS_Z);
 			if (newRightThumbstickX != mOldRightThumbstickX)
 			{
-				Cocos2dxGameController.onAxisEvent(mVendorName, event.getControllerId(), Cocos2dxGameController.RIGHT_THUMBSTICK_X, newRightThumbstickX, true);
+				Cocos2dxGameController.onAxisEvent(mVendorName, event.getControllerId(), Cocos2dxGameController.THUMBSTICK_RIGHT_X, newRightThumbstickX, true);
 				mOldRightThumbstickX = newRightThumbstickX;
 			}
 			
 			float newRightThumbstickY = event.getAxisValue(MotionEvent.AXIS_RZ);
 			if (newRightThumbstickY != mOldRightThumbstickY)
 			{
-				Cocos2dxGameController.onAxisEvent(mVendorName, event.getControllerId(), Cocos2dxGameController.RIGHT_THUMBSTICK_Y, newRightThumbstickY, true);
+				Cocos2dxGameController.onAxisEvent(mVendorName, event.getControllerId(), Cocos2dxGameController.THUMBSTICK_RIGHT_Y, newRightThumbstickY, true);
 				mOldRightThumbstickY = newRightThumbstickY;
 			}
 		}

@@ -7,10 +7,10 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 
 public class Cocos2dxGameController {
-    public static final int LEFT_THUMBSTICK_X = 101;//MotionEvent.AXIS_X;
-    public static final int LEFT_THUMBSTICK_Y = 102;//MotionEvent.AXIS_Y;
-    public static final int RIGHT_THUMBSTICK_X = 103;//MotionEvent.AXIS_RX;
-    public static final int RIGHT_THUMBSTICK_Y = 104;//MotionEvent.AXIS_RY;
+    public static final int THUMBSTICK_LEFT_X = 101;//MotionEvent.AXIS_X;
+    public static final int THUMBSTICK_LEFT_Y = 102;//MotionEvent.AXIS_Y;
+    public static final int THUMBSTICK_RIGHT_X = 103;//MotionEvent.AXIS_RX;
+    public static final int THUMBSTICK_RIGHT_Y = 104;//MotionEvent.AXIS_RY;
     public static final int BUTTON_A = 105;//KeyEvent.KEYCODE_BUTTON_A;
     public static final int BUTTON_B = 106;//KeyEvent.KEYCODE_BUTTON_B;
     public static final int BUTTON_X = 107;//KeyEvent.KEYCODE_BUTTON_X;
@@ -93,13 +93,13 @@ public class Cocos2dxGameController {
 		});
 	}
 	
-	public static void onAxisEvent(final String vendorName, final int controller, final int axis, final float value, final boolean isAnalog)
+	public static void onAxisEvent(final String vendorName, final int controller, final int axisID, final float value, final boolean isAnalog)
 	{
 		Cocos2dxHelper.runOnGLThread(new Runnable() {
 
 			@Override
 			public void run() {
-				nativeControllerAxisEvent(vendorName, controller, axis, value, isAnalog);
+				nativeControllerAxisEvent(vendorName, controller, axisID, value, isAnalog);
 			}	
 		});
 	}
@@ -107,5 +107,5 @@ public class Cocos2dxGameController {
 	private static native void nativeControllerConnected(final String vendorName, final int controller);
 	private static native void nativeControllerDisconnected(final String vendorName, final int controller);
 	private static native void nativeControllerButtonEvent(final String vendorName, final int controller, final int button, final boolean isPressed, final float value, final boolean isAnalog);
-	private static native void nativeControllerAxisEvent(final String vendorName, final int controller, final int axis, final float value, final boolean isAnalog);
+	private static native void nativeControllerAxisEvent(final String vendorName, final int controller, final int axisID, final float value, final boolean isAnalog);
 }
