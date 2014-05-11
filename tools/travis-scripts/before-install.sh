@@ -71,14 +71,17 @@ elif [ "$PLATFORM"x = "emscripten"x ]; then
     sudo rm -rf /dev/shm && sudo ln -s /run/shm /dev/shm
 
     install_android_ndk
-elif [ "$PLATFORM"x = "ios"x ]; then
-    install_android_ndk
-
-    pushd $COCOS2DX_ROOT
-    git submodule add https://github.com/facebook/xctool.git ./xctool
-    git submodule init
-    git submodule update
-    popd
+elif [ "$PLATFORM"x = "mac-ios"x ]; then
+    if [ "$PUSH_TO_MAC"x = "YES"x ]; then
+        cd $COCOS2DX_ROOT
+        mv tools/travis-scripts/travis_mac.yml .travis.yml
+        git add .travis.yml
+        git commit --amend -m "travis mac commit, need to replace this commit info"
+        git remote add travis-mac https://$GH_USER_MAC:$GH_PASSWORD_MAC@github.com/cocos-travis-mac/cocos2d-x.git
+        git push -f travis-mac $TRAVIS_BRANCH
+    else
+        install_android_ndk
+    fi
 else
     echo "Unknown \$PLATFORM: '$PLATFORM'"
     exit 1

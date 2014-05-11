@@ -3,6 +3,7 @@ env:
   matrix:
   - GEN_BINDING=YES
   - GEN_COCOS_FILES=YES
+  - PLATFORM=mac-ios PUSH_TO_MAC=YES
   - PLATFORM=linux DEBUG=1 CC_COMPILER=gcc CXX_COMPILER=g++
   - PLATFORM=linux DEBUG=1 CC_COMPILER=clang CXX_COMPILER=clang++
   # Since switching to C++11 only the ARM version of the nactive client
@@ -24,14 +25,10 @@ env:
       Wsngwo3jlZtvuPfr3RNhqrz/liNIhKYnlw4KYJO90gMQ9ZQKRTlMv2BMiPw/
       9lV+vgJQDRcFe7dKwtC86vk10EU7Ym2bhVmhMxi/AlmJXgavjmPVdizRT7rh
       X2Ry/Nb6hGRkH3WS0T3D/KG1+e7lP/TMB9bvo6/locLJ2A6Z1YI=
+  - secure: wE4hK+jt49cjxvL6b/8PWptqdCoHqIRp8R25fP/UHjOeCHrTzd2Z0CiGnhHcTyqzqueXW38eovi7RpLEW/3+TNxHjNOEndgnzwoAZxSkJZumQbVnxcA9NvkmrPPd20dtBWAoMYxuALYy2XhFmBzDoL0GucscSbF0KW4I4m0/b7o=
 script:
 - export CC=$CC_COMPILER
 - export CXX=$CXX_COMPILER
 - tools/travis-scripts/run-script.sh
 before_install:
 - tools/travis-scripts/before-install.sh
-
-# whitelist
-branches:
-  only:
-    - v3
