@@ -7,6 +7,3 @@ before_install:
 env:
   matrix:
   - PLATFORM=mac-ios
-  global:
-  - secure: |-
-      PSVWB23SmiEA+eYIaMYSa/Tlpv+nYnvqNX4qJDfqSKPxS54lATkduAlKT7k1V38xT5iYY4BPaH6o2m7G5a7+qx8UUZCLqJZB7GZt9UAsQcwTUKLdrkQmpLiLnuCq3zCpwYwvLFODSfycEwV1TS53p1TDABmkM44fp9QVgTkBDa4=

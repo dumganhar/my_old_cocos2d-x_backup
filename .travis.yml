@@ -1,17 +1,7 @@
 language: cpp
 env:
   matrix:
-#  - GEN_BINDING=YES
-#  - GEN_COCOS_FILES=YES
   - PLATFORM=mac-ios PUSH_TO_MAC=YES
-#  - PLATFORM=linux DEBUG=1 CC_COMPILER=gcc CXX_COMPILER=g++
-#  - PLATFORM=linux DEBUG=1 CC_COMPILER=clang CXX_COMPILER=clang++
-  # Since switching to C++11 only the ARM version of the nactive client
-  # port currently builds.  TODO(sbc): Re-enable all architectures.
-  # Disabled travis-ci build for native client port since it doesn't support std::thread, std::mutex.
-  # - PLATFORM=nacl DEBUG=1 NACL_ARCH=arm
-#  - PLATFORM=android
-  # - PLATFORM=emscripten DEBUG=1
   global:
   - secure: |-
       cHXOjAda+t2tmBVuVAiQfvhDN+unToO6hX1rc3dJeGDOk4rlQnylJacjA7o/
@@ -25,7 +15,7 @@ env:
       Wsngwo3jlZtvuPfr3RNhqrz/liNIhKYnlw4KYJO90gMQ9ZQKRTlMv2BMiPw/
       9lV+vgJQDRcFe7dKwtC86vk10EU7Ym2bhVmhMxi/AlmJXgavjmPVdizRT7rh
       X2Ry/Nb6hGRkH3WS0T3D/KG1+e7lP/TMB9bvo6/locLJ2A6Z1YI=
-  - secure: wE4hK+jt49cjxvL6b/8PWptqdCoHqIRp8R25fP/UHjOeCHrTzd2Z0CiGnhHcTyqzqueXW38eovi7RpLEW/3+TNxHjNOEndgnzwoAZxSkJZumQbVnxcA9NvkmrPPd20dtBWAoMYxuALYy2XhFmBzDoL0GucscSbF0KW4I4m0/b7o=
+  - secure: l1YRHwTt88agQjTTQjKN6LuUqfQACMlpN7EtD2AAaPUx2zv/ZPFGmeYLGR3bo3wgPRkDTjpEdBLimSWeTeBQvd3owkDiVrU72gAGhLWptmAKNtzIOq34E5QtdFlLAiunyxPrBpTiV2Iey+N39mGz+m64c5k/+EW1K87P63TNTXI=
 script:
 - export CC=$CC_COMPILER
 - export CXX=$CXX_COMPILER

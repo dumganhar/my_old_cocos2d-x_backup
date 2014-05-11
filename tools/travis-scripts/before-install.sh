@@ -74,6 +74,8 @@ elif [ "$PLATFORM"x = "emscripten"x ]; then
 elif [ "$PLATFORM"x = "mac-ios"x ]; then
     if [ "$PUSH_TO_MAC"x = "YES"x ]; then
         cd $COCOS2DX_ROOT
+        git config user.email ${GH_EMAIL_MAC}
+        git config user.name ${GH_USER_MAC}
         mv tools/travis-scripts/travis_mac.yml .travis.yml
         git add .travis.yml
         git commit --amend -m "travis mac commit, need to replace this commit info"
