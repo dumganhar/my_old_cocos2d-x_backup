@@ -17,7 +17,7 @@ cd $HOME/bin
 install_android_ndk()
 {
     # Download android ndk
-    if [ "$PLATFORM"x = "ios"x ]; then
+    if [ "$PLATFORM"x = "mac-ios"x ]; then
         HOST_NAME="darwin"
     else
         HOST_NAME="linux"
@@ -80,7 +80,7 @@ elif [ "$PLATFORM"x = "mac-ios"x ]; then
         cp tools/travis-scripts/travis_mac.yml ./.travis.yml
         git add .travis.yml
         cat .travis.yml
-        git commit --amend -m "travis mac commit, need to replace this commit info"
+        git commit --amend -m "`git log -1 --pretty=%B`"
         git remote add travis-mac https://$GH_USER_MAC:$GH_PASSWORD_MAC@github.com/cocos-travis-mac/cocos2d-x.git
         git push -f travis-mac $TRAVIS_BRANCH 2> /dev/null > /dev/null
     else
