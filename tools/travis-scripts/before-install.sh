@@ -76,12 +76,13 @@ elif [ "$PLATFORM"x = "mac-ios"x ]; then
         cd $COCOS2DX_ROOT
         git config user.email ${GH_EMAIL_MAC}
         git config user.name ${GH_USER_MAC}
+        git checkout -B $TRAVIS_BRANCH
         cp tools/travis-scripts/travis_mac.yml ./.travis.yml
         git add .travis.yml
         cat .travis.yml
         git commit --amend -m "travis mac commit, need to replace this commit info"
-        git remote add travis-mac https://$GH_USER_MAC:$GH_PASSWORD_MAC@github.com/cocos-travis-mac/cocos2d-x.git 2> /dev/null > /dev/null
-        git push -f travis-mac $TRAVIS_BRANCH
+        git remote add travis-mac https://$GH_USER_MAC:$GH_PASSWORD_MAC@github.com/cocos-travis-mac/cocos2d-x.git
+        git push -f travis-mac $TRAVIS_BRANCH 2> /dev/null > /dev/null
     else
         install_android_ndk
     fi
