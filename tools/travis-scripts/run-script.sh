@@ -119,8 +119,7 @@ elif [ "$PLATFORM"x = "mac-ios"x ]; then
         ./generate-cocosfiles.sh
 
         cd $COCOS2DX_ROOT
-        xctool -project build/cocos2d_tests.xcodeproj -scheme "build all tests iOS" -jobs 8 -arch i386 -sdk iphonesimulator7.1  build
-        xctool -project build/cocos2d_tests.xcodeproj -scheme "build all tests iOS" -jobs 8 -arch x86_64 -sdk iphonesimulator6.1  build
+        xctool -project build/cocos2d_tests.xcodeproj -scheme "$SCHEME" -jobs 8 -arch "$ARCH" -sdk "$SDK"  build
     fi
 else
     echo "Unknown \$PLATFORM: '$PLATFORM'"
