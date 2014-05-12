@@ -147,85 +147,85 @@ public:
         switch(btnCode)
         {
             case AndroidControllerCode::BUTTON_A:
-            {
-                thiz->sendEventButton(gamepad->getButtonA(), isPressed, value, isAnalog);
-            }
-            break;
+                {
+                    thiz->sendEventButton(gamepad->getButtonA(), isPressed, value, isAnalog);
+                }
+                break;
             case AndroidControllerCode::BUTTON_B:
-            {
-                thiz->sendEventButton(gamepad->getButtonB(), isPressed, value, isAnalog);
-            }
-            break;
+                {
+                    thiz->sendEventButton(gamepad->getButtonB(), isPressed, value, isAnalog);
+                }
+                break;
             case AndroidControllerCode::BUTTON_X:
-            {
-                thiz->sendEventButton(gamepad->getButtonX(), isPressed, value, isAnalog);
-            }
-            break;
+                {
+                    thiz->sendEventButton(gamepad->getButtonX(), isPressed, value, isAnalog);
+                }
+                break;
             case AndroidControllerCode::BUTTON_Y:
-            {
-                thiz->sendEventButton(gamepad->getButtonY(), isPressed, value, isAnalog);
-            }
-            break;
+                {
+                    thiz->sendEventButton(gamepad->getButtonY(), isPressed, value, isAnalog);
+                }
+                break;
             case AndroidControllerCode::BUTTON_LEFT_SHOULDER:
-            {
-                thiz->sendEventButton(gamepad->getLeftShoulder(), isPressed, value, isAnalog);
-            }
-            break;
+                {
+                    thiz->sendEventButton(gamepad->getLeftShoulder(), isPressed, value, isAnalog);
+                }
+                break;
             case AndroidControllerCode::BUTTON_RIGHT_SHOULDER:
-            {
-                thiz->sendEventButton(gamepad->getRightShoulder(), isPressed, value, isAnalog);
-            }
-            break;
+                {
+                    thiz->sendEventButton(gamepad->getRightShoulder(), isPressed, value, isAnalog);
+                }
+                break;
             case AndroidControllerCode::BUTTON_LEFT_TRIGGER:
-            {
-                thiz->sendEventButton(gamepad->getLeftTrigger(), isPressed, value, isAnalog);
-            }
-            break;
+                {
+                    thiz->sendEventButton(gamepad->getLeftTrigger(), isPressed, value, isAnalog);
+                }
+                break;
             case AndroidControllerCode::BUTTON_RIGHT_TRIGGER:
-            {
-                thiz->sendEventButton(gamepad->getRightTrigger(), isPressed, value, isAnalog);
-            }
-            break;
+                {
+                    thiz->sendEventButton(gamepad->getRightTrigger(), isPressed, value, isAnalog);
+                }
+                break;
             case AndroidControllerCode::BUTTON_DPAD_UP:
-            {
-                thiz->sendEventButton(gamepad->getDirectionPad()->getUp(), isPressed, value, isAnalog);
-            }
-            break;
+                {
+                    thiz->sendEventButton(gamepad->getDirectionPad()->getUp(), isPressed, value, isAnalog);
+                }
+                break;
             case AndroidControllerCode::BUTTON_DPAD_DOWN:
-            {
-                thiz->sendEventButton(gamepad->getDirectionPad()->getDown(), isPressed, value, isAnalog);
-            }
-            break;
+                {
+                    thiz->sendEventButton(gamepad->getDirectionPad()->getDown(), isPressed, value, isAnalog);
+                }
+                break;
             case AndroidControllerCode::BUTTON_DPAD_LEFT:
-            {
-                thiz->sendEventButton(gamepad->getDirectionPad()->getLeft(), isPressed, value, isAnalog);
-            }
-            break;
+                {
+                    thiz->sendEventButton(gamepad->getDirectionPad()->getLeft(), isPressed, value, isAnalog);
+                }
+                break;
             case AndroidControllerCode::BUTTON_DPAD_RIGHT:
-            {
-                thiz->sendEventButton(gamepad->getDirectionPad()->getRight(), isPressed, value, isAnalog);
-            }
-            break;
+                {
+                    thiz->sendEventButton(gamepad->getDirectionPad()->getRight(), isPressed, value, isAnalog);
+                }
+                break;
             case AndroidControllerCode::BUTTON_START:
-            {
-                thiz->sendEventButton(gamepad->getButtonStart(), isPressed, value, isAnalog);
-            }
-            break;
+                {
+                    thiz->sendEventButton(gamepad->getButtonStart(), isPressed, value, isAnalog);
+                }
+                break;
             case AndroidControllerCode::BUTTON_SELECT:
-            {
-                thiz->sendEventButton(gamepad->getButtonSelect(), isPressed, value, isAnalog);
-            }
-            break;
+                {
+                    thiz->sendEventButton(gamepad->getButtonSelect(), isPressed, value, isAnalog);
+                }
+                break;
             case AndroidControllerCode::BUTTON_LEFT_THUMBSTICK:
-            {
-                thiz->sendEventButton(gamepad->getLeftThumbstick()->getButton(), isPressed, value, isAnalog);
-            }
-            break;
+                {
+                    thiz->sendEventButton(gamepad->getLeftThumbstick()->getButton(), isPressed, value, isAnalog);
+                }
+                break;
             case AndroidControllerCode::BUTTON_RIGHT_THUMBSTICK:
-            {
-                thiz->sendEventButton(gamepad->getRightThumbstick()->getButton(), isPressed, value, isAnalog);
-            }
-            break;
+                {
+                    thiz->sendEventButton(gamepad->getRightThumbstick()->getButton(), isPressed, value, isAnalog);
+                }
+                break;
             default:
                 //                CCASSERT(false, "Invalid controller button code!");
                 break;
