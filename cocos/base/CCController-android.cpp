@@ -234,6 +234,7 @@ public:
 
     static void onAxisEvent(const std::string& vendorName, int controllerID, AndroidControllerCode axisCode, float value, bool isAnalog)
     {
+        // log("vendorName: %s, controller id: %d, axis: %d, value: %f", vendorName.c_str(), controllerID, axisCode, value);
         auto iter = findController(vendorName, controllerID);
         if (iter == Controller::_controllers.end())
         {
@@ -351,7 +352,7 @@ extern "C" {
 
     JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxGameController_nativeControllerAxisEvent(JNIEnv*  env, jobject thiz, jstring vendorName, jint controllerID, jint axis, jfloat value, jboolean isAnalog)
     {
-        CCLOG("controller id: %d, axis code: %d, value: %f, isAnalog:%d", controllerID, axis, value, (int)isAnalog);
+        // CCLOG("controller id: %d, axis code: %d, value: %f, isAnalog:%d", controllerID, axis, value, (int)isAnalog);
         cocos2d::ControllerImpl::onAxisEvent(cocos2d::JniHelper::jstring2string(vendorName), controllerID, static_cast<cocos2d::AndroidControllerCode>(axis), value, isAnalog);
     }
 
