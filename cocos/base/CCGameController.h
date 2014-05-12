@@ -30,6 +30,7 @@
 #include "CCControllerButtonInput.h"
 #include "CCControllerAxisInput.h"
 #include "CCControllerDirectionPad.h"
+#include "CCControllerThumbstick.h"
 #include "CCGamepad.h"
 #include "CCController.h"
 #include "CCEventController.h"
