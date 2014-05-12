@@ -132,7 +132,7 @@ bool HelloWorld::init()
 }
 
 void HelloWorld::onButtonPressed(cocos2d::Controller *controller, cocos2d::ControllerButtonInput *button, cocos2d::Event *event)
-{
+{return;
     log("HelloWorld::onButtonPressed: %p, %d, %f", button, button->isPressed(), button->getValue());
     if (_player1 == nullptr)
         return;
@@ -190,7 +190,7 @@ void HelloWorld::onButtonPressed(cocos2d::Controller *controller, cocos2d::Contr
 }
 
 void HelloWorld::onButtonReleased(cocos2d::Controller *controller, cocos2d::ControllerButtonInput *button, cocos2d::Event *event)
-{
+{return;
     CCNSLOG("HelloWorld::onButtonReleased: %p, %d, %f", button, button->isPressed(), button->getValue());
     if (_player1 == nullptr)
         return;
@@ -208,16 +208,22 @@ void HelloWorld::onButtonReleased(cocos2d::Controller *controller, cocos2d::Cont
 
 void HelloWorld::onAxisValueChanged(cocos2d::Controller* controller, cocos2d::ControllerAxisInput* axis, cocos2d::Event* event)
 {
-    log("HelloWorld::onAxisValueChanged: %p, %f", axis, axis->getValue());
+    return;
+//    log("HelloWorld::onAxisValueChanged: %p, %f", axis, axis->getValue());
     if (_player1 == nullptr)
         return;
     
-    const int MOVE_DELTA = axis->getValue() * 5;
-    
+    const int MOVE_DELTA = axis->getValue();
     Vector2 newPos = _actor->getPosition();
-    newPos.x += MOVE_DELTA;
-    newPos.y += MOVE_DELTA;
     
+    if (axis == _player1->getGamepad()->getLeftThumbstick()->getAxisX() || axis == _player1->getGamepad()->getRightThumbstick()->getAxisX())
+    {
+        newPos.x += MOVE_DELTA;
+    }
+    else if (axis == _player1->getGamepad()->getLeftThumbstick()->getAxisY() || axis == _player1->getGamepad()->getRightThumbstick()->getAxisY())
+    {
+        newPos.y -= MOVE_DELTA;
+    }
     _actor->setPosition(newPos);
 }
 
@@ -229,33 +235,39 @@ void HelloWorld::update(float dt)
         
         Vector2 newPos = _actor->getPosition();
 
-        if (_player1->getGamepad()->getDirectionPad()->getDown()->isPressed())
-        {
-            log("Dpad: down pressed");
-            _statusLabel->setString("Dpad: down pressed");
-            newPos.y -= MOVE_DELTA;
-        }
+//        if (_player1->getGamepad()->getDirectionPad()->getDown()->isPressed())
+//        {
+//            log("Dpad: down pressed");
+//            _statusLabel->setString("Dpad: down pressed");
+//            newPos.y -= MOVE_DELTA;
+//        }
+//        
+//        if (_player1->getGamepad()->getDirectionPad()->getUp()->isPressed())
+//        {
+//            log("Dpad: up pressed");
+//            _statusLabel->setString("Dpad: up pressed");
+//            newPos.y += MOVE_DELTA;
+//        }
+//        
+//        if (_player1->getGamepad()->getDirectionPad()->getLeft()->isPressed())
+//        {
+//            log("Dpad: left pressed");
+//            _statusLabel->setString("Dpad: left pressed");
+//            newPos.x -= MOVE_DELTA;
+//        }
+//        
+//        if (_player1->getGamepad()->getDirectionPad()->getRight()->isPressed())
+//        {
+//            log("Dpad: right pressed");
+//            _statusLabel->setString("Dpad: right pressed");
+//            newPos.x += MOVE_DELTA;
+//        }
         
-        if (_player1->getGamepad()->getDirectionPad()->getUp()->isPressed())
-        {
-            log("Dpad: up pressed");
-            _statusLabel->setString("Dpad: up pressed");
-            newPos.y += MOVE_DELTA;
-        }
+        newPos.x += _player1->getGamepad()->getLeftThumbstick()->getAxisX()->getValue();
+        newPos.y -= _player1->getGamepad()->getLeftThumbstick()->getAxisY()->getValue();
         
-        if (_player1->getGamepad()->getDirectionPad()->getLeft()->isPressed())
-        {
-            log("Dpad: left pressed");
-            _statusLabel->setString("Dpad: left pressed");
-            newPos.x -= MOVE_DELTA;
-        }
-        
-        if (_player1->getGamepad()->getDirectionPad()->getRight()->isPressed())
-        {
-            log("Dpad: right pressed");
-            _statusLabel->setString("Dpad: right pressed");
-            newPos.x += MOVE_DELTA;
-        }
+        newPos.x += _player1->getGamepad()->getRightThumbstick()->getAxisX()->getValue();
+        newPos.y -= _player1->getGamepad()->getRightThumbstick()->getAxisY()->getValue();
         
         _actor->setPosition(newPos);
     }
