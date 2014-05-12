@@ -24,25 +24,13 @@
  ****************************************************************************/
 
 #include "CCEventController.h"
-#include "CCControllerButtonInput.h"
-#include "CCControllerDirectionPad.h"
 
 NS_CC_BEGIN
 
-EventController::EventController(ControllerEventType type, Controller* controller, ControllerButtonInput* button)
+EventController::EventController(ControllerEventType type, Controller* controller, ControllerElement* element)
 : Event(Type::GAME_CONTROLLER)
 , _controllerEventType(type)
-, _element(button)
-, _controller(controller)
-, _isConnected(true)
-{
-    
-}
-
-EventController::EventController(ControllerEventType type, Controller* controller, ControllerDirectionPad* dpad)
-: Event(Type::GAME_CONTROLLER)
-, _controllerEventType(type)
-, _element(dpad)
+, _element(element)
 , _controller(controller)
 , _isConnected(true)
 {

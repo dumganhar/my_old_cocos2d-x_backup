@@ -32,7 +32,7 @@
 NS_CC_BEGIN
 
 class ControllerButtonInput;
-class ControllerDirectionPad;
+class ControllerAxisInput;
 class ControllerElement;
 class Controller;
 
@@ -46,8 +46,7 @@ public:
         AXIS_STATUS_CHANGED,
     };
     
-	EventController(ControllerEventType type, Controller* controller, ControllerButtonInput* button);
-    EventController(ControllerEventType type, Controller* controller, ControllerDirectionPad* dpad);
+	EventController(ControllerEventType type, Controller* controller, ControllerElement* element);
     EventController(ControllerEventType type, Controller* controller, bool isConnected);
 
     ControllerEventType getControllerEventType() const;
