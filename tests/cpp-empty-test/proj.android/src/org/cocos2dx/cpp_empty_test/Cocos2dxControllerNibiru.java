@@ -126,14 +126,14 @@ public class Cocos2dxControllerNibiru implements OnControllerSeviceListener, OnK
 
 	@Override
 	public void onLeftStickChanged(int playerOrder, float x, float y) {
-		Log.d(TAG, "onLeftStickChanged: playerOrder=" + playerOrder + ", x = " + x + ", y" + y);
+		Log.d(TAG, "onLeftStickChanged: playerOrder=" + playerOrder + ", x = " + x + ", y = " + y);
 		Cocos2dxGameController.onAxisEvent(mVendorName, playerOrder, Cocos2dxGameController.THUMBSTICK_LEFT_X, x, true);
 		Cocos2dxGameController.onAxisEvent(mVendorName, playerOrder, Cocos2dxGameController.THUMBSTICK_LEFT_Y, y, true);
 	}
 
 	@Override
 	public void onRightStickChanged(int playerOrder, float x, float y) {
-		Log.d(TAG, "onRightStickChanged: playerOrder=" + playerOrder + ", x = " + x + ", y" + y);
+		Log.d(TAG, "onRightStickChanged: playerOrder=" + playerOrder + ", x = " + x + ", y = " + y);
 		Cocos2dxGameController.onAxisEvent(mVendorName, playerOrder, Cocos2dxGameController.THUMBSTICK_RIGHT_X, x, true);
 		Cocos2dxGameController.onAxisEvent(mVendorName, playerOrder, Cocos2dxGameController.THUMBSTICK_RIGHT_Y, y, true);
 	}
