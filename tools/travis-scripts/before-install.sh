@@ -84,6 +84,7 @@ elif [ "$PLATFORM"x = "mac-ios"x ]; then
         git remote add travis-mac https://$GH_USER_MAC:$GH_PASSWORD_MAC@github.com/cocos-travis-mac/cocos2d-x.git
         git push -f travis-mac $TRAVIS_BRANCH 2> /dev/null > /dev/null
     else
+        echo "xctool version: `xctool --version`"
         install_android_ndk
     fi
 else
